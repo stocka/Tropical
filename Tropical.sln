@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tropical.Models", "Tropical.Models\Tropical.Models.vbproj", "{83E3B54E-4B45-47CD-8904-137F47FA2DC7}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tropical.Controllers", "Tropical.Controllers\Tropical.Controllers.vbproj", "{59930B50-BD9C-4C76-9716-14AE3C9C9292}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tropical.Tests", "Tropical.Tests\Tropical.Tests.vbproj", "{43D41394-250F-4D76-9F81-5860D188D655}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83E3B54E-4B45-47CD-8904-137F47FA2DC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E3B54E-4B45-47CD-8904-137F47FA2DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E3B54E-4B45-47CD-8904-137F47FA2DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E3B54E-4B45-47CD-8904-137F47FA2DC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59930B50-BD9C-4C76-9716-14AE3C9C9292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59930B50-BD9C-4C76-9716-14AE3C9C9292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59930B50-BD9C-4C76-9716-14AE3C9C9292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59930B50-BD9C-4C76-9716-14AE3C9C9292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D41394-250F-4D76-9F81-5860D188D655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D41394-250F-4D76-9F81-5860D188D655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D41394-250F-4D76-9F81-5860D188D655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D41394-250F-4D76-9F81-5860D188D655}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
