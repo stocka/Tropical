@@ -1,4 +1,5 @@
-﻿Imports System.Drawing
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.Drawing
 
 ''' <summary>
 ''' Provides methods for generating a sprite sheet.
@@ -52,18 +53,9 @@ Public Class SpriteSheetGenerator
   ''' <exception cref="System.ArgumentNullException">
   ''' The <paramref name="sheet" /> is null.
   ''' </exception>
-  ''' <exception cref="System.ArgumentNullException">
-  ''' The <paramref name="sheet" />'s <see cref="SpriteSheet.BaseClassName">base CSS class</see>
-  ''' is null or whitespace.
-  ''' </exception>
-  ''' <exception cref="System.ArgumentNullException">
-  ''' The <paramref name="sheet" />'s <see cref="SpriteSheet.BaseFileName">base file name</see>
-  ''' is null or whitespace.
-  ''' </exception>
-  ''' <exception cref="System.ArgumentOutOfRangeException">
-  ''' The <see cref="System.Drawing.Size.Width" /> and/or <see cref="System.Drawing.Size.Height" />
-  ''' of the <paramref name="sheet"/>'s <see cref="SpriteSheet.ImageDimensions">image dimensions</see>
-  ''' is less than or equal to zero.
+  ''' <exception cref="ValidationException">
+  ''' The provided sprite sheet is invalid. The exception will contain all
+  ''' failed-validation information.
   ''' </exception>
   Public Sub New(sheet As SpriteSheet)
 
@@ -71,21 +63,9 @@ Public Class SpriteSheetGenerator
       Throw New ArgumentNullException("sheet")
     End If
 
-    If String.IsNullOrWhiteSpace(sheet.BaseClassName) Then
-      Throw New ArgumentNullException("sheet.BaseClassName")
-    End If
-
-    If String.IsNullOrWhiteSpace(sheet.BaseFileName) Then
-      Throw New ArgumentNullException("sheet.BaseFileName")
-    End If
-
-    If sheet.ImageDimensions.Width <= 0 Then
-      Throw New ArgumentOutOfRangeException("sheet.ImageDimensions.Width")
-    End If
-
-    If sheet.ImageDimensions.Height <= 0 Then
-      Throw New ArgumentOutOfRangeException("sheet.ImageDimensions.Height")
-    End If
+    ' Now validate the sheet
+    Dim validationContext As New ValidationContext(sheet)
+    Validator.ValidateObject(sheet, validationContext, True)
 
     _sheet = sheet
 
@@ -117,6 +97,9 @@ Public Class SpriteSheetGenerator
     Return spriteSheetBuilder.ToString()
 
   End Function
+
+
+#Region "Image Positioning Methods"
 
   Private Sub PositionImages()
 
@@ -208,6 +191,8 @@ Public Class SpriteSheetGenerator
     Return placedSprite
 
   End Function
+
+#End Region
 
 #Region "Logging Methods"
 

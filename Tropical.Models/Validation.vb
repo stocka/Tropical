@@ -6,7 +6,7 @@ Public Class Validation
   ''' <summary>
   ''' A regular expression for validating a CSS class name.
   ''' </summary>
-  Private Shared ReadOnly CssClassNameRegex As New System.Text.RegularExpressions.Regex("-?[_a-zA-Z]+[_a-zA-Z0-9-]*")
+  Private Shared ReadOnly CssClassNameRegex As New System.Text.RegularExpressions.Regex("^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$")
 
   ''' <summary>
   ''' A set of file names reserved by the Windows operating system.
@@ -92,6 +92,53 @@ Public Class Validation
     End If
 
     Return True
+
+  End Function
+
+  ''' <summary>
+  ''' Gets the equivalent error message for the specified collection of validation results.
+  ''' </summary>
+  ''' <param name="results">The validation results.</param>
+  ''' <returns>The equivalent error message.</returns>
+  Public Shared Function GetValidationResultMessage(results As IEnumerable(Of ValidationResult)) As String
+
+    ' Make sure we have results.
+    If results Is Nothing OrElse Not results.Any() Then
+      Return String.Empty
+    End If
+
+    ' If we only have one, then just return that directly.
+    If results.Count() = 1 Then
+      Return GetValidationResultMessage(results(0))
+    End If
+
+    ' Let's build a list.
+    Dim messageBuilder As New Text.StringBuilder()
+
+    For Each result In results
+      messageBuilder.AppendLine("- " & GetValidationResultMessage(result))
+    Next
+
+    ' Trim ending terminators.
+    Return messageBuilder.ToString().Trim
+
+  End Function
+
+  ''' <summary>
+  ''' Gets the equivalent error message for the specified validation result.
+  ''' </summary>
+  ''' <param name="result">The validation result.</param>
+  ''' <returns>The equivalent error message.</returns>
+  Private Shared Function GetValidationResultMessage(result As ValidationResult) As String
+
+    ' See if we have member names
+    If result.MemberNames IsNot Nothing AndAlso result.MemberNames.Any() Then
+      ' Return the error message with a list of the invalid fields
+      Return result.ErrorMessage & " (" & String.Join(", ", result.MemberNames) & ")"
+    Else
+      ' Just return the error message.
+      Return result.ErrorMessage
+    End If
 
   End Function
 

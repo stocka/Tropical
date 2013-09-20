@@ -3,6 +3,7 @@
 ''' </summary>
 <Serializable()>
 Public Class Sprite
+  Implements IValidatableObject
 
   ''' <summary>
   ''' Gets or sets the unique identifier.
@@ -19,6 +20,7 @@ Public Class Sprite
   ''' <value>
   ''' The name of the CSS class used for the sprite.
   ''' </value>
+  <Required(ErrorMessage:="The CSS class name is required.")>
   Public Property ClassName As String
 
   ''' <summary>
@@ -38,5 +40,34 @@ Public Class Sprite
   ''' be displayed on hover.
   ''' </value>
   Public Property HoverImagePath As String
+
+  ''' <summary>
+  ''' Determines whether the specified object is valid.
+  ''' </summary>
+  ''' <param name="validationContext">The validation context.</param>
+  ''' <returns>
+  ''' A collection that holds failed-validation information.
+  ''' </returns>
+  Public Function Validate(validationContext As ValidationContext) As IEnumerable(Of ValidationResult) Implements IValidatableObject.Validate
+
+    Dim brokenRules As New List(Of ValidationResult)
+
+    ' Validate the class name
+    If Not String.IsNullOrWhiteSpace(Me.ClassName) AndAlso Not Validation.ValidateCssClass(Me.ClassName) Then
+      brokenRules.Add(New ValidationResult("The specified CSS class name is invalid.", {"ClassName"}))
+    End If
+
+    ' Validate file paths, if provided
+    If Not String.IsNullOrWhiteSpace(Me.ImagePath) AndAlso Not Validation.ValidateFilePath(Me.ImagePath) Then
+      brokenRules.Add(New ValidationResult("The specified image path is invalid.", {"ImagePath"}))
+    End If
+
+    If Not String.IsNullOrWhiteSpace(Me.HoverImagePath) AndAlso Not Validation.ValidateFilePath(Me.HoverImagePath) Then
+      brokenRules.Add(New ValidationResult("The specified hover image path is invalid.", {"HoverImagePath"}))
+    End If
+
+    Return brokenRules
+
+  End Function
 
 End Class
