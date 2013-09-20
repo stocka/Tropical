@@ -88,6 +88,11 @@
     <Compile Include="PlacedSprite.vb" />
     <Compile Include="Sprite.vb" />
     <Compile Include="SpriteSheet.vb" />
+    <Compile Include="SpriteSheetSampleHtml.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpriteSheetSampleHtml.tt</DependentUpon>
+    </Compile>
     <Compile Include="SpriteSheetTemplate.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -118,6 +123,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="SpriteSheetSampleHtml.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <CustomToolNamespace>Templates</CustomToolNamespace>
+      <LastGenOutput>SpriteSheetSampleHtml.vb</LastGenOutput>
     </None>
     <None Include="SpriteSheetTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

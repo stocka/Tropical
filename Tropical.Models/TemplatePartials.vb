@@ -1,5 +1,15 @@
 ﻿Namespace Templates
 
+  Partial Class SpriteSheetSampleHtml
+
+    Private mSheet As SpriteSheet
+
+    Public Sub New(sheet As SpriteSheet)
+      mSheet = sheet
+    End Sub
+
+  End Class
+
   Partial Class SpriteSheetTemplate
 
     Private mSheet As SpriteSheet
