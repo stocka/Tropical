@@ -95,8 +95,15 @@ Public Class SpriteSheetGenerator
 
     ' TODO: better validation around destinationPath
 
+    ' Create the directory if it doesn't exist
+    If Not System.IO.Directory.Exists(destinationPath) Then
+      System.IO.Directory.CreateDirectory(destinationPath)
+    End If
+
     Dim stylesheetPath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".css")
     Dim imagePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".png")
+
+    ' TODO: check write access for files
 
     ' Write out the stylesheet
     Try
