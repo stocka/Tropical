@@ -54,8 +54,45 @@ Public Class SpriteSheetGeneratorTests
 
   End Sub
 
+  <TestMethod()>
+  Public Sub TestOne_NoHover()
+
+    Dim sheet As New Models.SpriteSheet()
+    With sheet
+      .BaseClassName = "td-icon"
+      .BaseFileName = "td-icons"
+      .ImageDimensions = New System.Drawing.Size(16, 16)
+    End With
+
+    Dim sprite As New Models.Sprite()
+    With sprite
+      .ClassName = "sprite"
+      .ImagePath = GetFullImagePath("icon_16.png")
+    End With
+
+    sheet.Sprites.Add(sprite)
+
+    Dim generator = GetGenerator(sheet)
+
+    Assert.AreEqual(1, generator.SpriteCount)
+    Assert.AreEqual(16, generator.Dimensions.Height)
+    Assert.AreEqual(16, generator.Dimensions.Width)
+
+    ' Make sure generation succeeds
+    Assert.IsTrue(generator.Generate(GetDestinationPath()))
+
+    ' Make sure no errors/warnings were logged
+    Assert.AreEqual(0, Log.ErrorEntries.Count)
+    Assert.AreEqual(0, Log.WarningEntries.Count)
+
+  End Sub
+
   Private Function GetDestinationPath()
     Return System.IO.Directory.GetCurrentDirectory()
+  End Function
+
+  Private Function GetFullImagePath(fileName As String) As String
+    Return System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "TestImages", fileName)
   End Function
 
 End Class
