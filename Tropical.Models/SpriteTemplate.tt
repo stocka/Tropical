@@ -6,12 +6,12 @@
 
 <# If mSprite.Position.HasValue #>
 .<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:before {
-	background-position: <#= mSprite.Position.Value.X #>px <#= mSprite.Position.Value.Y #>px;	
+	background-position: -<#= mSprite.Position.Value.X #>px -<#= mSprite.Position.Value.Y #>px;	
 }
 <# End If #>
 
 <# If mSprite.HoverPosition.HasValue #>
 .<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:hover:before {
-	background-position: <#= mSprite.HoverPosition.Value.X #>px <#= mSprite.HoverPosition.Value.Y #>px;
+	background-position: -<#= mSprite.HoverPosition.Value.X #>px -<#= mSprite.HoverPosition.Value.Y #>px;
 }
 <# End If #>

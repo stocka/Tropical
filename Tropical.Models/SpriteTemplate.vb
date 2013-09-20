@@ -41,13 +41,13 @@ Namespace Templates
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.ClassName))
             
             #End ExternalSource
-            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: ")
+            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: -")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",9)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.Position.Value.X))
             
             #End ExternalSource
-            Me.Write("px ")
+            Me.Write("px -")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",9)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.Position.Value.Y))
@@ -77,13 +77,13 @@ Namespace Templates
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.ClassName))
             
             #End ExternalSource
-            Me.Write(":hover:before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: ")
+            Me.Write(":hover:before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: -")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",15)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.HoverPosition.Value.X))
             
             #End ExternalSource
-            Me.Write("px ")
+            Me.Write("px -")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",15)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.HoverPosition.Value.Y))
