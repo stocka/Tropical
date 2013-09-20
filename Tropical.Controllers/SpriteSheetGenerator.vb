@@ -1,4 +1,9 @@
-﻿Public Class SpriteSheetGenerator
+﻿Imports System.Drawing
+
+''' <summary>
+''' Provides methods for generating a sprite sheet.
+''' </summary>
+Public Class SpriteSheetGenerator
 
   Private ReadOnly _sheet As SpriteSheet
   Private _imagePositions As Dictionary(Of String, System.Drawing.Point)
@@ -32,6 +37,34 @@
     End Get
   End Property
 
+  ''' <summary>
+  ''' Gets or sets the logger to use.
+  ''' </summary>
+  ''' <value>
+  ''' The logger to use.
+  ''' </value>
+  Public Property Logger() As ILogger = Nothing
+
+  ''' <summary>
+  ''' Initializes a new instance of the <see cref="SpriteSheetGenerator"/> class.
+  ''' </summary>
+  ''' <param name="sheet">The sheet.</param>
+  ''' <exception cref="System.ArgumentNullException">
+  ''' The <paramref name="sheet" /> is null.
+  ''' </exception>
+  ''' <exception cref="System.ArgumentNullException">
+  ''' The <paramref name="sheet" />'s <see cref="SpriteSheet.BaseClassName">base CSS class</see>
+  ''' is null or whitespace.
+  ''' </exception>
+  ''' <exception cref="System.ArgumentNullException">
+  ''' The <paramref name="sheet" />'s <see cref="SpriteSheet.BaseFileName">base file name</see>
+  ''' is null or whitespace.
+  ''' </exception>
+  ''' <exception cref="System.ArgumentOutOfRangeException">
+  ''' The <see cref="System.Drawing.Size.Width" /> and/or <see cref="System.Drawing.Size.Height" />
+  ''' of the <paramref name="sheet"/>'s <see cref="SpriteSheet.ImageDimensions">image dimensions</see>
+  ''' is less than or equal to zero.
+  ''' </exception>
   Public Sub New(sheet As SpriteSheet)
 
     If sheet Is Nothing Then
@@ -57,13 +90,13 @@
     _sheet = sheet
 
     ' Place images
-    PlaceImages()
+    PositionImages()
 
   End Sub
 
   Public Function Generate() As String
 
-    Dim spriteSheetBuilder As New Text.StringBuilder()
+    Dim spriteSheetBuilder As New System.Text.StringBuilder()
 
     ' Add the base sprite sheet declaration
     Dim spriteSheetTmplInst As New Tropical.Models.Templates.SpriteSheetTemplate(_sheet)
@@ -85,7 +118,7 @@
 
   End Function
 
-  Private Sub PlaceImages()
+  Private Sub PositionImages()
 
     ' Re-declare core stuff
     _sheetDims = New Drawing.Size()
@@ -99,8 +132,8 @@
       For Each spr In _sheet.Sprites
 
         ' Allocate room for each image
-        AllocateImage(spr.ImagePath)
-        AllocateImage(spr.HoverImagePath)
+        AllocateImagePosition(spr.ImagePath)
+        AllocateImagePosition(spr.HoverImagePath)
 
       Next
 
@@ -114,7 +147,7 @@
   ''' additional space will not be generated.
   ''' </summary>
   ''' <param name="imagePath">The path to the image.</param>
-  Private Sub AllocateImage(imagePath As String)
+  Private Sub AllocateImagePosition(imagePath As String)
 
     ' Make sure the path is defined and we haven't already mapped a path to it
     If Not String.IsNullOrWhiteSpace(imagePath) AndAlso Not _imagePositions.ContainsKey(imagePath) Then
@@ -175,5 +208,61 @@
     Return placedSprite
 
   End Function
+
+#Region "Logging Methods"
+
+  ''' <summary>
+  ''' Logs a debug message.
+  ''' </summary>
+  ''' <param name="message">The message text.</param>
+  ''' <param name="exception">The associated exception. Optional.</param>
+  Private Sub LogDebug(message As String, Optional exception As Exception = Nothing)
+
+    If Me.Logger IsNot Nothing Then
+      Me.Logger.Debug(message, exception:=exception)
+    End If
+
+  End Sub
+
+  ''' <summary>
+  ''' Logs an informational message.
+  ''' </summary>
+  ''' <param name="message">The message text.</param>
+  ''' <param name="exception">The associated exception. Optional.</param>
+  Private Sub LogInfo(message As String, Optional exception As Exception = Nothing)
+
+    If Me.Logger IsNot Nothing Then
+      Me.Logger.Information(message, exception:=exception)
+    End If
+
+  End Sub
+
+  ''' <summary>
+  ''' Logs a warning message.
+  ''' </summary>
+  ''' <param name="message">The message text.</param>
+  ''' <param name="exception">The associated exception. Optional.</param>
+  Private Sub LogWarning(message As String, Optional exception As Exception = Nothing)
+
+    If Me.Logger IsNot Nothing Then
+      Me.Logger.Warning(message, exception:=exception)
+    End If
+
+  End Sub
+
+  ''' <summary>
+  ''' Logs an error message.
+  ''' </summary>
+  ''' <param name="message">The message text.</param>
+  ''' <param name="exception">The associated exception. Optional.</param>
+  Private Sub LogError(message As String, Optional exception As Exception = Nothing)
+
+    If Me.Logger IsNot Nothing Then
+      Me.Logger.Error(message, exception:=exception)
+    End If
+
+  End Sub
+
+#End Region
 
 End Class
