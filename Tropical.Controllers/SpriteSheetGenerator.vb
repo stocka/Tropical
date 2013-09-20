@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel.DataAnnotations
 Imports System.Drawing
+Imports System.IO
 
 ''' <summary>
 ''' Provides methods for generating a sprite sheet.
@@ -13,6 +14,8 @@ Public Class SpriteSheetGenerator
   Private _sheetColumn As Int32 = 0
 
   Private Const MaximumImageColumns As Int32 = Int32.MaxValue
+  Private Const OverHeightImageWarningFormat As String = "has a height of {0} pixels, which is larger than the sheet image height of {1} pixels"
+  Private Const OverWidthImageWarningFormat As String = "has a width of {0} pixels, which is larger than the sheet image width of {1} pixels"
 
   ''' <summary>
   ''' Gets the current calculated dimensions of the sprite sheet.
@@ -74,8 +77,76 @@ Public Class SpriteSheetGenerator
 
   End Sub
 
-  Public Function Generate() As String
+  ''' <summary>
+  ''' Generates the sprite image sheet and associated CSS stylesheet
+  ''' in the specified folder.
+  ''' </summary>
+  ''' <param name="destinationPath">The destination path.</param>
+  ''' <returns><c>true</c> if generation was successful; <c>false</c>
+  ''' otherwise. Any messages will be captured in the <see cref="Logger">log</see>.
+  ''' If this sheet has no sprites, no action will be performed and this method
+  ''' will return <c>false</c>.</returns>
+  Public Function Generate(destinationPath As String) As Boolean
 
+    If Me.SpriteCount = 0 Then
+      LogError("No sprites have been added to the sheet.")
+      Return False
+    End If
+
+    ' TODO: better validation around destinationPath
+
+    Dim stylesheetPath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".css")
+    Dim imagePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".png")
+
+    ' Write out the stylesheet
+    Try
+      GenerateStylesheet(stylesheetPath)
+    Catch ex As Exception
+      LogError("An error was encountered attempting to generate the stylesheet.", exception:=ex)
+      Return False
+    End Try
+
+    ' Now write out the sprite sheet
+    Try
+      GenerateSpriteImage(imagePath)
+    Catch ex As Exception
+      LogError("An error was encountered attempting to generate the sprite sheet.", exception:=ex)
+      Return False
+    End Try
+
+    ' We're good.
+    Return True
+
+  End Function
+
+  ''' <summary>
+  ''' Generates and saves the stylesheet for the sprite sheet.
+  ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
+  ''' </summary>
+  ''' <param name="sheetPath">The path to which the stylesheet will be saved.</param>
+  ''' <returns>The stylesheet's contents.</returns>
+  Private Function GenerateStylesheet(sheetPath As String) As String
+
+    ' Get the contents.
+    Dim sheetContents As String = GenerateStylesheetContents()
+
+    Using stylesheetWriter As New StreamWriter(sheetPath, False, New System.Text.UnicodeEncoding())
+      stylesheetWriter.Write(sheetContents)
+    End Using
+
+    ' Return the built CSS
+    Return sheetContents
+
+  End Function
+
+  ''' <summary>
+  ''' Generates the contents of the stylesheet for the sprite sheet.
+  ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
+  ''' </summary>
+  ''' <returns>The stylesheet's contents.</returns>
+  Private Function GenerateStylesheetContents() As String
+
+    Dim encounteredClasses As New HashSet(Of String)
     Dim spriteSheetBuilder As New System.Text.StringBuilder()
 
     ' Add the base sprite sheet declaration
@@ -86,9 +157,19 @@ Public Class SpriteSheetGenerator
     If _sheet.Sprites IsNot Nothing AndAlso _sheet.Sprites.Any() Then
 
       For Each spr In _sheet.Sprites
+
+        ' If we've already seen this class before, throw up a warning.
+        If encounteredClasses.Contains(spr.ClassName) Then
+          LogWarning("The CSS class """ & spr.ClassName & """ has already been used by a sprite.")
+        End If
+
         ' Get the equivalent placed sprite, and use that for the template
         Dim spriteTmplInst As New Tropical.Models.Templates.SpriteTemplate(GetPlacedSprite(spr))
         spriteSheetBuilder.AppendLine(spriteTmplInst.TransformText())
+
+        ' Add the CSS class to the list of ones we've seen
+        encounteredClasses.Add(spr.ClassName)
+
       Next
 
     End If
@@ -98,6 +179,34 @@ Public Class SpriteSheetGenerator
 
   End Function
 
+  ''' <summary>
+  ''' Generates and saves the sprite sheet image.
+  ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
+  ''' </summary>
+  ''' <param name="imagePath">The path to which the image will be saved.</param>
+  Private Sub GenerateSpriteImage(imagePath As String)
+
+    ' If we don't have valid dimensions, don't create a file.
+    If _sheetDims.Width = 0 Or _sheetDims.Height = 0 Then
+      Return
+    End If
+
+    ' Create an image (with ARGB support, as this will be a PNG) with the
+    ' calculated dims, as well as the supporting Graphics instance.
+    Using sprImage As New Bitmap(_sheetDims.Width, _sheetDims.Height, Imaging.PixelFormat.Format32bppArgb),
+       graphics As Graphics = graphics.FromImage(sprImage)
+
+      ' Now iterate over all of our placed images.
+      For Each placedImage In _imagePositions
+        AddSingleImageToSheet(graphics, placedImage)
+      Next
+
+      ' Now save the image as a PNG.
+      sprImage.Save(imagePath, Imaging.ImageFormat.Png)
+
+    End Using
+
+  End Sub
 
 #Region "Image Positioning Methods"
 
@@ -194,6 +303,50 @@ Public Class SpriteSheetGenerator
 
 #End Region
 
+#Region "Image Generation Methods"
+
+  ''' <summary>
+  ''' Adds a single image to the sprite sheet (as encapsulated by <paramref name="graphics" />).
+  ''' </summary>
+  ''' <param name="graphics">The graphics object for the sprite sheet.</param>
+  ''' <param name="imageInfo">The image to add.</param>
+  Private Sub AddSingleImageToSheet(graphics As Graphics, imageInfo As KeyValuePair(Of String, Point))
+
+    Dim imagePath As String = imageInfo.Key
+    Dim imageFileInfo As New FileInfo(imagePath)
+
+    ' Log a warning if the file doesn't exist.
+    If Not imageFileInfo.Exists() Then
+      LogImageWarning(imagePath, "does not exist")
+      Return
+    End If
+
+    Try
+
+      Using spriteImage As Image = Image.FromFile(imagePath)
+
+        ' Do some simple bounds checking, and log a warning if it's weird.
+        If spriteImage.Height > _sheet.ImageDimensions.Height Then
+          LogImageWarning(imagePath, String.Format(OverHeightImageWarningFormat, spriteImage.Height, _sheet.ImageDimensions.Height))
+        End If
+
+        If spriteImage.Width > _sheet.ImageDimensions.Width Then
+          LogImageWarning(imagePath, String.Format(OverWidthImageWarningFormat, spriteImage.Width, _sheet.ImageDimensions.Width))
+        End If
+
+        ' Draw the image at the specified point
+        graphics.DrawImage(spriteImage, imageInfo.Value)
+
+      End Using
+
+    Catch ex As Exception
+      LogImageWarning(imagePath, "could not be loaded", exception:=ex)
+    End Try
+
+  End Sub
+
+#End Region
+
 #Region "Logging Methods"
 
   ''' <summary>
@@ -220,6 +373,16 @@ Public Class SpriteSheetGenerator
       Me.Logger.Information(message, exception:=exception)
     End If
 
+  End Sub
+
+  ''' <summary>
+  ''' Logs a warning message for the specified image.
+  ''' </summary>
+  ''' <param name="imagePath">The path to the image.</param>
+  ''' <param name="message">The warning to include.</param>
+  ''' <param name="exception">The associated exception. Optional.</param>
+  Private Sub LogImageWarning(imagePath As String, message As String, Optional exception As Exception = Nothing)
+    LogWarning("The image """ & imagePath & """ " & message & ".", exception:=exception)
   End Sub
 
   ''' <summary>
