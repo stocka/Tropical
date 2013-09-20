@@ -10,7 +10,6 @@
 	height: <#= mSheet.ImageDimensions.Height #>px;
 	text-indent: -99999px;
 	overflow: hidden;	
-	background-image: url('<#= mSheet.BaseFileName #>.png');
+	background-image: url('<#= mSheet.BaseFileName #>.png?<#= DateTime.UtcNow.ToString("yyyyMMddHHmmss") #>');
 	background-repeat: no-repeat;
-	background-size: <#= mSheet.ImageDimensions.Width #>px <#= mSheet.ImageDimensions.Height #>px;
 }
