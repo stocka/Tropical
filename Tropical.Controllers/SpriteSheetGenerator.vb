@@ -102,6 +102,7 @@ Public Class SpriteSheetGenerator
 
     Dim stylesheetPath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".css")
     Dim imagePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".png")
+    Dim htmlSamplePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".html")
 
     ' TODO: check write access for files
 
@@ -118,6 +119,14 @@ Public Class SpriteSheetGenerator
       GenerateSpriteImage(imagePath)
     Catch ex As Exception
       LogError("An error was encountered attempting to generate the sprite sheet.", exception:=ex)
+      Return False
+    End Try
+
+    ' Now write out the sample HTML page
+    Try
+      GenerateSampleHtml(htmlSamplePath)
+    Catch ex As Exception
+      LogError("An error was encountered attempting to generate the sample HTML.", exception:=ex)
       Return False
     End Try
 
@@ -214,6 +223,37 @@ Public Class SpriteSheetGenerator
     End Using
 
   End Sub
+
+  ''' <summary>
+  ''' Generates and saves the sample HTML for the sprite sheet.
+  ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
+  ''' </summary>
+  ''' <param name="htmlSamplePath">The path to which the sample HTML page will be saved.</param>
+  ''' <returns>The HTML page's contents.</returns>
+  Private Function GenerateSampleHtml(htmlSamplePath As String) As String
+
+    ' Get the contents.
+    Dim htmlContents As String = GenerateHtmlContents()
+
+    Using htmlWriter As New StreamWriter(htmlSamplePath, False, New System.Text.UnicodeEncoding())
+      htmlWriter.Write(htmlContents)
+    End Using
+
+    ' Return the built CSS
+    Return htmlContents
+
+  End Function
+
+  ''' <summary>
+  ''' Generates the contents of the HTML sample page for the sprite sheet.
+  ''' </summary>
+  ''' <returns>The sample page's contents.</returns>
+  Private Function GenerateHtmlContents() As String
+
+    Dim htmlTmplInst As New Tropical.Models.Templates.SpriteSheetSampleHtml(_sheet)
+    Return htmlTmplInst.TransformText()
+
+  End Function
 
 #Region "Image Positioning Methods"
 
