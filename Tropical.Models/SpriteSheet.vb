@@ -1,4 +1,7 @@
-﻿<Serializable()>
+﻿''' <summary>
+''' A sprite sheet.
+''' </summary>
+<Serializable()>
 Public Class SpriteSheet
 
   ''' <summary>
@@ -21,16 +24,6 @@ Public Class SpriteSheet
   ''' the sprite sheet and associated CSS stylesheet.
   ''' </value>
   Public Property BaseFileName As String
-
-  ''' <summary>
-  ''' Gets or sets the path to the last folder in which
-  ''' the sprite sheet and stylesheet were generated.
-  ''' </summary>
-  ''' <value>
-  ''' The path to the last folder in which the
-  ''' sprite sheet and stylesheet were last generated.
-  ''' </value>
-  Public Property LastSaveFolder As String
 
   ''' <summary>
   ''' Gets or sets the dimensions for each image in the

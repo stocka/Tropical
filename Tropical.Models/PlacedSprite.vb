@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' A sprite that has been placed in the sheet at a specific location.
+''' A sprite that has been placed in a sheet at a specific location.
 ''' </summary>
 Public Class PlacedSprite
 
@@ -13,18 +13,18 @@ Public Class PlacedSprite
   Public Property BaseClassName As String
 
   ''' <summary>
-  ''' Gets or sets the position of the sprite in the stylesheet.
+  ''' Gets or sets the position of the sprite in the image.
   ''' </summary>
   ''' <value>
-  ''' The position of the sprite in the stylesheet.
+  ''' The position of the sprite in the image.
   ''' </value>
   Public Property Position As Nullable(Of System.Drawing.Point)
 
   ''' <summary>
-  ''' Gets or sets the position of the hover sprite in the stylesheet.
+  ''' Gets or sets the position of the hover sprite in the image.
   ''' </summary>
   ''' <value>
-  ''' The position of the hover sprite in the stylesheet.
+  ''' The position of the hover sprite in the image.
   ''' </value>
   Public Property HoverPosition As Nullable(Of System.Drawing.Point)
 

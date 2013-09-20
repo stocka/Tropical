@@ -1,4 +1,7 @@
-﻿<Serializable()>
+﻿''' <summary>
+''' A single sprite in a <see cref="SpriteSheet">sheet</see>.
+''' </summary>
+<Serializable()>
 Public Class Sprite
 
   ''' <summary>
