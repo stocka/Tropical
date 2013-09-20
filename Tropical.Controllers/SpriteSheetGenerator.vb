@@ -287,11 +287,11 @@ Public Class SpriteSheetGenerator
       .ClassName = sprite.ClassName
 
       ' Add sprite positions for each style if we have them
-      If _imagePositions.ContainsKey(sprite.ImagePath) Then
+      If Not String.IsNullOrWhiteSpace(sprite.ImagePath) AndAlso _imagePositions.ContainsKey(sprite.ImagePath) Then
         .Position = _imagePositions(sprite.ImagePath)
       End If
 
-      If _imagePositions.ContainsKey(sprite.HoverImagePath) Then
+      If Not String.IsNullOrWhiteSpace(sprite.HoverImagePath) AndAlso _imagePositions.ContainsKey(sprite.HoverImagePath) Then
         .HoverPosition = _imagePositions(sprite.HoverImagePath)
       End If
 
