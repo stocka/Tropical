@@ -26,7 +26,7 @@ Namespace Templates
             Me.Write(""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",7)
- If mSprite.Position.HasValue 
+ If ShouldIncludeStandardCss() 
             
             #End ExternalSource
             Me.Write(".")
@@ -41,19 +41,13 @@ Namespace Templates
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.ClassName))
             
             #End ExternalSource
-            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: -")
+            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: ")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",9)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.Position.Value.X))
+            Me.Write(Me.ToStringHelper.ToStringWithCulture(GetPositionString(mSprite.Position.Value)))
             
             #End ExternalSource
-            Me.Write("px -")
-            
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",9)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.Position.Value.Y))
-            
-            #End ExternalSource
-            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(9)&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
+            Me.Write(";"&Global.Microsoft.VisualBasic.ChrW(9)&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",11)
  End If 
@@ -62,7 +56,7 @@ Namespace Templates
             Me.Write(""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",13)
- If mSprite.HoverPosition.HasValue 
+ If ShouldIncludeHoverCss() 
             
             #End ExternalSource
             Me.Write(".")
@@ -77,19 +71,13 @@ Namespace Templates
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.ClassName))
             
             #End ExternalSource
-            Me.Write(":hover:before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: -")
+            Me.Write(":hover:before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-position: ")
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",15)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.HoverPosition.Value.X))
+            Me.Write(Me.ToStringHelper.ToStringWithCulture(GetPositionString(mSprite.HoverPosition.Value)))
             
             #End ExternalSource
-            Me.Write("px -")
-            
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",15)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(mSprite.HoverPosition.Value.Y))
-            
-            #End ExternalSource
-            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
+            Me.Write(";"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
             
             #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteTemplate.tt",17)
  End If 

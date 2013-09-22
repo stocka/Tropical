@@ -4,14 +4,14 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
-<# If mSprite.Position.HasValue #>
+<# If ShouldIncludeStandardCss() #>
 .<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:before {
-	background-position: -<#= mSprite.Position.Value.X #>px -<#= mSprite.Position.Value.Y #>px;	
+	background-position: <#= GetPositionString(mSprite.Position.Value) #>;	
 }
 <# End If #>
 
-<# If mSprite.HoverPosition.HasValue #>
+<# If ShouldIncludeHoverCss() #>
 .<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:hover:before {
-	background-position: -<#= mSprite.HoverPosition.Value.X #>px -<#= mSprite.HoverPosition.Value.Y #>px;
+	background-position: <#= GetPositionString(mSprite.HoverPosition.Value) #>;
 }
 <# End If #>
