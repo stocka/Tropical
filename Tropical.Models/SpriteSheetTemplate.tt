@@ -5,13 +5,13 @@
 <#@ import namespace="System.Collections.Generic" #>
 
 .<#= mSheet.BaseClassName #>:before {
-	content: '';
-	width: <#= mSheet.ImageDimensions.Width #>px;
-	height: <#= mSheet.ImageDimensions.Height #>px;
-	text-indent: -99999px;
-	overflow: hidden;	
+  content: '';
   display: inline-block;
-	background-image: url('<#= mSheet.BaseFileName #>.png?<#= DateTime.UtcNow.ToString("yyyyMMddHHmmss") #>');
-	background-repeat: no-repeat;
+  overflow: hidden;	
+  width: <#= mSheet.ImageDimensions.Width #>px;
+  height: <#= mSheet.ImageDimensions.Height #>px;  
+  background-image: url('<#= mSheet.BaseFileName #>.png?<#= DateTime.UtcNow.ToString("yyyyMMddHHmmss") #>');
+  background-repeat: no-repeat;
   background-position: <#= mSheet.ImageDimensions.Width #>px <#= mSheet.ImageDimensions.Height #>px;
+  text-indent: -99999px;
 }

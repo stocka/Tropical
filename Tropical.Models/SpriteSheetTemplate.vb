@@ -29,44 +29,44 @@ Namespace Templates
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.BaseClassName))
             
             #End ExternalSource
-            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"content: '';"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"width: ")
+            Me.Write(":before {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  content: '';"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  display: inline-block;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  overflow: hidden;"&Global.Microsoft.VisualBasic.ChrW(9)&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  widt"& _ 
+                    "h: ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",9)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",11)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.ImageDimensions.Width))
             
             #End ExternalSource
-            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"height: ")
+            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  height: ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",10)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",12)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.ImageDimensions.Height))
             
             #End ExternalSource
-            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"text-indent: -99999px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"overflow: hidden;"&Global.Microsoft.VisualBasic.ChrW(9)&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  display: inline-block;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"bac"& _ 
-                    "kground-image: url('")
+            Me.Write("px;  "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  background-image: url('")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",14)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",13)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.BaseFileName))
             
             #End ExternalSource
             Me.Write(".png?")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",14)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",13)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(DateTime.UtcNow.ToString("yyyyMMddHHmmss")))
             
             #End ExternalSource
-            Me.Write("');"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(9)&"background-repeat: no-repeat;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  background-position: ")
+            Me.Write("');"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  background-repeat: no-repeat;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  background-position: ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",16)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",15)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.ImageDimensions.Width))
             
             #End ExternalSource
             Me.Write("px ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",16)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetTemplate.tt",15)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.ImageDimensions.Height))
             
             #End ExternalSource
-            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
+            Me.Write("px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  text-indent: -99999px;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"}"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10))
             Return Me.GenerationEnvironment.ToString
         End Function
     End Class
