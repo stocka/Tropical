@@ -6,6 +6,8 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Public Class SpriteSheetValidationTests
 
   <TestMethod()>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with ""accepted"" properties and no sprites is valid.")>
   Public Sub TestEmpty()
 
     Dim sheet As New Models.SpriteSheet()
@@ -20,6 +22,8 @@ Public Class SpriteSheetValidationTests
   End Sub
 
   <TestMethod()>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with ""accepted"" properties and a single sprite is valid.")>
   Public Sub TestOneSprite()
 
     Dim sheet As New Models.SpriteSheet()
@@ -42,6 +46,8 @@ Public Class SpriteSheetValidationTests
   End Sub
 
   <TestMethod()>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with ""accepted"" properties and multiple sprites is valid.")>
   Public Sub TestMultipleSprites()
 
     Dim sheet As New Models.SpriteSheet()
@@ -73,6 +79,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with a null Sprites collection is invalid.")>
   Public Sub TestNullSpritesCollection()
 
     Dim sheet As New Models.SpriteSheet()
@@ -89,6 +97,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with a whitespace BaseClassName is invalid.")>
   Public Sub TestEmptyCssClass()
 
     Dim sheet As New Models.SpriteSheet()
@@ -104,6 +114,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with a BaseClassName that is not a valid CSS class is invalid.")>
   Public Sub TestInvalidCssClass()
 
     Dim sheet As New Models.SpriteSheet()
@@ -119,6 +131,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with a BaseFileName that is an invalid filename is invalid.")>
   Public Sub TestInvalidFileName()
 
     Dim sheet As New Models.SpriteSheet()
@@ -134,6 +148,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with an invalid ImageDimensions.Height is invalid.")>
   Public Sub TestInvalidHeight()
 
     Dim sheet As New Models.SpriteSheet()
@@ -149,6 +165,8 @@ Public Class SpriteSheetValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Sheet Validation")>
+  <Description("Tests that a sprite sheet with an invalid ImageDimensions.Width is invalid.")>
   Public Sub TestInvalidWidth()
 
     Dim sheet As New Models.SpriteSheet()

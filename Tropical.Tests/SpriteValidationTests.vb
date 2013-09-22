@@ -6,6 +6,8 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Public Class SpriteValidationTests
 
   <TestMethod()>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with ""accepted"" properties is valid.")>
   Public Sub TestValid()
 
     Dim sprite As New Models.Sprite()
@@ -20,6 +22,8 @@ Public Class SpriteValidationTests
   End Sub
 
   <TestMethod()>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with no ImagePath is valid.")>
   Public Sub TestValid_NoImagePath()
 
     Dim sprite As New Models.Sprite()
@@ -33,6 +37,8 @@ Public Class SpriteValidationTests
   End Sub
 
   <TestMethod()>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with no HoverImagePath is valid.")>
   Public Sub TestValid_NoHoverPath()
 
     Dim sprite As New Models.Sprite()
@@ -47,6 +53,8 @@ Public Class SpriteValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with a whitespace ClassName is invalid.")>
   Public Sub TestEmptyCssClass()
 
     Dim sprite As New Models.Sprite()
@@ -62,6 +70,8 @@ Public Class SpriteValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with a ClassName that is not a valid CSS class is invalid.")>
   Public Sub TestInvalidCssClass()
 
     Dim sprite As New Models.Sprite()
@@ -77,6 +87,8 @@ Public Class SpriteValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with an ImagePath that is an invalid filename is invalid.")>
   Public Sub TestInvalidFilePath()
 
     Dim sprite As New Models.Sprite()
@@ -92,6 +104,8 @@ Public Class SpriteValidationTests
 
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with a HoverImagePath with an invalid filename is invalid.")>
   Public Sub TestInvalidHoverFilePath()
 
     Dim sprite As New Models.Sprite()
