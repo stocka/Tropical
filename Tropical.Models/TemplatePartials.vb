@@ -79,6 +79,20 @@
       Return (-position.X).ToString() & "px " & (-position.Y).ToString() & "px"
     End Function
 
+    ''' <summary>
+    ''' Gets the CSS selector string for the sprite.
+    ''' </summary>
+    ''' <param name="forHover">If set to <c>true</c>, indicates
+    ''' that the selector is for the hover sprite, <c>false</c>
+    ''' otherwise.</param>
+    ''' <returns>The CSS selector string for the sprite.</returns>
+    Private Function GetCssSelectorString(forHover As Boolean) As String
+      Return String.Format(".{0}.{1}{2}:before",
+                           mSprite.BaseClassName,
+                           mSprite.ClassName,
+                           If(forHover, ":hover", ""))
+    End Function
+
   End Class
 
 End Namespace

@@ -5,13 +5,13 @@
 <#@ import namespace="System.Collections.Generic" #>
 
 <# If ShouldIncludeStandardCss() #>
-.<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:before {
+<#= GetCssSelectorString(False) #> {
 	background-position: <#= GetPositionString(mSprite.Position.Value) #>;	
 }
 <# End If #>
 
 <# If ShouldIncludeHoverCss() #>
-.<#= mSprite.BaseClassName #>.<#= mSprite.ClassName #>:hover:before {
+<#= GetCssSelectorString(True) #> {
 	background-position: <#= GetPositionString(mSprite.HoverPosition.Value) #>;
 }
 <# End If #>
