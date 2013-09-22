@@ -150,6 +150,38 @@ Public Class SpriteSheetGeneratorTests
 
   <TestMethod()>
   <TestCategory("Sprite Sheet Generation")>
+  <Description("Tests the addition of a single sprite, with a hover image (identical to the standard image) specified.")>
+  Public Sub TestOne_SameImage()
+
+    Dim destPath As String = GetDestinationPath(Me.DestinationPath)
+
+    Dim sheet As New Models.SpriteSheet()
+    With sheet
+      .BaseClassName = "td-icon"
+      .BaseFileName = "td-icons"
+      .ImageDimensions = New System.Drawing.Size(16, 16)
+    End With
+
+    ' Add one sprite, but make the hover image same as the regular one.
+    ' To make it tricky, let's capitalize that second name
+    AddSprite(sheet, "radioactive", "icon_16.png", "ICON_16.PNG")
+
+    Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
+
+    ' This should only create one sprite, as the standard and hover images
+    ' are identical
+    AssertSpriteCalculations(generator, 1, 16, 16)
+
+    ' Make sure generation succeeds
+    Assert.IsTrue(generator.Generate(destPath))
+
+    ' Make sure no errors/warnings were logged
+    AssertNoWarningsOrErrors()
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet Generation")>
   <Description("Tests the addition of two sprites, both with a hover image specified.")>
   Public Sub TestTwo_WithHover()
 
