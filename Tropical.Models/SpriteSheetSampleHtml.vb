@@ -42,51 +42,46 @@ Namespace Templates
             
             #End ExternalSource
             Me.Write(""" />"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    <style type=""text/css"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      div.list div {"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"        margin: 8px 3px;"& _ 
-                    ""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      }"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    </style>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  </head>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <body>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    <h1>Sprite Sheet for ")
+                    ""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"        border-bottom 1px solid #dcdcdc;"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      }"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    </style>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  </head>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  "& _ 
+                    "<body>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    <h1>Sprite Sheet for ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",19)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",20)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.BaseClassName))
             
             #End ExternalSource
             Me.Write("</h1>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    <em>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      Generated on ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",21)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",22)
             Me.Write(Me.ToStringHelper.ToStringWithCulture(DateTime.UtcNow.ToString()))
             
             #End ExternalSource
             Me.Write(" UTC"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    </em>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"    <div class=""list"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",24)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",25)
  For Each sprite In mSheet.Sprites 
             
             #End ExternalSource
             Me.Write("        <div class=""")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",25)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(mSheet.BaseClassName))
-            
-            #End ExternalSource
-            Me.Write(" ")
-            
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",25)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(sprite.ClassName))
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",26)
+            Me.Write(Me.ToStringHelper.ToStringWithCulture(GetClassString(sprite, True)))
             
             #End ExternalSource
             Me.Write(""" title=""")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",25)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(sprite.ClassName))
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",26)
+            Me.Write(Me.ToStringHelper.ToStringWithCulture(GetClassString(sprite, False)))
             
             #End ExternalSource
             Me.Write(""">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"          ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",26)
-            Me.Write(Me.ToStringHelper.ToStringWithCulture(sprite.ClassName))
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",27)
+            Me.Write(Me.ToStringHelper.ToStringWithCulture(GetClassString(sprite, False)))
             
             #End ExternalSource
             Me.Write(""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"        </div>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      ")
             
-            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",28)
+            #ExternalSource("C:\Users\Anonymous\Documents\GitHub\Tropical\Tropical.Models\SpriteSheetSampleHtml.tt",29)
  Next 
             
             #End ExternalSource

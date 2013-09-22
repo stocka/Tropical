@@ -8,6 +8,25 @@
       mSheet = sheet
     End Sub
 
+    ''' <summary>
+    ''' Gets the CSS class string for the sprite.
+    ''' </summary>
+    ''' <param name="sprite">The sprite.</param>
+    ''' <param name="includeBaseClass">If set to <c>true</c>, indicates
+    ''' that the sheet's base class should be included; <c>false</c> otherwise.</param>
+    ''' <returns>The CSS class string for the sprite.</returns>
+    Private Function GetClassString(sprite As Sprite, includeBaseClass As Boolean) As String
+
+      Dim classDeclaration As String = sprite.ClassName
+
+      If includeBaseClass Then
+        Return mSheet.BaseClassName & " " & classDeclaration
+      Else
+        Return classDeclaration
+      End If
+
+    End Function
+
   End Class
 
   Partial Class SpriteSheetTemplate

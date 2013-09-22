@@ -12,6 +12,7 @@
     <style type="text/css">
       div.list div {
         margin: 8px 3px;
+        border-bottom 1px solid #dcdcdc;
       }
     </style>
   </head>
@@ -22,8 +23,8 @@
     </em>
     <div class="list">
       <# For Each sprite In mSheet.Sprites #>
-        <div class="<#= mSheet.BaseClassName #> <#= sprite.ClassName #>" title="<#= sprite.ClassName #>">
-          <#= sprite.ClassName #>
+        <div class="<#= GetClassString(sprite, True) #>" title="<#= GetClassString(sprite, False) #>">
+          <#= GetClassString(sprite, False) #>
         </div>
       <# Next #>
     </div>
