@@ -97,7 +97,7 @@ Public Class SpriteSheet
 
           ' Now let's see if we actually have a class name, and fall back to the ID if we don't
           If Not String.IsNullOrWhiteSpace(spr.ClassName) Then
-            sprValidationMessage = String.Format("The sprite ""{0}"" has the following {1}:", spr.ClassName, errorPlurality)
+            sprValidationMessage = String.Format("The sprite ""{0}"" has the following {1}:", spr.GetEffectiveClassName(), errorPlurality)
           Else
             sprValidationMessage = String.Format("The sprite (ID {0}, no class name provided) has the following {1}:", spr.ID, errorPlurality)
           End If

@@ -24,6 +24,18 @@ Public Class Sprite
   Public Property ClassName As String
 
   ''' <summary>
+  ''' Gets or sets the name of the CSS class used to filter
+  ''' the appearance of the sprite.  For example, this could
+  ''' be a class such as &quot;disabled&quot;, &quot;accent&quot;,
+  ''' or &quot;muted&quot;
+  ''' </summary>
+  ''' <value>
+  ''' The name of the CSS class used to filter the appearance of the
+  ''' sprite.
+  ''' </value>
+  Public Property FilterClassName As String
+
+  ''' <summary>
   ''' Gets or sets the path to the sprite image.
   ''' </summary>
   ''' <value>
@@ -42,6 +54,23 @@ Public Class Sprite
   Public Property HoverImagePath As String
 
   ''' <summary>
+  ''' Gets the &quot;effective&quot; CSS class name
+  ''' of this sprite, which will include the <see cref="FilterClassName" />
+  ''' as appropriate.
+  ''' </summary>
+  ''' <returns>The effective CSS class name of the sprite.</returns>
+  Public Function GetEffectiveClassName() As String
+
+    ' See if we have a filter class specified
+    If String.IsNullOrWhiteSpace(Me.FilterClassName) Then
+      Return Me.ClassName
+    Else
+      Return Me.ClassName & "." & Me.FilterClassName
+    End If
+
+  End Function
+
+  ''' <summary>
   ''' Determines whether the specified object is valid.
   ''' </summary>
   ''' <param name="validationContext">The validation context.</param>
@@ -55,6 +84,11 @@ Public Class Sprite
     ' Validate the class name
     If Not String.IsNullOrWhiteSpace(Me.ClassName) AndAlso Not Validation.ValidateCssClass(Me.ClassName) Then
       brokenRules.Add(New ValidationResult("The specified CSS class name is invalid.", {"ClassName"}))
+    End If
+
+    ' Validate the filter class name, if provided
+    If Not String.IsNullOrWhiteSpace(Me.FilterClassName) AndAlso Not Validation.ValidateCssClass(Me.FilterClassName) Then
+      brokenRules.Add(New ValidationResult("The specified filter CSS class name is invalid.", {"FilterClassName"}))
     End If
 
     ' Validate file paths, if provided

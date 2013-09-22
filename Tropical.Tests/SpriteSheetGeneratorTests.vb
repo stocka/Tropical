@@ -76,7 +76,7 @@ Public Class SpriteSheetGeneratorTests
     End With
 
     ' Add a sprite, no hover
-    AddSprite(sheet, "sprite", "icon_16.png", Nothing)
+    AddSprite(sheet, "sprite", Nothing, "icon_16.png", Nothing)
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -104,7 +104,7 @@ Public Class SpriteSheetGeneratorTests
     End With
 
     ' Add a sprite, only hover
-    AddSprite(sheet, "sprite", Nothing, "icon_hover_16.png")
+    AddSprite(sheet, "sprite", Nothing, Nothing, "icon_hover_16.png")
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -132,7 +132,7 @@ Public Class SpriteSheetGeneratorTests
     End With
 
     ' Add a sprite, include hover
-    AddSprite(sheet, "sprite", "icon_16.png", "icon_hover_16.png")
+    AddSprite(sheet, "sprite", Nothing, "icon_16.png", "icon_hover_16.png")
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -164,7 +164,7 @@ Public Class SpriteSheetGeneratorTests
 
     ' Add one sprite, but make the hover image same as the regular one.
     ' To make it tricky, let's capitalize that second name
-    AddSprite(sheet, "radioactive", "icon_16.png", "ICON_16.PNG")
+    AddSprite(sheet, "radioactive", Nothing, "icon_16.png", "ICON_16.PNG")
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -182,8 +182,8 @@ Public Class SpriteSheetGeneratorTests
 
   <TestMethod()>
   <TestCategory("Sprite Sheet Generation")>
-  <Description("Tests the addition of two sprites, both with a hover image specified.")>
-  Public Sub TestTwo_WithHover()
+  <Description("Tests the addition of two sprites, both with a hover image specified and one acting as a filtered accent.")>
+  Public Sub TestTwo_Accent()
 
     Dim destPath As String = GetDestinationPath(Me.DestinationPath)
 
@@ -195,8 +195,8 @@ Public Class SpriteSheetGeneratorTests
     End With
 
     ' Add two sprites, include hover
-    AddSprite(sheet, "radioactive", "icon_16.png", "icon_hover_16.png")
-    AddSprite(sheet, "information", "alticon_16.png", "alticon_hover_16.png")
+    AddSprite(sheet, "radioactive", Nothing, "icon_16.png", "icon_hover_16.png")
+    AddSprite(sheet, "radioactive", "accent", "icon_accent_16.png", "icon_accent_hover_16.png")
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -227,18 +227,18 @@ Public Class SpriteSheetGeneratorTests
     End With
 
     ' Add two sprites, include hover
-    AddSprite(sheet, "radioactive", "icon_16.png", "icon_hover_16.png")
-    AddSprite(sheet, "information", "alticon_16.png", "alticon_hover_16.png")
+    AddSprite(sheet, "radioactive", Nothing, "icon_16.png", "icon_hover_16.png")
+    AddSprite(sheet, "information", Nothing, "alticon_16.png", "alticon_hover_16.png")
 
     ' Now we add all of the other images that we have, save for
     ' alternatively-sized ones
-    AddSprite(sheet, "gif", "icon_16.gif", Nothing)
-    AddSprite(sheet, "gif-notransparency", "icon_notrans_16.gif", Nothing)
-    AddSprite(sheet, "jpg", "icon_16.jpg", Nothing)
-    AddSprite(sheet, "jpg-grayscale", "icon_grayscale_16.jpg", Nothing)
-    AddSprite(sheet, "png-notransparency", "icon_notrans_16.png", Nothing)
-    AddSprite(sheet, "png-indexed", "icon_indexed_16.png", Nothing)
-    AddSprite(sheet, "png-indexed-notransparency", "icon_indexed_notrans_16.png", Nothing)
+    AddSprite(sheet, "gif", Nothing, "icon_16.gif", Nothing)
+    AddSprite(sheet, "gif-notransparency", Nothing, "icon_notrans_16.gif", Nothing)
+    AddSprite(sheet, "jpg", Nothing, "icon_16.jpg", Nothing)
+    AddSprite(sheet, "jpg-grayscale", Nothing, "icon_grayscale_16.jpg", Nothing)
+    AddSprite(sheet, "png-notransparency", Nothing, "icon_notrans_16.png", Nothing)
+    AddSprite(sheet, "png-indexed", Nothing, "icon_indexed_16.png", Nothing)
+    AddSprite(sheet, "png-indexed-notransparency", Nothing, "icon_indexed_notrans_16.png", Nothing)
 
     Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
 
@@ -336,11 +336,17 @@ Public Class SpriteSheetGeneratorTests
   ''' </summary>
   ''' <param name="sheet">The sheet.</param>
   ''' <param name="className">The CSS class of the sprite.</param>
+  ''' <param name="filterClassName">The filtering CSS class to use
+  ''' for the sprite. Optional.</param>
   ''' <param name="imageName">The file name of the standard image.
   ''' Path information should be omitted.</param>
   ''' <param name="hoverImageName">The file name of the hover image.
   ''' Path information should be omitted.</param>
-  Private Sub AddSprite(sheet As Models.SpriteSheet, className As String, imageName As String, hoverImageName As String)
+  Private Sub AddSprite(sheet As Models.SpriteSheet,
+                        className As String,
+                        filterClassName As String,
+                        imageName As String,
+                        hoverImageName As String)
 
     Dim sprite As New Models.Sprite()
     With sprite
@@ -353,6 +359,10 @@ Public Class SpriteSheetGeneratorTests
 
       If Not String.IsNullOrWhiteSpace(hoverImageName) Then
         .HoverImagePath = GetFullImagePath(hoverImageName)
+      End If
+
+      If Not String.IsNullOrWhiteSpace(filterClassName) Then
+        .FilterClassName = filterClassName
       End If
 
     End With

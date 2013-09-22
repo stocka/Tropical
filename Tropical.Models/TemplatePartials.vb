@@ -19,6 +19,11 @@
 
       Dim classDeclaration As String = sprite.ClassName
 
+      ' Include the filter class if specified
+      If Not String.IsNullOrWhiteSpace(sprite.FilterClassName) Then
+        classDeclaration &= " " & sprite.FilterClassName
+      End If
+
       If includeBaseClass Then
         Return mSheet.BaseClassName & " " & classDeclaration
       Else
@@ -106,9 +111,16 @@
     ''' otherwise.</param>
     ''' <returns>The CSS selector string for the sprite.</returns>
     Private Function GetCssSelectorString(forHover As Boolean) As String
+
+      Dim effectiveClassName As String = mSprite.ClassName
+
+      If Not String.IsNullOrWhiteSpace(mSprite.FilterClassName) Then
+        effectiveClassName &= "." & mSprite.FilterClassName
+      End If
+
       Return String.Format(".{0}.{1}{2}:before",
                            mSprite.BaseClassName,
-                           mSprite.ClassName,
+                           effectiveClassName,
                            If(forHover, ":hover", ""))
     End Function
 

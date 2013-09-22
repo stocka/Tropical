@@ -174,17 +174,21 @@ Public Class SpriteSheetGenerator
 
       For Each spr In _sheet.Sprites
 
+        ' Figure out the "effective" class name, which includes
+        ' the filtering name (if any)
+        Dim effectiveClassName As String = spr.GetEffectiveClassName()
+
         ' If we've already seen this class before, throw up a warning.
-        If encounteredClasses.Contains(spr.ClassName) Then
-          LogWarning("The CSS class """ & spr.ClassName & """ has already been used by a sprite.")
+        If encounteredClasses.Contains(effectiveClassName) Then
+          LogWarning("The CSS class """ & effectiveClassName & """ has already been used by a sprite.")
         End If
 
         ' Get the equivalent placed sprite, and use that for the template
         Dim spriteTmplInst As New Tropical.Models.Templates.SpriteTemplate(GetPlacedSprite(spr))
         spriteSheetBuilder.AppendLine(spriteTmplInst.TransformText())
 
-        ' Add the CSS class to the list of ones we've seen
-        encounteredClasses.Add(spr.ClassName)
+        ' Add the effective CSS class to the list of ones we've seen
+        encounteredClasses.Add(effectiveClassName)
 
       Next
 
@@ -332,6 +336,7 @@ Public Class SpriteSheetGenerator
 
       .BaseClassName = _sheet.BaseClassName
       .ClassName = sprite.ClassName
+      .FilterClassName = sprite.FilterClassName
 
       ' Add sprite positions for each style if we have them
       If Not String.IsNullOrWhiteSpace(sprite.ImagePath) AndAlso _imagePositions.ContainsKey(sprite.ImagePath) Then

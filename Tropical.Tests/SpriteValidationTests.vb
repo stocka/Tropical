@@ -15,6 +15,7 @@ Public Class SpriteValidationTests
       .ClassName = "sprite-class"
       .ImagePath = "sprite.png"
       .HoverImagePath = "sprite-hover.png"
+      .FilterClassName = "accent"
     End With
 
     ValidateSprite(sprite)
@@ -77,6 +78,24 @@ Public Class SpriteValidationTests
     Dim sprite As New Models.Sprite()
     With sprite
       .ClassName = "$BAD*CSS*MOJO"
+      .ImagePath = "sprite.png"
+      .HoverImagePath = "sprite-hover.png"
+    End With
+
+    ValidateSprite(sprite)
+
+  End Sub
+
+  <TestMethod()>
+  <ExpectedException(GetType(ValidationException))>
+  <TestCategory("Sprite Validation")>
+  <Description("Tests that a sprite with a FilterClassName that is not a valid CSS class is invalid.")>
+  Public Sub TestInvalidFilterCssClass()
+
+    Dim sprite As New Models.Sprite()
+    With sprite
+      .ClassName = "sprite-class"
+      .FilterClassName = "$BAD*CSS*MOJO"
       .ImagePath = "sprite.png"
       .HoverImagePath = "sprite-hover.png"
     End With

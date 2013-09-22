@@ -36,4 +36,14 @@ Public Class PlacedSprite
   ''' </value>
   Public Property ClassName As String
 
+  ''' <summary>
+  ''' Gets or sets the name of the CSS class used to filter
+  ''' the appearance of this specific sprite.
+  ''' </summary>
+  ''' <value>
+  ''' The name of the CSS class used to filter the appearance
+  ''' of this specific sprite.
+  ''' </value>
+  Public Property FilterClassName As String
+
 End Class
