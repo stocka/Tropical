@@ -32,6 +32,34 @@ Public Class Validation
   End Function
 
   ''' <summary>
+  ''' Validates the provided directory path.
+  ''' </summary>
+  ''' <param name="directoryPath">The directory path.</param>
+  ''' <returns><c>true</c> if the provided directory path is valid, <c>false</c> otherwise.</returns>
+  Public Shared Function ValidateDirectoryPath(directoryPath As String) As Boolean
+
+    ' Handle null/whitespace directory names.
+    If String.IsNullOrWhiteSpace(directoryPath) Then
+      Return False
+    End If
+
+    ' Check length.
+    If directoryPath.Length > 248 Then
+      Return False
+    End If
+
+    ' Now check for invalid directory names
+    For Each c In System.IO.Path.GetInvalidPathChars()
+      If directoryPath.Contains(c) Then
+        Return False
+      End If
+    Next
+
+    Return True
+
+  End Function
+
+  ''' <summary>
   ''' Validates the provided file path.
   ''' </summary>
   ''' <param name="filePath">The file path.</param>

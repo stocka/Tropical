@@ -41,13 +41,32 @@ Public Class SpriteSheetGenerator
     End Get
   End Property
 
+  Private _logger As ILogger = New BlackholeLogger()
+
   ''' <summary>
   ''' Gets or sets the logger to use.
   ''' </summary>
   ''' <value>
   ''' The logger to use.
   ''' </value>
-  Public Property Logger() As ILogger = Nothing
+  ''' <exception cref="ArgumentNullException">
+  ''' The <see cref="ILogger" /> instance specified by <paramref name="value" />
+  ''' is <c>null</c>.
+  ''' </exception>
+  Public Property Logger() As ILogger
+    Get
+      Return _logger
+    End Get
+    Set(value As ILogger)
+
+      If value Is Nothing Then
+        Throw New ArgumentNullException("value")
+      End If
+
+      Me._logger = value
+
+    End Set
+  End Property
 
   ''' <summary>
   ''' Initializes a new instance of the <see cref="SpriteSheetGenerator"/> class.
@@ -93,42 +112,53 @@ Public Class SpriteSheetGenerator
       Return False
     End If
 
-    ' TODO: better validation around destinationPath
-
-    ' Create the directory if it doesn't exist
-    If Not System.IO.Directory.Exists(destinationPath) Then
-      System.IO.Directory.CreateDirectory(destinationPath)
+    ' Validate (and create if necessary) the destination directory.
+    If Not FileUtilities.ValidateDirectoryPath(destinationPath, Me.Logger) Then
+      Return False
     End If
 
+    ' Calculate our destination file paths.
     Dim stylesheetPath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".css")
     Dim imagePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".png")
     Dim htmlSamplePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".html")
 
-    ' TODO: check write access for files
+    ' Get our file streams. If we can't open one of these, it'll return null.
+    Using stylesheetStream As FileStream = FileUtilities.GetFileStream(stylesheetPath, Me.Logger),
+      imageStream As FileStream = FileUtilities.GetFileStream(imagePath, Me.Logger),
+      htmlSampleStream As FileStream = FileUtilities.GetFileStream(htmlSamplePath, Me.Logger)
 
-    ' Write out the stylesheet
-    Try
-      GenerateStylesheet(stylesheetPath)
-    Catch ex As Exception
-      LogError("An error was encountered attempting to generate the stylesheet.", exception:=ex)
-      Return False
-    End Try
+      ' Make sure all of our streams were successfully created.
+      If stylesheetStream Is Nothing OrElse
+        imageStream Is Nothing OrElse
+        htmlSampleStream Is Nothing Then
+        Return False
+      End If
 
-    ' Now write out the sprite sheet
-    Try
-      GenerateSpriteImage(imagePath)
-    Catch ex As Exception
-      LogError("An error was encountered attempting to generate the sprite sheet.", exception:=ex)
-      Return False
-    End Try
+      ' Write out the stylesheet
+      Try
+        GenerateStylesheet(stylesheetStream)
+      Catch ex As Exception
+        LogError("An error was encountered attempting to generate the stylesheet.", exception:=ex)
+        Return False
+      End Try
 
-    ' Now write out the sample HTML page
-    Try
-      GenerateSampleHtml(htmlSamplePath)
-    Catch ex As Exception
-      LogError("An error was encountered attempting to generate the sample HTML.", exception:=ex)
-      Return False
-    End Try
+      ' Now write out the sprite sheet
+      Try
+        GenerateSpriteImage(imageStream)
+      Catch ex As Exception
+        LogError("An error was encountered attempting to generate the sprite sheet.", exception:=ex)
+        Return False
+      End Try
+
+      ' Now write out the sample HTML page
+      Try
+        GenerateSampleHtml(htmlSampleStream)
+      Catch ex As Exception
+        LogError("An error was encountered attempting to generate the sample HTML.", exception:=ex)
+        Return False
+      End Try
+
+    End Using
 
     ' We're good.
     Return True
@@ -139,14 +169,15 @@ Public Class SpriteSheetGenerator
   ''' Generates and saves the stylesheet for the sprite sheet.
   ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
   ''' </summary>
-  ''' <param name="sheetPath">The path to which the stylesheet will be saved.</param>
+  ''' <param name="sheetStream">The file stream to which
+  ''' the stylesheet will be written.</param>
   ''' <returns>The stylesheet's contents.</returns>
-  Private Function GenerateStylesheet(sheetPath As String) As String
+  Private Function GenerateStylesheet(sheetStream As FileStream) As String
 
     ' Get the contents.
     Dim sheetContents As String = GenerateStylesheetContents()
 
-    Using stylesheetWriter As New StreamWriter(sheetPath, False, New System.Text.UnicodeEncoding())
+    Using stylesheetWriter As New StreamWriter(sheetStream, New System.Text.UnicodeEncoding())
       stylesheetWriter.Write(sheetContents)
     End Using
 
@@ -203,8 +234,8 @@ Public Class SpriteSheetGenerator
   ''' Generates and saves the sprite sheet image.
   ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
   ''' </summary>
-  ''' <param name="imagePath">The path to which the image will be saved.</param>
-  Private Sub GenerateSpriteImage(imagePath As String)
+  ''' <param name="imageStream">The file stream to which the image will be written.</param>
+  Private Sub GenerateSpriteImage(imageStream As FileStream)
 
     ' If we don't have valid dimensions, don't create a file.
     If _sheetDims.Width = 0 Or _sheetDims.Height = 0 Then
@@ -222,7 +253,7 @@ Public Class SpriteSheetGenerator
       Next
 
       ' Now save the image as a PNG.
-      sprImage.Save(imagePath, Imaging.ImageFormat.Png)
+      sprImage.Save(imageStream, Imaging.ImageFormat.Png)
 
     End Using
 
@@ -232,14 +263,15 @@ Public Class SpriteSheetGenerator
   ''' Generates and saves the sample HTML for the sprite sheet.
   ''' Will write warnings to the <see cref="Logger">log</see> as appropriate.
   ''' </summary>
-  ''' <param name="htmlSamplePath">The path to which the sample HTML page will be saved.</param>
+  ''' <param name="htmlSampleStream">The file stream to which the sample HTML page
+  ''' will be written.</param>
   ''' <returns>The HTML page's contents.</returns>
-  Private Function GenerateSampleHtml(htmlSamplePath As String) As String
+  Private Function GenerateSampleHtml(htmlSampleStream As FileStream) As String
 
     ' Get the contents.
     Dim htmlContents As String = GenerateHtmlContents()
 
-    Using htmlWriter As New StreamWriter(htmlSamplePath, False, New System.Text.UnicodeEncoding())
+    Using htmlWriter As New StreamWriter(htmlSampleStream, New System.Text.UnicodeEncoding())
       htmlWriter.Write(htmlContents)
     End Using
 

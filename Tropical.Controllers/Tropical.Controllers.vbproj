@@ -65,6 +65,8 @@
     <Import Include="Tropical.Models" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackholeLogger.vb" />
+    <Compile Include="FileUtilities.vb" />
     <Compile Include="SpriteSheetGenerator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -39,6 +39,26 @@ Public Class SpriteSheetGeneratorTests
 
   <TestMethod()>
   <TestCategory("Sprite Sheet Generation")>
+  <Description("Tests that the Logger property cannot be set to null.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub TestNullLogger()
+
+    Dim sheet As New Models.SpriteSheet()
+    With sheet
+      .BaseClassName = "td-icon"
+      .BaseFileName = "td-icons"
+      .ImageDimensions = New System.Drawing.Size(16, 16)
+    End With
+
+    Dim generator As Controllers.SpriteSheetGenerator = GetGenerator(sheet)
+
+    ' This should throw an ArgumentNullException
+    generator.Logger = Nothing
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet Generation")>
   <Description("Tests the generation of a sprite sheet when no sprites have been added.")>
   Public Sub TestEmpty()
 
