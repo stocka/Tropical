@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
+Imports System.IO
 Imports Tropical.Models
 
 ''' <summary>
@@ -91,9 +92,9 @@ Public Class TestUtilities
   Public Shared Function GetDestinationPath(Optional subDir As String = Nothing)
 
     If String.IsNullOrWhiteSpace(subDir) Then
-      Return System.IO.Directory.GetCurrentDirectory()
+      Return Directory.GetCurrentDirectory()
     Else
-      Return System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), subDir)
+      Return Path.Combine(Directory.GetCurrentDirectory(), subDir)
     End If
 
   End Function
@@ -104,7 +105,68 @@ Public Class TestUtilities
   ''' <param name="fileName">The name of the image file.</param>
   ''' <returns>The full image path for the specified file.</returns>
   Public Shared Function GetFullImagePath(fileName As String) As String
-    Return System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "TestImages", fileName)
+    Return Path.Combine(Directory.GetCurrentDirectory(), "TestImages", fileName)
+  End Function
+
+  ''' <summary>
+  ''' Asserts that two directory paths are equal. This will perform normalization
+  ''' for trailing directory separators and use a case-insensitive comparison.
+  ''' </summary>
+  ''' <param name="expectedDirectory">The expected directory path.</param>
+  ''' <param name="actualDirectory">The actual directory path.</param>
+  Public Shared Sub AssertDirectoriesEqual(expectedDirectory As String,
+                                           actualDirectory As String)
+
+    ' Normalize trailing slashes.
+    ' We call this twice, once to handle if the expected directory
+    ' ends with the regular separator and once again to handle if it ends
+    ' with the alternate separator.
+    actualDirectory = NormalizeTrailingDirSeparator(expectedDirectory, actualDirectory, Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+    actualDirectory = NormalizeTrailingDirSeparator(expectedDirectory, actualDirectory, Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+
+    ' Compare, but ignore case as these are paths.
+    Assert.AreEqual(expectedDirectory, actualDirectory, True)
+
+  End Sub
+
+  ''' <summary>
+  ''' Normalizes the trailing directory separator on the <paramref name="actualDirectory" />
+  ''' to match that of the <paramref name="expectedDirectory" />.
+  ''' </summary>
+  ''' <param name="expectedDirectory">The expected directory.</param>
+  ''' <param name="actualDirectory">The actual directory.</param>
+  ''' <param name="separator">The separator to search for.</param>
+  ''' <param name="altSeparator">The alternate separator. If this is present on the
+  ''' actual directory, but not on the expected directory, it will be removed
+  ''' and replaced with the standard separator.</param>
+  ''' <returns>The normalized value of <paramref name="actualDirectory" />.</returns>
+  Private Shared Function NormalizeTrailingDirSeparator(expectedDirectory As String,
+                                                        actualDirectory As String,
+                                                        separator As Char,
+                                                        altSeparator As Char) As String
+
+    ' See if they both end with the separator.
+    If expectedDirectory.EndsWith(separator) AndAlso
+      Not actualDirectory.EndsWith(separator) Then
+
+      ' Trim out the alt-separator if it's there
+      If actualDirectory.EndsWith(altSeparator) Then
+        actualDirectory = actualDirectory.TrimEnd(altSeparator)
+      End If
+
+      actualDirectory = actualDirectory & separator
+
+    ElseIf Not expectedDirectory.EndsWith(separator) AndAlso
+      actualDirectory.EndsWith(separator) Then
+
+      ' Trim out the separator if it's present on the actual result
+      ' but not on the expected result.
+      actualDirectory = actualDirectory.TrimEnd(separator)
+
+    End If
+
+    Return actualDirectory
+
   End Function
 
 End Class
