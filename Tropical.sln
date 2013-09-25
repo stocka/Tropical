@@ -9,6 +9,13 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tropical.Tests", "Tropical.
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tropical.CommandLine", "Tropical.CommandLine\Tropical.CommandLine.vbproj", "{E45ACD2C-320E-4965-8C89-4D93D0E5632F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2D04A509-4774-45B0-AA3D-140A7E8CB8AF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
