@@ -32,9 +32,9 @@ Public Class CommandLineOptions
   ''' <value>
   ''' The logging level to use.
   ''' </value>
-  <[Option]("l"c, "level", DefaultValue:=CommandLineLogger.LogLevel.Warning,
+  <[Option]("l"c, "level", DefaultValue:=CommandLineLogger.LogLevel.Information,
     HelpText:="The logging level to use.")>
-  Public Property LogLevel() As CommandLineLogger.LogLevel = CommandLineLogger.LogLevel.Warning
+  Public Property LogLevel() As CommandLineLogger.LogLevel
 
   ''' <summary>
   ''' Gets or sets the custom path to the folder containing all sprite sheet images.
