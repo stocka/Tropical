@@ -25,6 +25,8 @@ Public Class SpriteSheetFileUtilityTests
     Me.Log = New TestLogger()
   End Sub
 
+#Region "Save/Load Tests"
+
   <TestMethod()>
   <TestCategory("Sprite Sheet File Utilities")>
   <Description("Saves and loads a sprite sheet that contains no sprites.")>
@@ -73,73 +75,6 @@ Public Class SpriteSheetFileUtilityTests
 
   End Sub
 
-  <TestMethod()>
-  <TestCategory("Sprite Sheet File Utilities")>
-  <Description("Relocates the image paths in a sprite sheet that contains no sprites.")>
-  Public Sub RelocateImagePaths_NoSprites()
-
-    ' Set up our sheet
-    Dim sheet As Models.SpriteSheet = GetSheetInstance()
-
-    ' Pass the rest off to the internal method.
-    RelocateSpritePathsInternal(sheet)
-
-  End Sub
-
-  <TestMethod()>
-  <TestCategory("Sprite Sheet File Utilities")>
-  <Description("Relocates the image paths in a sprite sheet that contains a single sprite.")>
-  Public Sub RelocateImagePaths_OneSprite()
-
-    ' Set up our sheet
-    Dim sheet As Models.SpriteSheet = GetSheetInstance()
-
-    ' Add a single sprite.
-    TestUtilities.AddSprite(sheet, "icon", "filter-class", "image.png", "image-hover.png")
-
-    ' Pass the rest off to the internal method.
-    RelocateSpritePathsInternal(sheet)
-
-  End Sub
-
-  <TestMethod()>
-  <TestCategory("Sprite Sheet File Utilities")>
-  <Description("Relocates the image paths in a sprite sheet that contains several sprites.")>
-  Public Sub RelocateImagePaths_ManySprites()
-
-    ' Set up our sheet
-    Dim sheet As Models.SpriteSheet = GetSheetInstance()
-
-    ' Add multiple sprites with different permutations
-    ' of filter classes and file names. To be tricky, add one
-    ' with absolutely no paths.
-    TestUtilities.AddSprite(sheet, "icon", "filter-class", "image.png", "image-hover.png")
-    TestUtilities.AddSprite(sheet, "icon2", Nothing, Nothing, "image2-hover.png")
-    TestUtilities.AddSprite(sheet, "icon3", "", "image3.png", Nothing)
-    TestUtilities.AddSprite(sheet, "icon4", Nothing, Nothing, Nothing)
-
-    ' Pass the rest off to the internal method.
-    RelocateSpritePathsInternal(sheet)
-
-  End Sub
-
-  ''' <summary>
-  ''' Gets a sprite sheet instance.
-  ''' </summary>
-  ''' <returns>An instantiated sprite sheet.</returns>
-  Private Shared Function GetSheetInstance() As Models.SpriteSheet
-
-    ' Set up our sheet
-    Dim sheet As New Models.SpriteSheet()
-    With sheet
-      .BaseClassName = "td-icon"
-      .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
-    End With
-
-    Return sheet
-
-  End Function
 
   ''' <summary>
   ''' Saves and loads a sprite sheet, after which it validates
@@ -167,55 +102,6 @@ Public Class SpriteSheetFileUtilityTests
 
     ' Make sure the log is empty
     TestUtilities.AssertNoWarningsOrErrors(Me.Log)
-
-  End Sub
-
-  ''' <summary>
-  ''' Relocates images in a sprite sheet, after which it validates
-  ''' that they have been properly relocated.
-  ''' </summary>
-  ''' <param name="sheet">The sprite sheet to relocate.</param>
-  Private Sub RelocateSpritePathsInternal(sheet As Models.SpriteSheet)
-
-    ' Get our directory - temp will do.
-    Dim tempDirectory As String = Path.GetTempPath()
-
-    ' Keep track of things that had image paths and hover image paths
-    Dim imagePaths As New HashSet(Of Guid)
-    Dim hoverImagePaths As New HashSet(Of Guid)
-
-    ' Make sure our sheet and sprites collection isn't null - they might be
-    ' if we're testing error paths
-    If sheet IsNot Nothing AndAlso sheet.Sprites IsNot Nothing Then
-      ' Build hashes of our sprites.
-      imagePaths = New HashSet(Of Guid)(
-        sheet.Sprites.Where(Function(s)
-                              Return Not String.IsNullOrWhiteSpace(s.ImagePath)
-                            End Function).Select(Function(s) s.ID))
-
-      hoverImagePaths = New HashSet(Of Guid)(
-        sheet.Sprites.Where(Function(s)
-                              Return Not String.IsNullOrWhiteSpace(s.HoverImagePath)
-                            End Function).Select(Function(s) s.ID))
-    End If
-
-    ' Relocate the image paths.
-    Controllers.SpriteSheetFileUtilities.RelocateImagePaths(sheet, tempDirectory)
-
-    ' Now iterate over each of our sprites, and make sure they were relocated
-    For Each sprite In sheet.Sprites
-
-      ' If our image path is defined, make sure it was relocated
-      If imagePaths.Contains(sprite.ID) Then
-        TestUtilities.AssertDirectoriesEqual(tempDirectory, Path.GetDirectoryName(sprite.ImagePath))
-      End If
-
-      ' If our hover image path is defined, make sure it was relocated
-      If hoverImagePaths.Contains(sprite.ID) Then
-        TestUtilities.AssertDirectoriesEqual(tempDirectory, Path.GetDirectoryName(sprite.HoverImagePath))
-      End If
-
-    Next
 
   End Sub
 
@@ -292,5 +178,132 @@ Public Class SpriteSheetFileUtilityTests
     Next
 
   End Sub
+
+#End Region
+
+#Region "Image Path Relocation Tests"
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Relocates the image paths in a sprite sheet that contains no sprites.")>
+  Public Sub RelocateImagePaths_NoSprites()
+
+    ' Set up our sheet
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    ' Pass the rest off to the internal method.
+    RelocateSpritePathsInternal(sheet)
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Relocates the image paths in a sprite sheet that contains a single sprite.")>
+  Public Sub RelocateImagePaths_OneSprite()
+
+    ' Set up our sheet
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    ' Add a single sprite.
+    TestUtilities.AddSprite(sheet, "icon", "filter-class", "image.png", "image-hover.png")
+
+    ' Pass the rest off to the internal method.
+    RelocateSpritePathsInternal(sheet)
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Relocates the image paths in a sprite sheet that contains several sprites.")>
+  Public Sub RelocateImagePaths_ManySprites()
+
+    ' Set up our sheet
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    ' Add multiple sprites with different permutations
+    ' of filter classes and file names. To be tricky, add one
+    ' with absolutely no paths.
+    TestUtilities.AddSprite(sheet, "icon", "filter-class", "image.png", "image-hover.png")
+    TestUtilities.AddSprite(sheet, "icon2", Nothing, Nothing, "image2-hover.png")
+    TestUtilities.AddSprite(sheet, "icon3", "", "image3.png", Nothing)
+    TestUtilities.AddSprite(sheet, "icon4", Nothing, Nothing, Nothing)
+
+    ' Pass the rest off to the internal method.
+    RelocateSpritePathsInternal(sheet)
+
+  End Sub
+
+  ''' <summary>
+  ''' Relocates images in a sprite sheet, after which it validates
+  ''' that they have been properly relocated.
+  ''' </summary>
+  ''' <param name="sheet">The sprite sheet to relocate.</param>
+  Private Sub RelocateSpritePathsInternal(sheet As Models.SpriteSheet)
+
+    ' Get our directory - temp will do.
+    Dim tempDirectory As String = Path.GetTempPath()
+
+    ' Keep track of things that had image paths and hover image paths
+    Dim imagePaths As New HashSet(Of Guid)
+    Dim hoverImagePaths As New HashSet(Of Guid)
+
+    ' Make sure our sheet and sprites collection isn't null - they might be
+    ' if we're testing error paths
+    If sheet IsNot Nothing AndAlso sheet.Sprites IsNot Nothing Then
+      ' Build hashes of our sprites.
+      imagePaths = New HashSet(Of Guid)(
+        sheet.Sprites.Where(Function(s)
+                              Return Not String.IsNullOrWhiteSpace(s.ImagePath)
+                            End Function).Select(Function(s) s.ID))
+
+      hoverImagePaths = New HashSet(Of Guid)(
+        sheet.Sprites.Where(Function(s)
+                              Return Not String.IsNullOrWhiteSpace(s.HoverImagePath)
+                            End Function).Select(Function(s) s.ID))
+    End If
+
+    ' Relocate the image paths.
+    Controllers.SpriteSheetFileUtilities.RelocateImagePaths(sheet, tempDirectory)
+
+    ' Now iterate over each of our sprites, and make sure they were relocated
+    For Each sprite In sheet.Sprites
+
+      ' If our image path is defined, make sure it was relocated
+      If imagePaths.Contains(sprite.ID) Then
+        TestUtilities.AssertDirectoriesEqual(tempDirectory, Path.GetDirectoryName(sprite.ImagePath))
+      End If
+
+      ' If our hover image path is defined, make sure it was relocated
+      If hoverImagePaths.Contains(sprite.ID) Then
+        TestUtilities.AssertDirectoriesEqual(tempDirectory, Path.GetDirectoryName(sprite.HoverImagePath))
+      End If
+
+    Next
+
+  End Sub
+
+#End Region
+
+#Region "Helper Methods/Properties"
+
+  ''' <summary>
+  ''' Gets a sprite sheet instance.
+  ''' </summary>
+  ''' <returns>An instantiated sprite sheet.</returns>
+  Private Shared Function GetSheetInstance() As Models.SpriteSheet
+
+    ' Set up our sheet
+    Dim sheet As New Models.SpriteSheet()
+    With sheet
+      .BaseClassName = "td-icon"
+      .BaseFileName = "td-icons"
+      .ImageDimensions = New System.Drawing.Size(16, 16)
+    End With
+
+    Return sheet
+
+  End Function
+
+#End Region
 
 End Class
