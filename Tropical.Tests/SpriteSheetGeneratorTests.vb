@@ -82,7 +82,7 @@ Public Class SpriteSheetGeneratorTests
 
     ' Make sure an error log entry was created.
     Assert.AreEqual(1, Log.ErrorEntries.Count)
-    Assert.AreEqual("No sprites have been added to the sheet.", Log.ErrorEntries.First().Message)
+    Assert.IsTrue(Log.ContainsExactError("No sprites have been added to the sheet."))
 
   End Sub
 

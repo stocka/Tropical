@@ -85,6 +85,26 @@ Public Class TestLogger
     End Get
   End Property
 
+  ''' <summary>
+  ''' Determines whether the log contains an error that exactly matches
+  ''' the specified error message.
+  ''' </summary>
+  ''' <param name="errorMessage">The error message.</param>
+  ''' <returns><c>true</c> if a matching error was found, <c>false</c> otherwise.</returns>
+  Public Function ContainsExactError(errorMessage As String) As Boolean
+    Return Me.ErrorEntries IsNot Nothing AndAlso Me.ErrorEntries.Any(Function(e) e.Message.Equals(errorMessage))
+  End Function
+
+  ''' <summary>
+  ''' Determines whether the log contains an error that contains
+  ''' the specified error message.
+  ''' </summary>
+  ''' <param name="partialErrorMessage">The partial error message.</param>
+  ''' <returns><c>true</c> if a matching error was found, <c>false</c> otherwise.</returns>
+  Public Function ContainsError(partialErrorMessage As String) As Boolean
+    Return Me.ErrorEntries IsNot Nothing AndAlso Me.ErrorEntries.Any(Function(e) e.Message.Contains(partialErrorMessage))
+  End Function
+
 #End Region
 
 #Region "ILogger Implementation"
