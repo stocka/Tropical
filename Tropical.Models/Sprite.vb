@@ -11,7 +11,7 @@ Public Class Sprite
   ''' <value>
   ''' The unique identifier.
   ''' </value>
-  Public Property ID As New Guid
+  Public Property ID As Guid = Guid.NewGuid()
 
   ''' <summary>
   ''' Gets or sets the name of the CSS class
