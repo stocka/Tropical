@@ -75,6 +75,141 @@ Public Class SpriteSheetFileUtilityTests
 
   End Sub
 
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a sprite sheet with a null/whitespace file path.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub SaveSheet_NullFilePath()
+    Controllers.SpriteSheetFileUtilities.SaveSpriteSheet("   ", GetSheetInstance(), Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a sprite sheet with an invalid file path.")>
+  <ExpectedException(GetType(ArgumentException), AllowDerivedTypes:=False)>
+  Public Sub SaveSheet_InvalidFilePath()
+    Controllers.SpriteSheetFileUtilities.SaveSpriteSheet("CON.xml", GetSheetInstance(), Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a sprite sheet with an invalid directory path.")>
+  <ExpectedException(GetType(ArgumentException), AllowDerivedTypes:=False)>
+  Public Sub SaveSheet_InvalidDirectoryPath()
+    Controllers.SpriteSheetFileUtilities.SaveSpriteSheet("|directory\sheet.xml", GetSheetInstance(), Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a sprite sheet to a file that cannot be written to.")>
+  Public Sub SaveSheet_InaccessibleFile()
+
+    Dim filePath As String = Path.GetTempFileName()
+
+    ' Get an exclusive write handle, which should lock out
+    ' the save.
+    Using FileStream As FileStream = File.Create(filePath)
+      ' We expect this to fail.
+      Assert.IsFalse(Controllers.SpriteSheetFileUtilities.SaveSpriteSheet(filePath, GetSheetInstance(), Me.Log))
+    End Using
+
+    ' Make sure we have stuff in the log.
+    Assert.AreEqual(1, Log.ErrorEntries.Count)
+    Assert.IsTrue(Log.ContainsError("could not be created"))
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a null sprite sheet.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub SaveSheet_NullSheet()
+    Controllers.SpriteSheetFileUtilities.SaveSpriteSheet(Path.GetRandomFileName(), Nothing, Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to save a sprite sheet with a null logger.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub SaveSheet_NullLogger()
+    Controllers.SpriteSheetFileUtilities.SaveSpriteSheet(Path.GetRandomFileName(), GetSheetInstance(), Nothing)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet with a null/whitespace file path.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub LoadSheet_NullFilePath()
+    Controllers.SpriteSheetFileUtilities.LoadSpriteSheet("   ", Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet with an invalid file path.")>
+  <ExpectedException(GetType(ArgumentException), AllowDerivedTypes:=False)>
+  Public Sub LoadSheet_InvalidFilePath()
+    Controllers.SpriteSheetFileUtilities.LoadSpriteSheet("CON.xml", Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet with an invalid directory path.")>
+  <ExpectedException(GetType(ArgumentException), AllowDerivedTypes:=False)>
+  Public Sub LoadSheet_InvalidDirectoryPath()
+    Controllers.SpriteSheetFileUtilities.LoadSpriteSheet("|directory\sheet.xml", Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet from a nonexistent file.")>
+  <ExpectedException(GetType(FileNotFoundException))>
+  Public Sub LoadSheet_InaccessibleFile()
+    ' Generate a random GUID to make a nonexistent file name.
+    Controllers.SpriteSheetFileUtilities.LoadSpriteSheet(Guid.NewGuid.ToString(), Me.Log)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet with a null logger.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub LoadSheet_NullLogger()
+    Controllers.SpriteSheetFileUtilities.LoadSpriteSheet(Path.GetRandomFileName(), Nothing)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet from an empty file.")>
+  Public Sub LoadSheet_EmptyFile()
+
+    ' Get a new file
+    Dim emptyFilePath As String = Path.GetTempFileName()
+
+    ' We expect this to fail.
+    Assert.IsNull(Controllers.SpriteSheetFileUtilities.LoadSpriteSheet(emptyFilePath, Me.Log))
+
+    ' Check the error log.
+    Assert.AreEqual(1, Log.ErrorEntries.Count)
+    Assert.IsTrue(Me.Log.ContainsExactError("An error occured during deserialization."))
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to load a sprite sheet from a file with just an XML declaration.")>
+  Public Sub LoadSheet_EmptyXmlFile()
+
+    ' Get a new file
+    Dim emptyFilePath As String = Path.GetRandomFileName()
+    File.WriteAllText(emptyFilePath, "<xml></xml>")
+
+    ' We expect this to fail.
+    Assert.IsNull(Controllers.SpriteSheetFileUtilities.LoadSpriteSheet(emptyFilePath, Me.Log))
+
+    ' Check the error log.
+    Assert.AreEqual(1, Log.ErrorEntries.Count)
+    Assert.IsTrue(Me.Log.ContainsExactError("An error occured during deserialization."))
+
+  End Sub
 
   ''' <summary>
   ''' Saves and loads a sprite sheet, after which it validates
@@ -230,6 +365,52 @@ Public Class SpriteSheetFileUtilityTests
 
     ' Pass the rest off to the internal method.
     RelocateSpritePathsInternal(sheet)
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to relocate the image paths in a null sprite sheet.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub RelocateImagePaths_NullSheet()
+    RelocateSpritePathsInternal(Nothing)
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to relocate the image paths in a sprite sheet with a null sprite collection.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub RelocateImagePaths_NullSpriteCollection()
+
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    ' This should cause an error.
+    sheet.Sprites = Nothing
+    RelocateSpritePathsInternal(sheet)
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to relocate the image paths to a null/whitespace directory.")>
+  <ExpectedException(GetType(ArgumentNullException))>
+  Public Sub RelocateImagePaths_NullDirectory()
+
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    Controllers.SpriteSheetFileUtilities.RelocateImagePaths(sheet, "    ")
+
+  End Sub
+
+  <TestMethod()>
+  <TestCategory("Sprite Sheet File Utilities")>
+  <Description("Attempts to relocate the image paths to an invalid directory.")>
+  <ExpectedException(GetType(ArgumentException), AllowDerivedTypes:=False)>
+  Public Sub RelocateImagePaths_InvalidDirectory()
+
+    Dim sheet As Models.SpriteSheet = GetSheetInstance()
+
+    Controllers.SpriteSheetFileUtilities.RelocateImagePaths(sheet, "|BAD$DIRECTORY*MOJO")
 
   End Sub
 
