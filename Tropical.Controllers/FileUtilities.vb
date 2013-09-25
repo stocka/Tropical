@@ -21,6 +21,7 @@ Public Class FileUtilities
   ''' <param name="logger">The logger.</param>
   ''' <returns><c>true</c> if the provided directory path is valid;
   ''' <c>false</c> otherwise.</returns>
+  ''' <exception cref="System.ArgumentNullException">
   ''' <paramref name="filePath" /> is null or whitespace.
   ''' </exception>
   ''' <exception cref="System.ArgumentNullException">
@@ -86,9 +87,10 @@ Public Class FileUtilities
   ''' <exception cref="System.ArgumentNullException">
   ''' <paramref name="logger" /> is null.
   ''' </exception>
-  Public Shared Function GetFileStream(filePath As String,
-                                       logger As Models.ILogger) As FileStream
+  Public Shared Function GetWriteFileStream(filePath As String,
+                                            logger As Models.ILogger) As FileStream
 
+    ' Validate args.
     If String.IsNullOrWhiteSpace(filePath) Then
       Throw New ArgumentNullException("filePath")
     End If
@@ -112,6 +114,56 @@ Public Class FileUtilities
       logger.Error("The file """ & fileName & """ could not be created. It may be opened by another program or marked as read-only.", exception:=ex)
     Catch ex As IOException
       logger.Error("The file """ & fileName & """ could not be created.", exception:=ex)
+    End Try
+
+    Return Nothing
+
+  End Function
+
+  ''' <summary>
+  ''' Gets a file stream (for opening) for the file specified by <paramref name="filePath" />.
+  ''' If this is unsuccessful, this method will return <c>null</c> and log
+  ''' any errors in the provided <paramref name="logger" />.
+  ''' </summary>
+  ''' <param name="filePath">The path to the file. It is assumed
+  ''' that this file path has already been validated.</param>
+  ''' <param name="logger">The logger.</param>
+  ''' <returns>The requested stream for the file, or <c>null</c>
+  ''' if the stream could not be retrieved.</returns>
+  ''' <exception cref="System.ArgumentNullException">
+  ''' <paramref name="filePath" /> is null or whitespace.
+  ''' </exception>
+  ''' <exception cref="System.ArgumentNullException">
+  ''' <paramref name="logger" /> is null.
+  ''' </exception>
+  Public Shared Function GetReadFileStream(filePath As String,
+                                           logger As Models.ILogger) As FileStream
+
+    ' Validate args.
+    If String.IsNullOrWhiteSpace(filePath) Then
+      Throw New ArgumentNullException("filePath")
+    End If
+
+    If logger Is Nothing Then
+      Throw New ArgumentNullException("logger")
+    End If
+
+    ' Get the file name, which we'll use for error messages.
+    Dim fileName As String = Path.GetFileName(filePath)
+
+    Try
+      ' Get the file stream for just opening
+      Return File.OpenRead(filePath)
+    Catch ex As FileNotFoundException
+      logger.Error("The file path """ & filePath & """ refers to a file that does not exist.", exception:=ex)
+    Catch ex As DirectoryNotFoundException
+      logger.Error("The file path """ & filePath & """ refers to a directory that does not exist.", exception:=ex)
+    Catch ex As PathTooLongException
+      logger.Error("The file path """ & filePath & """ is too long.", exception:=ex)
+    Catch ex As UnauthorizedAccessException
+      logger.Error("The file """ & fileName & """ could not be opened. You may not have access to it.", exception:=ex)
+    Catch ex As NotSupportedException
+      logger.Error("The file path """ & filePath & """ is in an invalid format.", exception:=ex)
     End Try
 
     Return Nothing

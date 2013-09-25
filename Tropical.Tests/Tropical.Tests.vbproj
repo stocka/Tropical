@@ -101,6 +101,8 @@
     </Compile>
     <Compile Include="SpriteSheetValidationTests.vb" />
     <Compile Include="TestLogger.vb" />
+    <Compile Include="SpriteSheetFileUtilityTests.vb" />
+    <Compile Include="TestUtilities.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

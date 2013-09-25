@@ -123,9 +123,9 @@ Public Class SpriteSheetGenerator
     Dim htmlSamplePath As String = Path.Combine(destinationPath, _sheet.BaseFileName & ".html")
 
     ' Get our file streams. If we can't open one of these, it'll return null.
-    Using stylesheetStream As FileStream = FileUtilities.GetFileStream(stylesheetPath, Me.Logger),
-      imageStream As FileStream = FileUtilities.GetFileStream(imagePath, Me.Logger),
-      htmlSampleStream As FileStream = FileUtilities.GetFileStream(htmlSamplePath, Me.Logger)
+    Using stylesheetStream As FileStream = FileUtilities.GetWriteFileStream(stylesheetPath, Me.Logger),
+      imageStream As FileStream = FileUtilities.GetWriteFileStream(imagePath, Me.Logger),
+      htmlSampleStream As FileStream = FileUtilities.GetWriteFileStream(htmlSamplePath, Me.Logger)
 
       ' Make sure all of our streams were successfully created.
       If stylesheetStream Is Nothing OrElse
