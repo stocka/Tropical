@@ -176,7 +176,8 @@ Public Class SpriteSheetFileUtilities
   ''' <param name="sheet">The sprite sheet.</param>
   ''' <param name="newImageDirectory">The new image directory.</param>
   ''' <exception cref="System.ArgumentNullException">
-  ''' <paramref name="sheet" /> is <c>null</c>.
+  ''' <paramref name="sheet" /> or its <see cref="Models.SpriteSheet.Sprites">sprite collection</see>
+  ''' is <c>null</c>.
   ''' </exception>
   ''' <exception cref="System.ArgumentNullException">
   ''' <paramref name="newImageDirectory" /> is null or whitespace.
@@ -191,6 +192,10 @@ Public Class SpriteSheetFileUtilities
       Throw New ArgumentNullException("sheet")
     End If
 
+    If sheet.Sprites Is Nothing Then
+      Throw New ArgumentNullException("sheet.Sprites")
+    End If
+
     If String.IsNullOrWhiteSpace(newImageDirectory) Then
       Throw New ArgumentNullException("newImageDirectory")
     End If
@@ -201,7 +206,7 @@ Public Class SpriteSheetFileUtilities
     End If
 
     ' Okay, now we update the sprites
-    If sheet.Sprites IsNot Nothing AndAlso sheet.Sprites.Any() Then
+    If sheet.Sprites.Any() Then
 
       For Each sprite In sheet.Sprites
 
