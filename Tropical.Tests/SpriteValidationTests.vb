@@ -2,6 +2,9 @@
 Imports System.Text
 Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
+''' <summary>
+''' Contains unit tests for <see cref="Models.Sprite.Validate">sprite validation</see>.
+''' </summary>
 <TestClass()>
 Public Class SpriteValidationTests
 
@@ -142,7 +145,7 @@ Public Class SpriteValidationTests
   ''' Validates the provided sprite.
   ''' </summary>
   ''' <param name="sprite">The sprite.</param>
-  Private Sub ValidateSprite(sprite As Models.Sprite)
+  Private Shared Sub ValidateSprite(sprite As Models.Sprite)
 
     Dim context As New ValidationContext(sprite)
     Validator.ValidateObject(sprite, context, True)
