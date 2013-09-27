@@ -17,12 +17,9 @@
     ''' <returns>The CSS class string for the sprite.</returns>
     Private Function GetClassString(sprite As Sprite, includeBaseClass As Boolean) As String
 
-      Dim classDeclaration As String = sprite.ClassName
-
-      ' Include the filter class if specified
-      If Not String.IsNullOrWhiteSpace(sprite.FilterClassName) Then
-        classDeclaration &= " " & sprite.FilterClassName
-      End If
+      ' Separate out by spaces.
+      Dim classDeclaration As String =
+        Models.Sprite.GetEffectiveClassDeclaration(sprite.ClassName, sprite.FilterClassName, " ")
 
       If includeBaseClass Then
         Return mSheet.BaseClassName & " " & classDeclaration
@@ -112,11 +109,9 @@
     ''' <returns>The CSS selector string for the sprite.</returns>
     Private Function GetCssSelectorString(forHover As Boolean) As String
 
-      Dim effectiveClassName As String = mSprite.ClassName
-
-      If Not String.IsNullOrWhiteSpace(mSprite.FilterClassName) Then
-        effectiveClassName &= "." & mSprite.FilterClassName
-      End If
+      ' Get the effective class name for the sprite
+      Dim effectiveClassName As String =
+        Models.Sprite.GetEffectiveClassDeclaration(mSprite.ClassName, mSprite.FilterClassName, ".")
 
       Return String.Format(".{0}.{1}{2}:before",
                            mSprite.BaseClassName,

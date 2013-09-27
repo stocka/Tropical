@@ -60,12 +60,25 @@ Public Class Sprite
   ''' </summary>
   ''' <returns>The effective CSS class name of the sprite.</returns>
   Public Function GetEffectiveClassName() As String
+    Return Sprite.GetEffectiveClassDeclaration(Me.ClassName, Me.FilterClassName, ".")
+  End Function
 
-    ' See if we have a filter class specified
-    If String.IsNullOrWhiteSpace(Me.FilterClassName) Then
-      Return Me.ClassName
+  ''' <summary>
+  ''' Given a CSS class name, and optionally a filtering class name, gets
+  ''' the equivalent CSS class declaration.
+  ''' </summary>
+  ''' <param name="className">The name of the CSS class.</param>
+  ''' <param name="filterClassName">The name of the filtering CSS class to use.
+  ''' This can be null/whitespace.</param>
+  ''' <param name="separator">The separator to use between the class
+  ''' and filter class names as necessary.</param>
+  ''' <returns>The effective CSS class of the sprite.</returns>
+  Public Shared Function GetEffectiveClassDeclaration(className As String, filterClassName As String, separator As String) As String
+
+    If String.IsNullOrWhiteSpace(filterClassName) Then
+      Return className
     Else
-      Return Me.ClassName & "." & Me.FilterClassName
+      Return className & separator & filterClassName
     End If
 
   End Function
