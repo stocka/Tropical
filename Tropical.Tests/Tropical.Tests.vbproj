@@ -103,6 +103,8 @@
     <Compile Include="TestLogger.vb" />
     <Compile Include="SpriteSheetFileUtilityTests.vb" />
     <Compile Include="TestUtilities.vb" />
+    <Compile Include="SpriteSheetContentGeneratorTests.vb" />
+    <Compile Include="SpriteSheetContentGeneratorValidationTests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -176,6 +178,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestImages\icon_notrans_16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestImages\onlyhover_hover_16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

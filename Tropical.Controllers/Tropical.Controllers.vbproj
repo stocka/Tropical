@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="BlackholeLogger.vb" />
     <Compile Include="FileUtilities.vb" />
+    <Compile Include="SpriteSheetContentGenerator.vb" />
     <Compile Include="SpriteSheetFileUtilities.vb" />
     <Compile Include="SpriteSheetGenerator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

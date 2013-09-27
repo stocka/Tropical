@@ -45,6 +45,29 @@ Public Class TestUtilities
   End Function
 
   ''' <summary>
+  ''' Gets a standard set of options.
+  ''' </summary>
+  ''' <returns>An initialized set of options.</returns>
+  Public Shared Function GetStandardOptions() As Models.SpriteSheetContentGeneratorOptions
+
+    Dim options As New Models.SpriteSheetContentGeneratorOptions()
+
+    With options
+      .BaseClassName = "td-icon"
+      .BaseFileName = "td-icons"
+      .ImageWidth = 16
+      .ImageHeight = 16
+      .FilterClassNames = {"accent"}
+      .HoverClassNames = {"hover"}
+      .ClassDelimiters = {" "c, "-"c, "_"c}
+      .FileExtensions = {"jpeg", "jpg", "png", "gif"}
+    End With
+
+    Return options
+
+  End Function
+
+  ''' <summary>
   ''' Adds a sprite to the stylesheet.
   ''' </summary>
   ''' <param name="sheet">The sheet.</param>
@@ -97,6 +120,14 @@ Public Class TestUtilities
       Return Path.Combine(Directory.GetCurrentDirectory(), subDir)
     End If
 
+  End Function
+
+  ''' <summary>
+  ''' Gets the path to the test images directory.
+  ''' </summary>
+  ''' <returns>The path to the test images directory.</returns>
+  Public Shared Function GetTestImagesDirectory() As String
+    Return Path.Combine(Directory.GetCurrentDirectory(), "TestImages")
   End Function
 
   ''' <summary>

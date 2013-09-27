@@ -88,6 +88,7 @@
     <Compile Include="PlacedSprite.vb" />
     <Compile Include="Sprite.vb" />
     <Compile Include="SpriteSheet.vb" />
+    <Compile Include="SpriteSheetContentGeneratorOptions.vb" />
     <Compile Include="SpriteSheetSampleHtml.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
