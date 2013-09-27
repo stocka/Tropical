@@ -105,6 +105,16 @@ Public Class TestLogger
     Return Me.ErrorEntries IsNot Nothing AndAlso Me.ErrorEntries.Any(Function(e) e.Message.Contains(partialErrorMessage))
   End Function
 
+  ''' <summary>
+  ''' Determines whether the log contains an warning that contains
+  ''' the specified warning message.
+  ''' </summary>
+  ''' <param name="partialWarningMessage">The partial warning message.</param>
+  ''' <returns><c>true</c> if a matching warning was found, <c>false</c> otherwise.</returns>
+  Public Function ContainsWarning(partialWarningMessage As String) As Boolean
+    Return Me.WarningEntries IsNot Nothing AndAlso Me.WarningEntries.Any(Function(e) e.Message.Contains(partialWarningMessage))
+  End Function
+
 #End Region
 
 #Region "ILogger Implementation"
