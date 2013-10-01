@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Tropical.CommandLine")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("Tropical.CommandLine takes an existing sprite sheet file and uses it to generate the associated CSS, image, and sample HTML file.")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("Tropical")> 
 <Assembly: AssemblyCopyright("Copyright © Andrew Stock 2013")> 
