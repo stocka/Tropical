@@ -104,7 +104,7 @@ Public Class SpriteSheet
 
           ' Append a newline and the contents of the errors
           sprValidationMessage &= Environment.NewLine
-          sprValidationMessage &= Validation.GetValidationResultMessage(sprValidation)
+          sprValidationMessage &= Validation.GetValidationResultMessage(sprValidation, False)
 
           ' Now add that rule to our collection.
           brokenRules.Add(New ValidationResult(sprValidationMessage))

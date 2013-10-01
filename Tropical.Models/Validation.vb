@@ -127,8 +127,11 @@ Public Class Validation
   ''' Gets the equivalent error message for the specified collection of validation results.
   ''' </summary>
   ''' <param name="results">The validation results.</param>
+  ''' <param name="includeMemberNames">If <c>true</c>, will include
+  ''' member names in the associated error message, <c>false</c> otherwise.</param>
   ''' <returns>The equivalent error message.</returns>
-  Public Shared Function GetValidationResultMessage(results As IEnumerable(Of ValidationResult)) As String
+  Public Shared Function GetValidationResultMessage(results As IEnumerable(Of ValidationResult),
+                                                    includeMemberNames As Boolean) As String
 
     ' Make sure we have results.
     If results Is Nothing OrElse Not results.Any() Then
@@ -137,14 +140,14 @@ Public Class Validation
 
     ' If we only have one, then just return that directly.
     If results.Count() = 1 Then
-      Return GetValidationResultMessage(results(0))
+      Return GetValidationResultMessage(results(0), includeMemberNames)
     End If
 
     ' Let's build a list.
     Dim messageBuilder As New Text.StringBuilder()
 
     For Each result In results
-      messageBuilder.AppendLine("- " & GetValidationResultMessage(result))
+      messageBuilder.AppendLine("- " & GetValidationResultMessage(result, includeMemberNames))
     Next
 
     ' Trim ending terminators.
@@ -156,11 +159,14 @@ Public Class Validation
   ''' Gets the equivalent error message for the specified validation result.
   ''' </summary>
   ''' <param name="result">The validation result.</param>
+  ''' <param name="includeMemberNames">If <c>true</c>, will include
+  ''' member names in the associated error message, <c>false</c> otherwise.</param>
   ''' <returns>The equivalent error message.</returns>
-  Private Shared Function GetValidationResultMessage(result As ValidationResult) As String
+  Private Shared Function GetValidationResultMessage(result As ValidationResult,
+                                                     includeMemberNames As Boolean) As String
 
     ' See if we have member names
-    If result.MemberNames IsNot Nothing AndAlso result.MemberNames.Any() Then
+    If includeMemberNames = True AndAlso result.MemberNames IsNot Nothing AndAlso result.MemberNames.Any() Then
       ' Return the error message with a list of the invalid fields
       Return result.ErrorMessage & " (" & String.Join(", ", result.MemberNames) & ")"
     Else
