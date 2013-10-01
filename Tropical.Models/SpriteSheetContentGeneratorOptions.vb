@@ -122,15 +122,6 @@ Public Class SpriteSheetContentGeneratorOptions
       brokenRules.Add(New ValidationResult("The specified base file name is invalid.", {"BaseFileName"}))
     End If
 
-    ' Validate the image dimensions
-    If Me.ImageHeight <= 0 Then
-      brokenRules.Add(New ValidationResult("The specified image height is invalid.", {"ImageHeight"}))
-    End If
-
-    If Me.ImageWidth <= 0 Then
-      brokenRules.Add(New ValidationResult("The specified image width is invalid.", {"ImageWidth"}))
-    End If
-
     ' Validate filter class names if provided
     ValidateClassSet(brokenRules, Me.FilterClassNames, "filter class names", "filter", "FilterClassNames")
 
