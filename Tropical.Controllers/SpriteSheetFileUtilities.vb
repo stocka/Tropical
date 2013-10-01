@@ -61,6 +61,9 @@ Public Class SpriteSheetFileUtilities
       Throw New ArgumentException("filePath", "The specified file path is invalid.")
     End If
 
+    ' Now make the file path absolute
+    filePath = Path.GetFullPath(filePath)
+
     ' Validate (and create if necessary) the destination directory.
     If Not FileUtilities.ValidateDirectoryPath(Path.GetDirectoryName(filePath), logger) Then
       Throw New ArgumentException("filePath", "The directory does not exist and could not be created.")
@@ -130,6 +133,9 @@ Public Class SpriteSheetFileUtilities
     If Not Validation.ValidateFilePath(filePath) Then
       Throw New ArgumentException("filePath", "The specified file path is invalid.")
     End If
+
+    ' Now make the file path absolute
+    filePath = Path.GetFullPath(filePath)
 
     If Not File.Exists(filePath) Then
       Throw New FileNotFoundException("The file specified by """ & filePath & """ does not exist.")
