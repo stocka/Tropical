@@ -12,19 +12,9 @@ Public Class CommandLineOptions
   ''' <value>
   ''' The path to the directory that will be scanned for sprite images.
   ''' </value>
-  <[Option]("d"c, "directory", Required:=True, DefaultValue:=".",
+  <[Option]("d"c, "directory", DefaultValue:=".",
     HelpText:="The path to the directory that will be scanned for sprite images.")>
   Public Property SourceDirectory() As String
-
-  ''' <summary>
-  ''' Gets or sets the name of the CSS class that will be used for all sprites.
-  ''' </summary>
-  ''' <value>
-  ''' The name of the CSS class that will be used for all sprites.
-  ''' </value>
-  <[Option]("c"c, "class",
-    HelpText:="The name of the CSS class that will be used for all sprites. Will default to the name of the containing directory.")>
-  Public Property BaseClassName() As String
 
   ''' <summary>
   ''' Gets or sets the path where the sprite sheet project file will be saved.
@@ -37,6 +27,16 @@ Public Class CommandLineOptions
   Public Property DestinationPath() As String
 
   ''' <summary>
+  ''' Gets or sets the name of the CSS class that will be used for all sprites.
+  ''' </summary>
+  ''' <value>
+  ''' The name of the CSS class that will be used for all sprites.
+  ''' </value>
+  <[Option]("c"c, "class",
+    HelpText:="The name of the CSS class that will be used for all sprites. Will default to the name of the containing directory.")>
+  Public Property BaseClassName() As String
+
+  ''' <summary>
   ''' Gets or sets the base file name that will be used
   ''' to generate the sprite sheet and associated CSS stylesheet.
   ''' </summary>
@@ -44,7 +44,7 @@ Public Class CommandLineOptions
   ''' The base file name that will be used to generate the
   ''' sprite sheet and associated CSS stylesheet.
   ''' </value>
-  <[Option]("f"c, "basefilename",
+  <[Option]("b"c, "basefilename",
     HelpText:="The base file name that will be used to generate the sprite sheet and associated CSS stylesheet. Will default to the name of the containing directory.")>
   Public Property BaseFileName() As String
 
@@ -75,9 +75,9 @@ Public Class CommandLineOptions
   ''' <value>
   ''' The set of file extensions from which images will be generated.
   ''' </value>
-  <OptionArray("e"c, "extensions", DefaultValue:={"jpg", "jpeg", "gif", "png"},
+  <[Option]("e"c, "extensions", DefaultValue:="jpg, jpeg, gif, png",
     HelpText:="The set of file extensions from which images will be generated.")>
-  Public Property FileExtensions() As String()
+  Public Property FileExtensions() As String
 
   ''' <summary>
   ''' Gets or sets the search pattern that will be used
@@ -87,7 +87,7 @@ Public Class CommandLineOptions
   ''' The search pattern that will be used to retrieve
   ''' files in the directory.
   ''' </value>
-  <[Option]("p", DefaultValue:="*",
+  <[Option]("p"c, "pattern", DefaultValue:="*",
     HelpText:="The search pattern that will be used to retrieve files in the directory.")>
   Public Property FileSearchPattern() As String
 
@@ -96,11 +96,12 @@ Public Class CommandLineOptions
   ''' separate out CSS class names.
   ''' </summary>
   ''' <value>
-  ''' The delimiters that will be used to separate out CSS class names.
+  ''' The delimiters that will be used to separate out CSS class
+  ''' names.
   ''' </value>
-  <OptionArray("delimiters", DefaultValue:={"_"c, "-"c, " "c},
+  <[Option]("delimiters", DefaultValue:="_- ",
     HelpText:="The delimiters that will be used to separate out CSS class names.")>
-  Public Property ClassDelimiters() As Char()
+  Public Property ClassDelimiters() As String
 
   ''' <summary>
   ''' Gets or sets the collection of CSS class names
@@ -110,9 +111,9 @@ Public Class CommandLineOptions
   ''' The collection of CSS class names that will be
   ''' interpreted as hover classes.
   ''' </value>
-  <OptionArray("hoverclasses", DefaultValue:=CType({}, String()),
+  <[Option]("hoverclasses",
     HelpText:="The collection of CSS class names that will be interpreted as ""hover"" classes.")>
-  Public Property HoverClassNames() As String()
+  Public Property HoverClassNames() As String
 
   ''' <summary>
   ''' Gets or sets the collection of CSS class names
@@ -122,9 +123,9 @@ Public Class CommandLineOptions
   ''' The collection of CSS class names that will be
   ''' interpreted as filter classes.
   ''' </value>
-  <OptionArray("filterclasses", DefaultValue:=CType({}, String()),
+  <[Option]("filterclasses",
     HelpText:="The collection of CSS class names that will be interpreted as ""filter"" classes.")>
-  Public Property FilterClassNames() As String()
+  Public Property FilterClassNames() As String
 
   ''' <summary>
   ''' Gets or sets the logging level to use.
