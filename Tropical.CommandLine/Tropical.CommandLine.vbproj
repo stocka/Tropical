@@ -75,7 +75,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineLogger.vb" />
     <Compile Include="CommandLineOptions.vb" />
     <Compile Include="TropicalCommandLine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

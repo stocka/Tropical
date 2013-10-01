@@ -32,9 +32,9 @@ Public Class CommandLineOptions
   ''' <value>
   ''' The logging level to use.
   ''' </value>
-  <[Option]("l"c, "level", DefaultValue:=CommandLineLogger.LogLevel.Information,
+  <[Option]("l"c, "level", DefaultValue:=Controllers.CommandLineLogger.LogLevel.Information,
     HelpText:="The logging level to use.")>
-  Public Property LogLevel() As CommandLineLogger.LogLevel
+  Public Property LogLevel() As Controllers.CommandLineLogger.LogLevel
 
   ''' <summary>
   ''' Gets or sets the custom path to the folder containing all sprite sheet images.
@@ -61,6 +61,8 @@ Public Class CommandLineOptions
       .AddDashesToOption = True
     End With
 
+    helpBuilder.AddPreOptionsLine("Tropical.CommandLine takes an existing sprite sheet file and uses it to generate the associated CSS, image, and sample HTML file.")
+    helpBuilder.AddPreOptionsLine("")
     helpBuilder.AddPreOptionsLine("Usage: Tropical.CommandLine -f <sprite sheet file> -d <destination folder>")
 
     ' Add options
