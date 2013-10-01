@@ -50,7 +50,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     Dim generator As Controllers.SpriteSheetGenerator = TestUtilities.GetGenerator(sheet, Me.Log)
@@ -69,7 +70,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     Dim generator As Controllers.SpriteSheetGenerator = TestUtilities.GetGenerator(sheet, Me.Log)
@@ -95,7 +97,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add a sprite, no hover
@@ -123,7 +126,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add a sprite, only hover
@@ -151,7 +155,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add a sprite, include hover
@@ -182,7 +187,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add one sprite, but make the hover image same as the regular one.
@@ -214,7 +220,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add two sprites, include hover
@@ -246,7 +253,8 @@ Public Class SpriteSheetGeneratorTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ' Add two sprites, include hover

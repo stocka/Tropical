@@ -17,7 +17,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ValidateSheet(sheet)
@@ -33,7 +34,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     Dim sprite As New Models.Sprite()
@@ -57,7 +59,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     Dim spriteOne As New Models.Sprite()
@@ -90,7 +93,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
       .Sprites = Nothing
     End With
 
@@ -108,7 +112,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "     "
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ValidateSheet(sheet)
@@ -125,7 +130,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "$BAD*CSS~MOJO"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ValidateSheet(sheet)
@@ -142,7 +148,8 @@ Public Class SpriteSheetValidationTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "\#%*#(*&Y%#"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageHeight = 16
+      .ImageWidth = 16
     End With
 
     ValidateSheet(sheet)
@@ -152,14 +159,15 @@ Public Class SpriteSheetValidationTests
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
   <TestCategory("Sprite Sheet Validation")>
-  <Description("Tests that a sprite sheet with an invalid ImageDimensions.Height is invalid.")>
+  <Description("Tests that a sprite sheet with an invalid ImageHeight is invalid.")>
   Public Sub TestInvalidHeight()
 
     Dim sheet As New Models.SpriteSheet()
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 0) ' Bad!
+      .ImageHeight = 0 ' Bad!
+      .ImageWidth = 16
     End With
 
     ValidateSheet(sheet)
@@ -169,14 +177,15 @@ Public Class SpriteSheetValidationTests
   <TestMethod()>
   <ExpectedException(GetType(ValidationException))>
   <TestCategory("Sprite Sheet Validation")>
-  <Description("Tests that a sprite sheet with an invalid ImageDimensions.Width is invalid.")>
+  <Description("Tests that a sprite sheet with an invalid ImageWidth is invalid.")>
   Public Sub TestInvalidWidth()
 
     Dim sheet As New Models.SpriteSheet()
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(0, 16) ' Bad!
+      .ImageHeight = 16
+      .ImageWidth = 0 ' Bad!
     End With
 
     ValidateSheet(sheet)

@@ -326,8 +326,8 @@ Public Class SpriteSheetContentGeneratorTests
 
     Assert.AreEqual(options.BaseClassName, sheet.BaseClassName)
     Assert.AreEqual(options.BaseFileName, sheet.BaseFileName)
-    Assert.AreEqual(options.ImageHeight, sheet.ImageDimensions.Height)
-    Assert.AreEqual(options.ImageWidth, sheet.ImageDimensions.Width)
+    Assert.AreEqual(options.ImageHeight, sheet.ImageHeight)
+    Assert.AreEqual(options.ImageWidth, sheet.ImageWidth)
 
   End Sub
 

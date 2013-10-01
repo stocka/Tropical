@@ -8,10 +8,10 @@
   content: '';
   display: inline-block;
   overflow: hidden;	
-  width: <#= mSheet.ImageDimensions.Width #>px;
-  height: <#= mSheet.ImageDimensions.Height #>px;  
+  width: <#= mSheet.ImageWidth #>px;
+  height: <#= mSheet.ImageHeight #>px;  
   background-image: url('<#= mSheet.BaseFileName #>.png?<#= DateTime.UtcNow.ToString("yyyyMMddHHmmss") #>');
   background-repeat: no-repeat;
-  background-position: <#= mSheet.ImageDimensions.Width #>px <#= mSheet.ImageDimensions.Height #>px;
+  background-position: <#= mSheet.ImageWidth #>px <#= mSheet.ImageHeight #>px;
   text-indent: -99999px;
 }

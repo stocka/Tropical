@@ -331,16 +331,16 @@ Public Class SpriteSheetGenerator
       ' Allocate a point for this image.
       Dim imageLocation As New Drawing.Point()
       With imageLocation
-        .X = _sheetColumn * _sheet.ImageDimensions.Width
-        .Y = _sheetRow * _sheet.ImageDimensions.Height
+        .X = _sheetColumn * _sheet.ImageWidth
+        .Y = _sheetRow * _sheet.ImageHeight
       End With
 
       ' Add it to the dictionary, keyed to the specified file.
       _imagePositions.Add(imagePath, imageLocation)
 
       ' Recalculate the dimensions of the overall sheet.
-      _sheetDims.Width = Math.Max(_sheetDims.Width, imageLocation.X + _sheet.ImageDimensions.Width)
-      _sheetDims.Height = Math.Max(_sheetDims.Height, imageLocation.Y + _sheet.ImageDimensions.Height)
+      _sheetDims.Width = Math.Max(_sheetDims.Width, imageLocation.X + _sheet.ImageWidth)
+      _sheetDims.Height = Math.Max(_sheetDims.Height, imageLocation.Y + _sheet.ImageHeight)
 
       ' Let's see at this point if we're supposed to start on a new row.
       If _sheetColumn = MaximumImageColumns - 1 Then
@@ -410,12 +410,12 @@ Public Class SpriteSheetGenerator
       Using spriteImage As Image = Image.FromFile(imagePath)
 
         ' Do some simple bounds checking, and log a warning if it's weird.
-        If spriteImage.Height > _sheet.ImageDimensions.Height Then
-          LogImageWarning(imagePath, String.Format(OverHeightImageWarningFormat, spriteImage.Height, _sheet.ImageDimensions.Height))
+        If spriteImage.Height > _sheet.ImageHeight Then
+          LogImageWarning(imagePath, String.Format(OverHeightImageWarningFormat, spriteImage.Height, _sheet.ImageHeight))
         End If
 
-        If spriteImage.Width > _sheet.ImageDimensions.Width Then
-          LogImageWarning(imagePath, String.Format(OverWidthImageWarningFormat, spriteImage.Width, _sheet.ImageDimensions.Width))
+        If spriteImage.Width > _sheet.ImageWidth Then
+          LogImageWarning(imagePath, String.Format(OverWidthImageWarningFormat, spriteImage.Width, _sheet.ImageWidth))
         End If
 
         ' Draw the image at the specified point

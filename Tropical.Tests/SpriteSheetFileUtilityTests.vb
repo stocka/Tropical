@@ -256,7 +256,8 @@ Public Class SpriteSheetFileUtilityTests
 
     ' We can ignore case for file names.
     Assert.AreEqual(expectedSheet.BaseFileName, actualSheet.BaseFileName, True)
-    Assert.AreEqual(expectedSheet.ImageDimensions, actualSheet.ImageDimensions)
+    Assert.AreEqual(expectedSheet.ImageHeight, actualSheet.ImageHeight)
+    Assert.AreEqual(expectedSheet.ImageWidth, actualSheet.ImageWidth)
 
     ' Now make sure the sprite collections are the same
     AssertSpritesEqual(expectedSheet.Sprites, actualSheet.Sprites)
@@ -478,7 +479,8 @@ Public Class SpriteSheetFileUtilityTests
     With sheet
       .BaseClassName = "td-icon"
       .BaseFileName = "td-icons"
-      .ImageDimensions = New System.Drawing.Size(16, 16)
+      .ImageWidth = 16
+      .ImageHeight = 16
     End With
 
     Return sheet

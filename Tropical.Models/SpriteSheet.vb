@@ -29,13 +29,22 @@ Public Class SpriteSheet
   Public Property BaseFileName As String
 
   ''' <summary>
-  ''' Gets or sets the dimensions for each image in the
-  ''' sprite sheet.
+  ''' Gets or sets the height, in pixels, of each image.
   ''' </summary>
   ''' <value>
-  ''' The dimensions for each image in the sprite sheet.
+  ''' The height, in pixels, of each image.
   ''' </value>
-  Public Property ImageDimensions As System.Drawing.Size
+  <Range(1, Int32.MaxValue, ErrorMessage:="Image height must be a positive value.")>
+  Public Property ImageHeight() As Int32 = 16
+
+  ''' <summary>
+  ''' Gets or sets the width, in pixels, of each image.
+  ''' </summary>
+  ''' <value>
+  ''' The width, in pixels, of each image.
+  ''' </value>
+  <Range(1, Int32.MaxValue, ErrorMessage:="Image width must be a positive value.")>
+  Public Property ImageWidth() As Int32 = 16
 
   ''' <summary>
   ''' Gets or sets the sprites in the sheet.
@@ -64,15 +73,6 @@ Public Class SpriteSheet
     ' Validate the file name
     If Not String.IsNullOrWhiteSpace(Me.BaseFileName) AndAlso Not Validation.ValidateFileName(Me.BaseFileName) Then
       brokenRules.Add(New ValidationResult("The specified base file name is invalid.", {"BaseFileName"}))
-    End If
-
-    ' Validate the image dimensions
-    If Me.ImageDimensions.Height <= 0 Then
-      brokenRules.Add(New ValidationResult("The specified image height is invalid.", {"ImageDimensions.Height"}))
-    End If
-
-    If Me.ImageDimensions.Width <= 0 Then
-      brokenRules.Add(New ValidationResult("The specified image width is invalid.", {"ImageDimensions.Width"}))
     End If
 
     ' Now validate the sprite collection.

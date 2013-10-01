@@ -112,7 +112,8 @@ Public Class SpriteSheetContentGenerator
       With sheet
         .BaseClassName = Me._options.BaseClassName
         .BaseFileName = Me._options.BaseFileName
-        .ImageDimensions = New System.Drawing.Size(Me._options.ImageWidth, Me._options.ImageHeight)
+        .ImageHeight = Me._options.ImageHeight
+        .ImageWidth = Me._options.ImageWidth
       End With
 
       ' Process each file in the directory.
