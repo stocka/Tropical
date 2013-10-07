@@ -74,6 +74,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Commands\AddCommand.vb" />
+    <Compile Include="ViewModels\Commands\BrowseFilePathCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\BrowseHoverImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\BrowseImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\ClearFilePathCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\ClearHoverImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\ClearImagePathCommand.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommandBase.vb" />
     <Compile Include="ViewModels\Commands\DeleteCommand.vb" />
     <Compile Include="ViewModels\Commands\MoveCommandBase.vb" />

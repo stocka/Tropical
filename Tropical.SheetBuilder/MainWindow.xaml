@@ -130,23 +130,39 @@
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
 
             <Label FontSize="11">Image</Label>
-            <Image x:Name="imgSpriteImage" Width="50" Height="50" />
+            <Image x:Name="imgSpriteImage" 
+                   Source="{Binding CurrentSprite.ImagePath}"
+                   Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
                        Text="{Binding CurrentSprite.ImagePath}"
                        Width="125" Margin="3,0" />
-              <Button x:Name="btnBrowseSpriteImage" Width="50" Margin="3,0">Browse</Button>
-              <Button x:Name="btnClearSpriteImage" Width="50" Margin="3,0">Clear</Button>
+              <Button x:Name="btnBrowseSpriteImage" 
+                      Command="{Binding BrowseImagePathCommand}"
+                      CommandParameter="{Binding CurrentSprite}" 
+                      Width="50" Margin="3,0">Browse</Button>
+              <Button x:Name="btnClearHoverImage" 
+                    Command="{Binding ClearImagePathCommand}"
+                    CommandParameter="{Binding CurrentSprite}"  
+                    Width="50" Margin="3,0">Clear</Button>
             </StackPanel>
 
             <Label FontSize="11">Hover Image</Label>
-            <Image x:Name="imgSpriteHoverImage" Width="50" Height="50" />
+            <Image x:Name="imgSpriteHoverImage" 
+                   Source="{Binding CurrentSprite.HoverImagePath}"
+                   Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
                        Text="{Binding CurrentSprite.HoverImagePath}"
                        Width="125" Margin="3,0" />
-              <Button x:Name="btnBrowseSpriteHoverImage" Width="50" Margin="3,0">Browse</Button>
-              <Button x:Name="btnClearSpriteHoverImage" Width="50" Margin="3,0">Clear</Button>
+              <Button x:Name="btnBrowseSpriteHoverImage" 
+                    Command="{Binding BrowseHoverImagePathCommand}"
+                    CommandParameter="{Binding CurrentSprite}" 
+                    Width="50" Margin="3,0">Browse</Button>
+              <Button x:Name="btnClearSpriteHoverImage" 
+                    Command="{Binding ClearHoverImagePathCommand}"
+                    CommandParameter="{Binding CurrentSprite}"  
+                    Width="50" Margin="3,0">Clear</Button>
             </StackPanel>
           </StackPanel>
         </ScrollViewer>

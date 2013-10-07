@@ -11,31 +11,55 @@ Public Class SpriteSheetViewModel
     Me.Service = New SpriteSheetService(Me.Sprites)
 
     ' Wire up our commands
-    Me.AddCommand = New AddCommand(Me.Service,
-                                   Function() Me.CanAdd,
-                                   Sub(sprite)
-                                     Me.CurrentSprite = sprite
-                                     Me.PropagateSpriteCollectionChanges()
-                                   End Sub)
+    Me.AddCommand = New AddCommand(
+      Me.Service,
+      Function() Me.CanAdd,
+      Sub(sprite)
+        Me.CurrentSprite = sprite
+        Me.PropagateSpriteCollectionChanges()
+      End Sub)
 
-    Me.DeleteCommand = New DeleteCommand(Me.Service,
-                                         Function() Me.CanDelete,
-                                         Sub(sprite)
-                                           Me.CurrentSprite = Nothing
-                                           Me.PropagateSpriteCollectionChanges()
-                                         End Sub)
+    Me.DeleteCommand = New DeleteCommand(
+      Me.Service,
+      Function() Me.CanDelete,
+      Sub(sprite)
+        Me.CurrentSprite = Nothing
+        Me.PropagateSpriteCollectionChanges()
+      End Sub)
 
-    Me.MoveUpCommand = New MoveUpCommand(Me.Service,
-                                         Function() Me.CanMoveUp,
-                                         Sub(sprite)
-                                           Me.PropagateSpriteCollectionChanges()
-                                         End Sub)
+    Me.MoveUpCommand = New MoveUpCommand(
+      Me.Service,
+      Function() Me.CanMoveUp,
+      Sub(sprite)
+        Me.PropagateSpriteCollectionChanges()
+      End Sub)
 
-    Me.MoveDownCommand = New MoveDownCommand(Me.Service,
-                                             Function() Me.CanMoveDown,
-                                             Sub(sprite)
-                                               Me.PropagateSpriteCollectionChanges()
-                                             End Sub)
+    Me.MoveDownCommand = New MoveDownCommand(
+      Me.Service,
+      Function() Me.CanMoveDown,
+      Sub(sprite)
+        Me.PropagateSpriteCollectionChanges()
+      End Sub)
+
+    Me.BrowseImagePathCommand = New BrowseImagePathCommand(
+      Me.Service,
+      Function() Me.CanChangeImagePath,
+      Nothing)
+
+    Me.BrowseHoverImagePathCommand = New BrowseHoverImagePathCommand(
+      Me.Service,
+      Function() Me.CanChangeImagePath,
+      Nothing)
+
+    Me.ClearImagePathCommand = New ClearImagePathCommand(
+      Me.Service,
+      Function() Me.CanChangeImagePath,
+      Nothing)
+
+    Me.ClearHoverImagePathCommand = New ClearHoverImagePathCommand(
+      Me.Service,
+      Function() Me.CanChangeImagePath,
+      Nothing)
 
   End Sub
 
@@ -68,6 +92,7 @@ Public Class SpriteSheetViewModel
         RaisePropertyChanging(Function() CanDelete)
         RaisePropertyChanging(Function() CanMoveUp)
         RaisePropertyChanging(Function() CanMoveDown)
+        RaisePropertyChanging(Function() CanChangeImagePath)
 
         _currentSprite = value
 
@@ -75,6 +100,7 @@ Public Class SpriteSheetViewModel
         RaisePropertyChanged(Function() CanDelete)
         RaisePropertyChanged(Function() CanMoveUp)
         RaisePropertyChanged(Function() CanMoveDown)
+        RaisePropertyChanged(Function() CanChangeImagePath)
 
       End If
 
@@ -103,6 +129,12 @@ Public Class SpriteSheetViewModel
 
       Case "canmovedown"
         MoveDownCommand.RaiseCanExecuteChanged()
+
+      Case "canchangeimagepath"
+        BrowseImagePathCommand.RaiseCanExecuteChanged()
+        BrowseHoverImagePathCommand.RaiseCanExecuteChanged()
+        ClearImagePathCommand.RaiseCanExecuteChanged()
+        ClearHoverImagePathCommand.RaiseCanExecuteChanged()
 
     End Select
 
@@ -135,10 +167,20 @@ Public Class SpriteSheetViewModel
     End Get
   End Property
 
+  Public ReadOnly Property CanChangeImagePath() As Boolean
+    Get
+      Return Me.CurrentSprite IsNot Nothing
+    End Get
+  End Property
+
   Public Property AddCommand As AddCommand
   Public Property DeleteCommand As DeleteCommand
   Public Property MoveUpCommand As MoveUpCommand
   Public Property MoveDownCommand As MoveDownCommand
+  Public Property BrowseImagePathCommand As BrowseImagePathCommand
+  Public Property BrowseHoverImagePathCommand As BrowseHoverImagePathCommand
+  Public Property ClearImagePathCommand As ClearImagePathCommand
+  Public Property ClearHoverImagePathCommand As ClearHoverImagePathCommand
 
 #End Region
 
