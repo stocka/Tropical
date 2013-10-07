@@ -148,8 +148,14 @@ Public Class Sprite
   ''' This can be null/whitespace.</param>
   ''' <param name="separator">The separator to use between the class
   ''' and filter class names as necessary.</param>
-  ''' <returns>The effective CSS class of the sprite.</returns>
+  ''' <returns>The effective CSS class of the sprite. 
+  ''' If no <paramref name="className" /> is provided, this will return
+  ''' &quot;(no class specified)&quot;</returns>
   Public Shared Function GetEffectiveClassDeclaration(className As String, filterClassName As String, separator As String) As String
+
+    If String.IsNullOrWhiteSpace(className) Then
+      Return "(no class specified)"
+    End If
 
     If String.IsNullOrWhiteSpace(filterClassName) Then
       Return className
