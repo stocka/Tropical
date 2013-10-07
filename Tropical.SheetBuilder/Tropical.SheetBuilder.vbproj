@@ -74,6 +74,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Commands\AddCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommandBase.vb" />
     <Compile Include="ViewModels\Commands\DeleteCommand.vb" />
     <Compile Include="ViewModels\Commands\MoveCommandBase.vb" />
     <Compile Include="ViewModels\Commands\MoveDownCommand.vb" />

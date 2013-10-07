@@ -1,25 +1,34 @@
 ﻿Imports Tropical.Models
 
+''' <summary>
+''' A command for deleting a sprite.
+''' </summary>
 Public Class AddCommand
+  Inherits SpriteCommandBase
   Implements ICommand
 
-  Private ReadOnly _service As SpriteSheetService
-  Private ReadOnly _canExecute As Func(Of Boolean)
-  Private ReadOnly _added As Action(Of Sprite)
-
+  ''' <summary>
+  ''' Initializes a new instance of the <see cref="AddCommand"/> class.
+  ''' </summary>
+  ''' <param name="service">The sprite sheet service.</param>
+  ''' <param name="canExecute">The function to be invoked as necessary
+  ''' by <see cref="CanExecute" />.</param>
+  ''' <param name="added">The method to invoke after a sprite
+  ''' has been successfully deleted. The new sprite will be
+  ''' passed to this method.</param>
   Public Sub New(service As SpriteSheetService,
                  canExecute As Func(Of Boolean),
                  added As Action(Of Sprite))
-    _service = service
-    _canExecute = canExecute
-    _added = added
+    MyBase.New(service, canExecute, added)
   End Sub
 
-  Public Function CanExecute(parameter As Object) As Boolean Implements ICommand.CanExecute
-    Return _canExecute()
-  End Function
-
-  Public Sub Execute(parameter As Object) Implements ICommand.Execute
+  ''' <summary>
+  ''' Creates a new sprite.
+  ''' </summary>
+  ''' <param name="parameter">The sprite at which the new sprite will be placed.
+  ''' If this value is <c>null</c>, the sprite will be placed at the end
+  ''' of the list.</param>
+  Public Overrides Sub Execute(parameter As Object)
 
     If CanExecute(parameter) Then
 
@@ -32,18 +41,12 @@ Public Class AddCommand
 
       ' If we added it successfully, and we have an event handler
       ' for addition, invoke it.
-      If createdSprite IsNot Nothing AndAlso _added IsNot Nothing Then
-        _added(sprite)
+      If createdSprite IsNot Nothing AndAlso _onExecuted IsNot Nothing Then
+        _onExecuted(sprite)
       End If
 
     End If
 
-  End Sub
-
-  Public Event CanExecuteChanged As EventHandler Implements ICommand.CanExecuteChanged
-
-  Public Sub RaiseCanExecuteChanged()
-    RaiseEvent CanExecuteChanged(Me, EventArgs.Empty)
   End Sub
 
 End Class
