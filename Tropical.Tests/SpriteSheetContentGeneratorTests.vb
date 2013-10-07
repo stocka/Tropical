@@ -376,7 +376,7 @@ Public Class SpriteSheetContentGeneratorTests
   ''' <param name="sheet">The sprite sheet.</param>
   ''' <returns>The equivalent dictionary.</returns>
   Private Shared Function GetSpriteDictionary(sheet As Models.SpriteSheet) As Dictionary(Of String, Models.Sprite)
-    Return sheet.Sprites.ToDictionary(Function(s) s.GetEffectiveClassName())
+    Return sheet.Sprites.ToDictionary(Function(s) s.EffectiveClassName())
   End Function
 
 End Class

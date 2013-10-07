@@ -134,10 +134,12 @@ Public Class Sprite
   ''' of this sprite, which will include the <see cref="FilterClassName" />
   ''' as appropriate.
   ''' </summary>
-  ''' <returns>The effective CSS class name of the sprite.</returns>
-  Public Function GetEffectiveClassName() As String
-    Return Sprite.GetEffectiveClassDeclaration(Me.ClassName, Me.FilterClassName, ".")
-  End Function
+  ''' <value>The effective CSS class name of the sprite.</value>
+  Public ReadOnly Property EffectiveClassName() As String
+    Get
+      Return Sprite.GetEffectiveClassDeclaration(Me.ClassName, Me.FilterClassName, ".")
+    End Get
+  End Property
 
   ''' <summary>
   ''' Given a CSS class name, and optionally a filtering class name, gets

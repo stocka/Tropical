@@ -207,7 +207,7 @@ Public Class SpriteSheetGenerator
 
         ' Figure out the "effective" class name, which includes
         ' the filtering name (if any)
-        Dim effectiveClassName As String = spr.GetEffectiveClassName()
+        Dim effectiveClassName As String = spr.EffectiveClassName()
 
         ' If we've already seen this class before, throw up a warning.
         If encounteredClasses.Contains(effectiveClassName) Then
