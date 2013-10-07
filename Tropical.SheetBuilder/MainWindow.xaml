@@ -2,8 +2,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Tropical Sprite Sheet Builder" Height="480" Width="640">
+  <Window.Resources>
+    <Style x:Key="CurrentSpriteDependent" TargetType="FrameworkElement">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding CurrentSprite}" Value="{x:Null}">
+          <Setter Property="Visibility" Value="Collapsed" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </Window.Resources>
   <DockPanel>
-    
+
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="_File">
         <MenuItem Header="_New" />
@@ -19,7 +28,7 @@
         <MenuItem Header="_About"/>
       </MenuItem>
     </Menu>
-    
+
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="70" />
@@ -36,30 +45,30 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
-          
+
           <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left">
             <Label FontSize="11">Base CSS Class</Label>
             <TextBox x:Name="txtBaseCssClass" 
                      Text="{Binding SpriteSheet.BaseClassName}"
                      Width="200" FontSize="11"/>
           </StackPanel>
-          
+
           <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0,0,0">
             <Label FontSize="11">Base File Name</Label>
             <TextBox x:Name="txtBaseFileName" 
                      Text="{Binding SpriteSheet.BaseFileName}"
                      Width="200" FontSize="11" />
           </StackPanel>
-          
+
           <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical" Margin="15,0,0,0">
             <Label FontSize="11">Image Dimensions</Label>
-            
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
               <TextBox x:Name="txtImageWidth" 
                        Text="{Binding SpriteSheet.ImageWidth}"
                        Width="50" FontSize="11" VerticalAlignment="Top" />
               <Label FontSize="11" VerticalAlignment="Top">by</Label>
-              
+
               <TextBox x:Name="txtImageHeight"
                        Text="{Binding SpriteSheet.ImageHeight}"
                        Width="50" FontSize="11" VerticalAlignment="Top" />
@@ -99,24 +108,27 @@
           <Button Command="{Binding MoveDownCommand}"
                   CommandParameter="{Binding CurrentSprite}"  
                   Margin="3">Move Down</Button>
-          <Label Margin="0,3,0,3">Current Sprite</Label>
+          <Label Style="{StaticResource CurrentSpriteDependent}" 
+                 Margin="0,3,0,3">Current Sprite</Label>
         </StackPanel>
-        
-        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto">
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0" 
+                      Style="{StaticResource CurrentSpriteDependent}"
+                      HorizontalScrollBarVisibility="Auto">
           <StackPanel Orientation="Vertical" HorizontalAlignment="Left" 
                       VerticalAlignment="Top" Margin="0,0,0,3">
-            
+
             <Label FontSize="11">CSS Class</Label>
             <TextBox x:Name="txtSpriteCssClass" 
                      Text="{Binding CurrentSprite.ClassName}"
                      Width="200" FontSize="11" 
                      HorizontalAlignment="Left" Margin="3,0"/>
-            
+
             <Label FontSize="11">Filter to CSS Class</Label>
             <TextBox x:Name="txtSpriteFilterCssClass" 
                      Text="{Binding CurrentSprite.FilterClassName}"
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
-            
+
             <Label FontSize="11">Image</Label>
             <Image x:Name="imgSpriteImage" Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
@@ -126,7 +138,7 @@
               <Button x:Name="btnBrowseSpriteImage" Width="50" Margin="3,0">Browse</Button>
               <Button x:Name="btnClearSpriteImage" Width="50" Margin="3,0">Clear</Button>
             </StackPanel>
-            
+
             <Label FontSize="11">Hover Image</Label>
             <Image x:Name="imgSpriteHoverImage" Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
