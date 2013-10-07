@@ -265,6 +265,7 @@ Public Class SpriteSheetGeneratorTests
     ' alternatively-sized ones
     TestUtilities.AddSprite(sheet, "gif", Nothing, "icon_16.gif", Nothing)
     TestUtilities.AddSprite(sheet, "gif-notransparency", Nothing, "icon_notrans_16.gif", Nothing)
+    TestUtilities.AddSprite(sheet, "gif-animated", Nothing, "icon_animated_16.gif", Nothing)
     TestUtilities.AddSprite(sheet, "jpg", Nothing, "icon_16.jpg", Nothing)
     TestUtilities.AddSprite(sheet, "jpg-grayscale", Nothing, "icon_grayscale_16.jpg", Nothing)
     TestUtilities.AddSprite(sheet, "png-notransparency", Nothing, "icon_notrans_16.png", Nothing)
