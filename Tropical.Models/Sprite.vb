@@ -47,8 +47,10 @@ Public Class Sprite
 
       If value <> _filterClassName Then
         RaisePropertyChanging(Function() ClassName)
+        RaisePropertyChanging(Function() EffectiveClassName)
         _className = value
         RaisePropertyChanged(Function() ClassName)
+        RaisePropertyChanged(Function() EffectiveClassName)
       End If
 
     End Set
@@ -74,8 +76,10 @@ Public Class Sprite
 
       If value <> _filterClassName Then
         RaisePropertyChanging(Function() FilterClassName)
+        RaisePropertyChanging(Function() EffectiveClassName)
         _filterClassName = value
         RaisePropertyChanged(Function() FilterClassName)
+        RaisePropertyChanged(Function() EffectiveClassName)
       End If
 
     End Set
