@@ -371,7 +371,7 @@ Public Class SpriteSheetContentGeneratorTests
 
   ''' <summary>
   ''' Gets a dictionary of sprites in the provided sprite <paramref name="sheet"/>,
-  ''' keyed to their <see cref="Models.Sprite.GetEffectiveClassName">effective class names</see>.
+  ''' keyed to their <see cref="Models.Sprite.EffectiveClassName">effective class names</see>.
   ''' </summary>
   ''' <param name="sheet">The sprite sheet.</param>
   ''' <returns>The equivalent dictionary.</returns>
