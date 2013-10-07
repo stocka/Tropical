@@ -3,7 +3,10 @@
 ''' </summary>
 <Serializable()>
 Public Class Sprite
+  Inherits BaseNotifyPropertyChanged
   Implements IValidatableObject
+
+  Private _id As Guid = Guid.NewGuid()
 
   ''' <summary>
   ''' Gets or sets the unique identifier.
@@ -11,7 +14,22 @@ Public Class Sprite
   ''' <value>
   ''' The unique identifier.
   ''' </value>
-  Public Property ID As Guid = Guid.NewGuid()
+  Public Property ID As Guid
+    Get
+      Return _id
+    End Get
+    Set(value As Guid)
+
+      If value <> _id Then
+        RaisePropertyChanging(Function() ID)
+        _id = value
+        RaisePropertyChanged(Function() ID)
+      End If
+
+    End Set
+  End Property
+
+  Private _className As String
 
   ''' <summary>
   ''' Gets or sets the name of the CSS class
@@ -22,6 +40,21 @@ Public Class Sprite
   ''' </value>
   <Required(ErrorMessage:="The CSS class name is required.")>
   Public Property ClassName As String
+    Get
+      Return _className
+    End Get
+    Set(value As String)
+
+      If value <> _filterClassName Then
+        RaisePropertyChanging(Function() ClassName)
+        _className = value
+        RaisePropertyChanged(Function() ClassName)
+      End If
+
+    End Set
+  End Property
+
+  Private _filterClassName As String
 
   ''' <summary>
   ''' Gets or sets the name of the CSS class used to filter
@@ -34,6 +67,21 @@ Public Class Sprite
   ''' sprite.
   ''' </value>
   Public Property FilterClassName As String
+    Get
+      Return _filterClassName
+    End Get
+    Set(value As String)
+
+      If value <> _filterClassName Then
+        RaisePropertyChanging(Function() FilterClassName)
+        _filterClassName = value
+        RaisePropertyChanged(Function() FilterClassName)
+      End If
+
+    End Set
+  End Property
+
+  Private _imagePath As String
 
   ''' <summary>
   ''' Gets or sets the path to the sprite image.
@@ -42,6 +90,21 @@ Public Class Sprite
   ''' The path to the sprite image.
   ''' </value>
   Public Property ImagePath As String
+    Get
+      Return _imagePath
+    End Get
+    Set(value As String)
+
+      If value <> _imagePath Then
+        RaisePropertyChanging(Function() ImagePath)
+        _imagePath = value
+        RaisePropertyChanged(Function() ImagePath)
+      End If
+
+    End Set
+  End Property
+
+  Private _hoverImagePath As String
 
   ''' <summary>
   ''' Gets or sets the path to the sprite image
@@ -52,6 +115,19 @@ Public Class Sprite
   ''' be displayed on hover.
   ''' </value>
   Public Property HoverImagePath As String
+    Get
+      Return _hoverImagePath
+    End Get
+    Set(value As String)
+
+      If value <> _hoverImagePath Then
+        RaisePropertyChanging(Function() HoverImagePath)
+        _hoverImagePath = value
+        RaisePropertyChanged(Function() HoverImagePath)
+      End If
+
+    End Set
+  End Property
 
   ''' <summary>
   ''' Gets the &quot;effective&quot; CSS class name

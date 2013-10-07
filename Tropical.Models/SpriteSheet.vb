@@ -3,7 +3,10 @@
 ''' </summary>
 <Serializable()>
 Public Class SpriteSheet
+  Inherits BaseNotifyPropertyChanged
   Implements IValidatableObject
+
+  Private _baseClassName As String
 
   ''' <summary>
   ''' Gets or sets the name of the CSS class
@@ -15,6 +18,21 @@ Public Class SpriteSheet
   ''' </value>
   <Required(ErrorMessage:="The base CSS class name is required.")>
   Public Property BaseClassName As String
+    Get
+      Return _baseClassName
+    End Get
+    Set(value As String)
+
+      If value <> _baseClassName Then
+        RaisePropertyChanging(Function() BaseClassName)
+        _baseClassName = value
+        RaisePropertyChanged(Function() BaseClassName)
+      End If
+
+    End Set
+  End Property
+
+  Private _baseFileName As String
 
   ''' <summary>
   ''' Gets or sets the base filename that will
@@ -27,6 +45,21 @@ Public Class SpriteSheet
   ''' </value>
   <Required(ErrorMessage:="The base file name is required.")>
   Public Property BaseFileName As String
+    Get
+      Return _baseFileName
+    End Get
+    Set(value As String)
+
+      If value <> _baseFileName Then
+        RaisePropertyChanging(Function() BaseFileName)
+        _baseFileName = value
+        RaisePropertyChanged(Function() BaseFileName)
+      End If
+
+    End Set
+  End Property
+
+  Private _imageHeight As Int32 = 16
 
   ''' <summary>
   ''' Gets or sets the height, in pixels, of each image.
@@ -35,7 +68,22 @@ Public Class SpriteSheet
   ''' The height, in pixels, of each image.
   ''' </value>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image height must be a positive value.")>
-  Public Property ImageHeight() As Int32 = 16
+  Public Property ImageHeight() As Int32
+    Get
+      Return _imageHeight
+    End Get
+    Set(value As Int32)
+
+      If value <> _imageHeight Then
+        RaisePropertyChanging(Function() ImageHeight)
+        _imageHeight = value
+        RaisePropertyChanged(Function() ImageHeight)
+      End If
+
+    End Set
+  End Property
+
+  Private _imageWidth As Int32 = 16
 
   ''' <summary>
   ''' Gets or sets the width, in pixels, of each image.
@@ -44,7 +92,20 @@ Public Class SpriteSheet
   ''' The width, in pixels, of each image.
   ''' </value>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image width must be a positive value.")>
-  Public Property ImageWidth() As Int32 = 16
+  Public Property ImageWidth() As Int32
+    Get
+      Return _imageWidth
+    End Get
+    Set(value As Int32)
+
+      If value <> _imageWidth Then
+        RaisePropertyChanging(Function() ImageWidth)
+        _imageWidth = value
+        RaisePropertyChanged(Function() ImageWidth)
+      End If
+
+    End Set
+  End Property
 
   ''' <summary>
   ''' Gets or sets the sprites in the sheet.
