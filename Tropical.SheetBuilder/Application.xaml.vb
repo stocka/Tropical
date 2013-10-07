@@ -1,6 +1,12 @@
 ﻿Class Application
 
-    ' Application-level events, such as Startup, Exit, and DispatcherUnhandledException
-    ' can be handled in this file.
+  Sub Application_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+
+    Dim mainWin As New MainWindow()
+    mainWin.DataContext = New SpriteSheetViewModel(New Models.SpriteSheet())
+    Me.MainWindow = mainWin
+    Me.MainWindow.Visibility = Visibility.Visible
+
+  End Sub
 
 End Class

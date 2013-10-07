@@ -73,6 +73,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\Commands\AddCommand.vb" />
+    <Compile Include="ViewModels\Commands\DeleteCommand.vb" />
+    <Compile Include="ViewModels\Commands\MoveCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\MoveDownCommand.vb" />
+    <Compile Include="ViewModels\Commands\MoveUpCommand.vb" />
+    <Compile Include="ViewModels\SpriteSheetService.vb" />
+    <Compile Include="ViewModels\SpriteSheetViewModel.vb" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,6 +143,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tropical.Controllers\Tropical.Controllers.vbproj">
+      <Project>{59930b50-bd9c-4c76-9716-14ae3c9c9292}</Project>
+      <Name>Tropical.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tropical.Models\Tropical.Models.vbproj">
+      <Project>{83e3b54e-4b45-47cd-8904-137f47fa2dc7}</Project>
+      <Name>Tropical.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
