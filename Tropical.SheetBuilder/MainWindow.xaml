@@ -135,6 +135,7 @@
             <Label FontSize="11">Image</Label>
             <Image x:Name="imgSpriteImage" 
                    Source="{Binding CurrentSprite.ImagePath}"
+                   StretchDirection="DownOnly"
                    Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
@@ -153,6 +154,7 @@
             <Label FontSize="11">Hover Image</Label>
             <Image x:Name="imgSpriteHoverImage" 
                    Source="{Binding CurrentSprite.HoverImagePath}"
+                   StretchDirection="DownOnly"
                    Width="50" Height="50" />
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
