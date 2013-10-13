@@ -22,6 +22,7 @@ Public Class SpriteSheetViewModel
     Me._sprites = New ObservableCollection(Of Sprite)(spriteSheet.Sprites)
     Me._service = New SpriteSheetService(Me._sprites)
     Me._readOnlySprites = New ReadOnlyObservableCollection(Of Sprite)(Me._sprites)
+    Me._containingWindow = containingWindow
     
     ' Wire up our commands
     Me._AddCommand = New AddCommand(
