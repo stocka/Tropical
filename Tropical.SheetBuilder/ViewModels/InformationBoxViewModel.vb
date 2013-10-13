@@ -111,11 +111,11 @@ Public Class InformationBoxViewModel
   ''' <c>true</c> if one or more errors have been logged; 
   ''' otherwise, <c>false</c>.
   ''' </value>
-  Private Property HasErrors() As Boolean
+  Public Property HasErrors() As Boolean
     Get
       Return Me._hasErrors
     End Get
-    Set(value As Boolean)
+    Protected Set(value As Boolean)
 
       If value <> _hasErrors Then
 
@@ -144,11 +144,11 @@ Public Class InformationBoxViewModel
   ''' <c>true</c> if one or more warnings have been logged; 
   ''' otherwise, <c>false</c>.
   ''' </value>
-  Private Property HasWarnings() As Boolean
+  Public Property HasWarnings() As Boolean
     Get
       Return Me._hasWarnings
     End Get
-    Set(value As Boolean)
+    Protected Set(value As Boolean)
 
       If value <> Me._hasWarnings Then
 

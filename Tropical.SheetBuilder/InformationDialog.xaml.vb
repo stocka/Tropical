@@ -65,6 +65,20 @@
     End Set
   End Property
 
+  ''' <summary>
+  ''' Gets a value indicating whether this dialog
+  ''' has errors or warnings to display.
+  ''' </summary>
+  ''' <value>
+  ''' <c>true</c> if the dialog has errors or warnings to display;
+  ''' otherwise, <c>false</c>.
+  ''' </value>
+  Public ReadOnly Property HasErrorsOrWarnings() As Boolean
+    Get
+      Return Me.InformationVM.HasErrors Or Me.InformationVM.HasWarnings
+    End Get
+  End Property
+
   Private Sub InformationDialog_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
     ' Set our information box VM as our data context
