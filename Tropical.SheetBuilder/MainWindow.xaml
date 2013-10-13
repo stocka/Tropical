@@ -82,16 +82,14 @@
           </StackPanel>
         </Grid>
       </GroupBox>
-      <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Top">
-        <Label>Sprites</Label>
-        <ScrollViewer >
-          <ListBox ItemsSource="{Binding Sprites}" 
-                   SelectedItem="{Binding CurrentSprite,Mode=TwoWay}" 
-                   DisplayMemberPath="EffectiveClassName"
-                   Height="Auto" VerticalAlignment="Top"
-                   Margin="3,0,0,0" />
-        </ScrollViewer>
-      </StackPanel>
+      <ListBox Grid.Column="0" Grid.Row="1"
+              ItemsSource="{Binding Sprites}" 
+              SelectedItem="{Binding CurrentSprite,Mode=TwoWay}" 
+              DisplayMemberPath="EffectiveClassName"
+              VerticalAlignment="Stretch"
+              VerticalContentAlignment="Top"
+              ScrollViewer.VerticalScrollBarVisibility="Visible"
+              Margin="3" />
       <Grid Grid.Row="1" Grid.Column="1">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
