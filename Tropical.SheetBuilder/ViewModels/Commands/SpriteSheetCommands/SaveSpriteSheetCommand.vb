@@ -87,9 +87,12 @@ Public Class SaveSpriteSheetCommand
 
           End If
 
-          ' Now show our information message dialog
-          infoDialog.Owner = _containingWindow
-          infoDialog.ShowDialog()
+          ' Now show our information message dialog, if there's
+          ' anything worth showing.
+          If infoDialog.HasErrorsOrWarnings Then
+            infoDialog.Owner = _containingWindow
+            infoDialog.ShowDialog()
+          End If
 
         End If
       End If
