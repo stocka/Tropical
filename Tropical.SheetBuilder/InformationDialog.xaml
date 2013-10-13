@@ -28,9 +28,12 @@
            Content="{Binding CurrentMessage}" />
     <GroupBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" 
               Header="Messages"
+              MinHeight="75"
               MaxHeight="200"
               Visibility="{Binding LogMessageVisibility}">
-      <TextBlock Text="{Binding LogMessageText}" ScrollViewer.CanContentScroll="True" />
+      <TextBlock Text="{Binding LogMessageText}" 
+                 Margin="3,3,0,0" 
+                 ScrollViewer.CanContentScroll="True" />
     </GroupBox>
     <Button Grid.Column="1" Grid.Row="2" Name="btnOk" 
             Width="100" Margin="8"
