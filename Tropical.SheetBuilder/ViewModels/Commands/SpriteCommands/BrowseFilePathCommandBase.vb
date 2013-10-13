@@ -41,7 +41,7 @@ Public MustInherit Class BrowseFilePathCommandBase
       Dim openFileDlg As New Microsoft.Win32.OpenFileDialog()
       With openFileDlg
         .Title = "Select " & imageDescription
-        .Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif"
+        .Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*"
         .CheckFileExists = True
         .ValidateNames = True
 
