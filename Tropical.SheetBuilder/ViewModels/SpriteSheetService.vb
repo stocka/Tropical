@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.ObjectModel
 Imports Tropical.Models
+Imports Tropical.Controllers
 
 Public Class SpriteSheetService
 
@@ -67,6 +68,90 @@ Public Class SpriteSheetService
 
     ' Something didn't work out.
     Return False
+
+  End Function
+
+  ''' <summary>
+  ''' Loads the sprite sheet file at the specified file path
+  ''' and returns it.
+  ''' </summary>
+  ''' <param name="spriteSheetPath">The path to the sprite sheet file.</param>
+  ''' <param name="logger">The logger.</param>
+  ''' <returns>The loaded sprite sheet, or <c>null</c>
+  ''' if the sprite sheet could not be loaded.</returns>
+  Public Shared Function LoadSpriteSheet(spriteSheetPath As String,
+                                         logger As ILogger) As SpriteSheet
+
+    Try
+
+      Dim sheet As SpriteSheet = SpriteSheetFileUtilities.LoadSpriteSheet(spriteSheetPath, logger)
+      Return sheet
+
+    Catch ex As Exception
+      ' Uh-oh. At this point we're going to assume the
+      ' message is something we've specified, so the message
+      ' should be OK for user consumption.
+      logger.Error(ex.Message, ex)
+      Return Nothing
+    End Try
+
+  End Function
+
+  ''' <summary>
+  ''' Saves the sprite sheet to the specified path.
+  ''' </summary>
+  ''' <param name="savePath">The path to the sprite sheet.</param>
+  ''' <param name="spriteSheet">The sprite sheet to save.</param>
+  ''' <param name="logger">The logger.</param>
+  ''' <returns><c>true</c> if the sprite sheet was successfully saved,
+  ''' <c>false</c> otherwise.</returns>
+  Public Shared Function SaveSpriteSheet(savePath As String,
+                                         spriteSheet As SpriteSheet,
+                                         logger As ILogger) As Boolean
+
+    Try
+
+      SpriteSheetFileUtilities.SaveSpriteSheet(savePath, spriteSheet, logger)
+      Return True
+
+    Catch ex As Exception
+      ' Uh-oh. At this point we're going to assume the
+      ' message is something we've specified, so the message
+      ' should be OK for user consumption.
+      logger.Error(ex.Message, ex)
+      Return False
+    End Try
+
+  End Function
+
+  ''' <summary>
+  ''' Saves the generated sprite sheet (image, CSS file, and sample
+  ''' HTML) to the specified path.
+  ''' </summary>
+  ''' <param name="savePath">The path to the directtory where
+  ''' the sprite sheet files will be saved.</param>
+  ''' <param name="spriteSheet">The sprite sheet to save.</param>
+  ''' <param name="logger">The logger.</param>
+  ''' <returns><c>true</c> if the sprite sheet was successfully
+  ''' created, <c>false</c> otherwise.</returns>
+  Public Shared Function SaveSpriteSheetContent(savePath As String,
+                                                spriteSheet As SpriteSheet,
+                                                logger As ILogger) As Boolean
+
+    Try
+
+      Dim generator As New SpriteSheetGenerator(spriteSheet)
+      generator.Logger = logger
+
+      Return generator.Generate(savePath)
+
+    Catch ex As Exception
+      ' Uh-oh. At this point we're going to assume the
+      ' message is something we've specified, so the message
+      ' should be OK for user consumption.      
+      logger.Error(ex.Message, ex)
+      Return False
+    End Try
 
   End Function
 
