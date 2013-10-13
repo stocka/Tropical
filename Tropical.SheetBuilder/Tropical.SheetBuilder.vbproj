@@ -55,6 +55,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System" />
@@ -90,6 +91,10 @@
     <Compile Include="ViewModels\Commands\SpriteCommands\MoveCommandBase.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\MoveDownCommand.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\MoveUpCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteSheetCommands\LoadSpriteSheetCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteSheetCommands\NewSpriteSheetCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteSheetCommands\SaveSpriteSheetCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteSheetCommands\SaveSpriteSheetContentsCommand.vb" />
     <Compile Include="ViewModels\InformationBoxViewModel.vb" />
     <Compile Include="ViewModels\SpriteSheetService.vb" />
     <Compile Include="ViewModels\SpriteSheetViewModel.vb" />

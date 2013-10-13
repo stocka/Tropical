@@ -74,6 +74,33 @@ Public Class SpriteSheetViewModel
       Function() Me.CanChangeImagePath,
       Nothing)
 
+    Me._newSpriteSheetCommand = New NewSpriteSheetCommand(
+      Me.Service,
+      Function() Me.CanSaveLoadSpriteSheet,
+      Sub(sheet)
+        RaiseEvent NewSpriteSheetLoaded(sheet)
+      End Sub)
+
+    Me._loadSpriteSheetCommand = New LoadSpriteSheetCommand(
+      Me.Service,
+      Function() Me.CanSaveLoadSpriteSheet,
+      Sub(sheet)
+        RaiseEvent NewSpriteSheetLoaded(sheet)
+      End Sub,
+      Me.ContainingWindow)
+
+    Me._saveSpriteSheetCommand = New SaveSpriteSheetCommand(
+      Me.Service,
+      Function() Me.CanSaveLoadSpriteSheet,
+      Nothing,
+      Me.ContainingWindow)
+
+    Me._saveSpriteSheetContentsCommand = New SaveSpriteSheetContentsCommand(
+      Me.Service,
+      Function() Me.CanSaveSpriteSheetContents,
+      Nothing,
+      Me.ContainingWindow)
+
   End Sub
 
   ''' <summary>
@@ -131,7 +158,7 @@ Public Class SpriteSheetViewModel
     End Get
   End Property
 
-  Private ReadOnly _window As Window
+  Private ReadOnly _containingWindow As Window
 
   ''' <summary>
   ''' Gets the containing window, to be used for displaying
@@ -143,7 +170,7 @@ Public Class SpriteSheetViewModel
   ''' </value>
   Public ReadOnly Property ContainingWindow() As Window
     Get
-      Return Me._window
+      Return Me._containingWindow
     End Get
   End Property
 
@@ -163,8 +190,8 @@ Public Class SpriteSheetViewModel
 
       If value IsNot Me._currentSprite Then
 
-        ' We're skipping CanAdd here because it's
-        ' always true.
+        ' We're skipping CanAdd and some of the other
+        ' always-true properties here.
         RaisePropertyChanging(Function() CurrentSprite)
         RaisePropertyChanging(Function() CanDelete)
         RaisePropertyChanging(Function() CanMoveUp)
@@ -301,6 +328,37 @@ Public Class SpriteSheetViewModel
     End Get
   End Property
 
+  ''' <summary>
+  ''' Gets a value indicating whether a sprite sheet
+  ''' can be saved or loaded.
+  ''' </summary>
+  ''' <value>
+  ''' <c>true</c> if a sprite sheet can be saved or loaded; 
+  ''' otherwise, <c>false</c>.
+  ''' </value>
+  Public ReadOnly Property CanSaveLoadSpriteSheet() As Boolean
+    Get
+      ' Right now, we can always save/load.
+      Return True
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets a value indicating whether the current sprite
+  ''' sheet's contents (CSS, sprite image, and sample HTML)
+  ''' can be generated.
+  ''' </summary>
+  ''' <value>
+  ''' <c>true</c> if the current sprite sheet's contents can be
+  ''' generated; otherwise, <c>false</c>.
+  ''' </value>
+  Public ReadOnly Property CanSaveSpriteSheetContents() As Boolean
+    Get
+      ' Right now, we can always save sprite sheet contents.
+      Return True
+    End Get
+  End Property
+
   Private ReadOnly _addCommand As AddCommand
 
   ''' <summary>
@@ -414,6 +472,66 @@ Public Class SpriteSheetViewModel
   Public ReadOnly Property ClearHoverImagePathCommand As ClearHoverImagePathCommand
     Get
       Return Me._clearHoverImagePathCommand
+    End Get
+  End Property
+
+  Private ReadOnly _newSpriteSheetCommand As NewSpriteSheetCommand
+
+  ''' <summary>
+  ''' Gets the command used to create a new sprite sheet.
+  ''' </summary>
+  ''' <value>
+  ''' The command used to create a new sprite sheet.
+  ''' </value>
+  Public ReadOnly Property NewSpriteSheetCommand As NewSpriteSheetCommand
+    Get
+      Return Me._newSpriteSheetCommand
+    End Get
+  End Property
+
+  Private ReadOnly _loadSpriteSheetCommand As LoadSpriteSheetCommand
+
+  ''' <summary>
+  ''' Gets the command used to browse for and load up
+  ''' a new sprite sheet.
+  ''' </summary>
+  ''' <value>
+  ''' The command used to browse for and load up a new sprite sheet.
+  ''' </value>
+  Public ReadOnly Property LoadSpriteSheetCommand As LoadSpriteSheetCommand
+    Get
+      Return Me._loadSpriteSheetCommand
+    End Get
+  End Property
+
+  Private _saveSpriteSheetCommand As SaveSpriteSheetCommand
+
+  ''' <summary>
+  ''' Gets the command used to browse to save the current sprite sheet
+  ''' to a file.
+  ''' </summary>
+  ''' <value>
+  ''' The command used to save the current sprite sheet
+  ''' to a file.
+  ''' </value>
+  Public ReadOnly Property SaveSpriteSheetCommand() As SaveSpriteSheetCommand
+    Get
+      Return _saveSpriteSheetCommand
+    End Get
+  End Property
+
+  Private _saveSpriteSheetContentsCommand As SaveSpriteSheetContentsCommand
+
+  ''' <summary>
+  ''' Gets the command used to browse to generate the contents
+  ''' of the current sprite sheet.
+  ''' </summary>
+  ''' <value>
+  ''' The command used to generate the contents of the current sprite sheet.
+  ''' </value>
+  Public ReadOnly Property SaveSpriteSheetContentsCommand() As SaveSpriteSheetContentsCommand
+    Get
+      Return _saveSpriteSheetContentsCommand
     End Get
   End Property
 

@@ -15,16 +15,22 @@
 
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="_File">
-        <MenuItem Header="_New" />
+        <MenuItem Header="_New"
+                  Command="{Binding NewSpriteSheetCommand}" />
         <Separator />
-        <MenuItem Header="_Open"/>
-        <MenuItem Header="_Save"/>
-        <MenuItem Header="_Generate" />
+        <MenuItem Header="_Open" 
+                  Command="{Binding LoadSpriteSheetCommand}" />
+        <MenuItem Header="_Save" 
+                  Command="{Binding SaveSpriteSheetCommand}"
+                  CommandParameter="{Binding SpriteSheet}" />
+        <MenuItem Header="_Generate" 
+                  Command="{Binding SaveSpriteSheetContentsCommand}"
+                  CommandParameter="{Binding SpriteSheet}"  />
         <Separator />
-        <MenuItem Header="_Exit" />
+        <MenuItem Header="_Exit" x:Name="mnuExit" />
       </MenuItem>
       <MenuItem Header="_Help">
-        <MenuItem Header="_About"/>
+        <MenuItem Header="_About" x:Name="mnuAbout" />
       </MenuItem>
     </Menu>
 
