@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InformationDialog.xaml.vb">
+      <DependentUpon>InformationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Commands\AddCommand.vb" />
     <Compile Include="ViewModels\Commands\BrowseFilePathCommandBase.vb" />
     <Compile Include="ViewModels\Commands\BrowseHoverImagePathCommand.vb" />
@@ -85,8 +88,13 @@
     <Compile Include="ViewModels\Commands\MoveCommandBase.vb" />
     <Compile Include="ViewModels\Commands\MoveDownCommand.vb" />
     <Compile Include="ViewModels\Commands\MoveUpCommand.vb" />
+    <Compile Include="ViewModels\InformationBoxViewModel.vb" />
     <Compile Include="ViewModels\SpriteSheetService.vb" />
     <Compile Include="ViewModels\SpriteSheetViewModel.vb" />
+    <Page Include="InformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
