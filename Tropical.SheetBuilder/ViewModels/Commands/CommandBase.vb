@@ -2,15 +2,18 @@
 ''' A base class for simplified implementation of
 ''' <see cref="ICommand" />.
 ''' </summary>
-Public MustInherit Class SpriteCommandBase
+''' <typeparam name="T">The type of item that
+''' will be provided to the successful execution
+''' callback.</typeparam>
+Public MustInherit Class CommandBase(Of T)
   Implements ICommand
 
   Protected ReadOnly _service As SpriteSheetService
   Protected ReadOnly _canExecute As Func(Of Boolean)
-  Protected ReadOnly _onExecuted As Action(Of Models.Sprite)
+  Protected ReadOnly _onExecuted As Action(Of T)
 
   ''' <summary>
-  ''' Initializes a new instance of the <see cref="SpriteCommandBase"/> class.
+  ''' Initializes a new instance of the <see cref="CommandBase(Of T)"/> class.
   ''' </summary>
   ''' <param name="service">The sprite sheet service.</param>
   ''' <param name="canExecute">The function to be invoked as necessary
@@ -20,7 +23,7 @@ Public MustInherit Class SpriteCommandBase
   ''' passed to this method.</param>
   Public Sub New(service As SpriteSheetService,
                  canExecute As Func(Of Boolean),
-                 onExecuted As Action(Of Models.Sprite))
+                 onExecuted As Action(Of T))
     _service = service
     _canExecute = canExecute
     _onExecuted = onExecuted
@@ -56,5 +59,6 @@ Public MustInherit Class SpriteCommandBase
   Public Sub RaiseCanExecuteChanged()
     RaiseEvent CanExecuteChanged(Me, EventArgs.Empty)
   End Sub
+
 
 End Class

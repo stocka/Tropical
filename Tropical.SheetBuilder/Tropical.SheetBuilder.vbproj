@@ -53,6 +53,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System.Core" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,18 +77,19 @@
     <Compile Include="InformationDialog.xaml.vb">
       <DependentUpon>InformationDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Commands\AddCommand.vb" />
-    <Compile Include="ViewModels\Commands\BrowseFilePathCommandBase.vb" />
-    <Compile Include="ViewModels\Commands\BrowseHoverImagePathCommand.vb" />
-    <Compile Include="ViewModels\Commands\BrowseImagePathCommand.vb" />
-    <Compile Include="ViewModels\Commands\ClearFilePathCommandBase.vb" />
-    <Compile Include="ViewModels\Commands\ClearHoverImagePathCommand.vb" />
-    <Compile Include="ViewModels\Commands\ClearImagePathCommand.vb" />
-    <Compile Include="ViewModels\Commands\SpriteCommandBase.vb" />
-    <Compile Include="ViewModels\Commands\DeleteCommand.vb" />
-    <Compile Include="ViewModels\Commands\MoveCommandBase.vb" />
-    <Compile Include="ViewModels\Commands\MoveDownCommand.vb" />
-    <Compile Include="ViewModels\Commands\MoveUpCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\AddCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\BrowseFilePathCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\BrowseHoverImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\BrowseImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\ClearFilePathCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\ClearHoverImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\ClearImagePathCommand.vb" />
+    <Compile Include="ViewModels\Commands\CommandBase.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\SpriteCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\DeleteCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\MoveCommandBase.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\MoveDownCommand.vb" />
+    <Compile Include="ViewModels\Commands\SpriteCommands\MoveUpCommand.vb" />
     <Compile Include="ViewModels\InformationBoxViewModel.vb" />
     <Compile Include="ViewModels\SpriteSheetService.vb" />
     <Compile Include="ViewModels\SpriteSheetViewModel.vb" />
