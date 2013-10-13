@@ -19,7 +19,6 @@
         <Separator />
         <MenuItem Header="_Open"/>
         <MenuItem Header="_Save"/>
-        <MenuItem Header="_Close"/>
         <MenuItem Header="_Generate" />
         <Separator />
         <MenuItem Header="_Exit" />
