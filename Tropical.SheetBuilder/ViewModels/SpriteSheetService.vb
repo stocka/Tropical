@@ -2,14 +2,31 @@
 Imports Tropical.Models
 Imports Tropical.Controllers
 
+''' <summary>
+''' Contains methods for interacting with a sprite sheet
+''' and its sprites collection.
+''' </summary>
 Public Class SpriteSheetService
 
   Private ReadOnly _sprites As ObservableCollection(Of Sprite)
 
+  ''' <summary>
+  ''' Initializes a new instance of the <see cref="SpriteSheetService"/> class.
+  ''' </summary>
+  ''' <param name="sprites">The sprites collection
+  ''' to perform operations on.</param>
   Public Sub New(sprites As ObservableCollection(Of Sprite))
     _sprites = sprites
   End Sub
 
+  ''' <summary>
+  ''' Adds a sprite to the list.
+  ''' </summary>
+  ''' <param name="insertAtSprite">If specified, the position
+  ''' of the sprite to insert the new sprite at. If not specified,
+  ''' or not in the list, the new sprite will be added to
+  ''' the end of the list.</param>
+  ''' <returns>The created sprite.</returns>
   Public Function AddSprite(insertAtSprite As Sprite) As Sprite
 
     Dim createdSprite As New Sprite()
@@ -30,10 +47,25 @@ Public Class SpriteSheetService
 
   End Function
 
+  ''' <summary>
+  ''' Deletes a sprite from the list.
+  ''' </summary>
+  ''' <param name="sprite">The sprite to delete.</param>
+  ''' <returns><c>true</c> if the sprite was deleted successfully;
+  ''' otherwise, <c>false</c>.</returns>
   Public Function DeleteSprite(sprite As Sprite) As Boolean
     Return _sprites.Remove(sprite)
   End Function
 
+  ''' <summary>
+  ''' Moves the sprite in the list.
+  ''' </summary>
+  ''' <param name="sprite">The sprite to move.</param>
+  ''' <param name="moveUp">If set to <c>true</c>, indicates that
+  ''' the sprite should be moved up. If set to <c>false</c>, indicates
+  ''' that the sprite should be moved down.</param>
+  ''' <returns><c>true</c> if the sprite was moved successfully;
+  ''' otherwise, <c>false</c>.</returns>
   Public Function MoveSprite(sprite As Sprite, moveUp As Boolean) As Boolean
 
     Dim oldSpriteIndex As Int32
