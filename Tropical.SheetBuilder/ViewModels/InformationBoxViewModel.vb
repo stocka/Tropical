@@ -292,7 +292,8 @@ Public Class InformationBoxViewModel
 #If DEBUG Then
 
     ' Add the exception, if we're debugging
-    If exception IsNot Nothing Then
+    If exception IsNot Nothing AndAlso
+      Not TypeOf exception Is System.ComponentModel.DataAnnotations.ValidationException Then
 
       messageBuilder.AppendLine("Exception:")
       AppendExceptionToMessage(exception, messageBuilder)
