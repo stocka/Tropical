@@ -60,5 +60,17 @@ Public MustInherit Class CommandBase(Of T)
     RaiseEvent CanExecuteChanged(Me, EventArgs.Empty)
   End Sub
 
+  ''' <summary>
+  ''' Attempts to invoke the <see cref="_onExecuted" /> handler
+  ''' if it exists.
+  ''' </summary>
+  ''' <param name="handlerArgument">The data to pass to the handler.</param>
+  Protected Sub TryExecuteHandler(handlerArgument As T)
+
+    If _onExecuted IsNot Nothing Then
+      Me._onExecuted(handlerArgument)
+    End If
+
+  End Sub
 
 End Class
