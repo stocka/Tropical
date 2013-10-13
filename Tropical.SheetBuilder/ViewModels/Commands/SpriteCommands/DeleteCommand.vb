@@ -41,9 +41,10 @@ Public Class DeleteCommand
 
           ' If we deleted it successfully, and we have an event handler
           ' for deletion, invoke it.
-          If _service.DeleteSprite(sprite) AndAlso _onExecuted IsNot Nothing Then
-            _onExecuted(sprite)
+          If _service.DeleteSprite(sprite) Then
+            MyBase.TryExecuteHandler(sprite)
           End If
+
         End If
       End If
     End If

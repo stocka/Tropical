@@ -37,8 +37,8 @@ Public MustInherit Class MoveCommandBase
       If sprite IsNot Nothing Then
 
         ' Now try to move it, invoking the event handler as appropriate
-        If _service.MoveSprite(sprite, moveUp) AndAlso _onExecuted IsNot Nothing Then
-          _onExecuted(sprite)
+        If _service.MoveSprite(sprite, moveUp) Then
+          MyBase.TryExecuteHandler(sprite)
         End If
 
       End If

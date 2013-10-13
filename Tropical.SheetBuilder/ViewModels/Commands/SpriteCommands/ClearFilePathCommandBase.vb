@@ -41,9 +41,8 @@ Public MustInherit Class ClearFilePathCommandBase
         ' Clear it out and invoke the handler if we have one.
         clearValue = Nothing
 
-        If _onExecuted IsNot Nothing Then
-          _onExecuted(sprite)
-        End If
+        MyBase.TryExecuteHandler(sprite)
+
       End If
     End If
   End Sub

@@ -63,9 +63,8 @@ Public MustInherit Class BrowseFilePathCommandBase
           imageValue = openFileDlg.FileName
 
           ' Invoke the handler if we have one.
-          If _onExecuted IsNot Nothing Then
-            _onExecuted(sprite)
-          End If
+          MyBase.TryExecuteHandler(sprite)
+
         End If
       End If
     End If

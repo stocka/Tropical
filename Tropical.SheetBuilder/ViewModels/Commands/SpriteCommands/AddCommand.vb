@@ -41,8 +41,8 @@ Public Class AddCommand
 
       ' If we added it successfully, and we have an event handler
       ' for addition, invoke it.
-      If createdSprite IsNot Nothing AndAlso _onExecuted IsNot Nothing Then
-        _onExecuted(sprite)
+      If createdSprite IsNot Nothing Then
+        MyBase.TryExecuteHandler(createdSprite)
       End If
 
     End If
