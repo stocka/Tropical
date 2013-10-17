@@ -21,16 +21,20 @@
         <MenuItem Header="_Open" 
                   Command="{Binding LoadSpriteSheetCommand}" />
         <MenuItem Header="_Save" 
+                  Click="CommitFocusedChanges"
                   Command="{Binding SaveSpriteSheetCommand}"
                   CommandParameter="{Binding SpriteSheet}" />
         <MenuItem Header="_Generate" 
+                  Click="CommitFocusedChanges"
                   Command="{Binding SaveSpriteSheetContentsCommand}"
                   CommandParameter="{Binding SpriteSheet}"  />
         <Separator />
-        <MenuItem Header="_Exit" x:Name="mnuExit" />
+        <MenuItem Header="_Exit"
+                  Click="mnuExit_Click" />
       </MenuItem>
       <MenuItem Header="_Help">
-        <MenuItem Header="_About" x:Name="mnuAbout" />
+        <MenuItem Header="_About"
+                  Click="mnuAbout_Click" />
       </MenuItem>
     </Menu>
 

@@ -1,4 +1,4 @@
-﻿Class MainWindow 
+﻿Class MainWindow
 
   ''' <summary>
   ''' Changes the current sprite sheet to use the new provided
@@ -24,11 +24,31 @@
 
   End Sub
 
-  Private Sub mnuExit_Click(sender As Object, e As RoutedEventArgs) Handles mnuExit.Click
+  Private Sub CommitFocusedChanges(sender As Object, e As RoutedEventArgs)
+
+    ' See if we have a textbox focused
+    Dim focusedTextBox As TextBox = TryCast(FocusManager.GetFocusedElement(Me), TextBox)
+
+    If focusedTextBox IsNot Nothing Then
+
+      ' Get the binding expression for the Text property
+      Dim textBindingEx As BindingExpression =
+        focusedTextBox.GetBindingExpression(TextBox.TextProperty)
+
+      ' Update the source if we found it
+      If textBindingEx IsNot Nothing Then
+        textBindingEx.UpdateSource()
+      End If
+
+    End If
+
+  End Sub
+
+  Private Sub mnuExit_Click(sender As Object, e As RoutedEventArgs)
     Me.Close()
   End Sub
 
-  Private Sub mnuAbout_Click(sender As Object, e As RoutedEventArgs) Handles mnuAbout.Click
+  Private Sub mnuAbout_Click(sender As Object, e As RoutedEventArgs)
 
     Dim aboutText As New System.Text.StringBuilder()
     aboutText.AppendLine("Tropical Sprite Sheet Builder")
