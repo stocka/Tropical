@@ -34,10 +34,21 @@ Public Class LoadSpriteSheetCommand
   ''' <summary>
   ''' Loads a sprite sheet.
   ''' </summary>
-  ''' <param name="parameter">This parameter is ignored.</param>
+  ''' <param name="parameter">A delegate to determine
+  ''' if unsaved changes should be discarded. This should be
+  ''' a <see cref="SpriteSheetViewModel.CheckUnsavedChangesHandler" />
+  ''' value.</param>
   Public Overrides Sub Execute(parameter As Object)
 
     If CanExecute(parameter) Then
+
+      ' Prompt if we have unsaved changes, and exit out if so desired
+      Dim unsavedChangesHandler As Func(Of Boolean) =
+        TryCast(parameter, Func(Of Boolean))
+
+      If unsavedChangesHandler IsNot Nothing AndAlso Not unsavedChangesHandler.Invoke() Then
+        Return
+      End If
 
       Dim openFileDlg As New Microsoft.Win32.OpenFileDialog()
       With openFileDlg

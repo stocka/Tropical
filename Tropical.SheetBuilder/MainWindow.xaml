@@ -17,10 +17,14 @@
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="_File">
         <MenuItem Header="_New"
-                  Command="{Binding NewSpriteSheetCommand}" />
+                  Click="CommitFocusedChanges"
+                  Command="{Binding NewSpriteSheetCommand}"
+                  CommandParameter="{Binding CheckUnsavedChangesHandler}" />
         <Separator />
         <MenuItem Header="_Open" 
-                  Command="{Binding LoadSpriteSheetCommand}" />
+                  Click="CommitFocusedChanges"
+                  Command="{Binding LoadSpriteSheetCommand}"
+                  CommandParameter="{Binding CheckUnsavedChangesHandler}" />
         <MenuItem Header="_Save" 
                   Click="CommitFocusedChanges"
                   Command="{Binding SaveSpriteSheetCommand}"

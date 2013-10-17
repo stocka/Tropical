@@ -307,6 +307,44 @@ Public Class SpriteSheetViewModel
   End Property
 
   ''' <summary>
+  ''' Checks to see if there are any unsaved changes, and if so,
+  ''' asks the user if they wish to discard them.
+  ''' </summary>
+  ''' <returns><c>true</c> if there are no unsaved changes
+  ''' or the user has indicated they wish to discard them;
+  ''' otherwise, <c>false</c>.</returns>
+  Private Function PromptUnsavedChanges() As Boolean
+
+    ' Show a prompt if we have unsaved changes.
+    If Me.HasUnsavedChanges AndAlso
+      MessageBox.Show("You have unsaved changes. Are you sure you wish to discard them?",
+                       "Unsaved changes", MessageBoxButton.OKCancel,
+                        MessageBoxImage.Question) = MessageBoxResult.Cancel Then
+      Return False
+    End If
+
+    ' We're good.
+    Return True
+
+  End Function
+
+  ''' <summary>
+  ''' Gets the handler that will check for unsaved changes and prompt
+  ''' the user if they wish to discard them. If there are no unsaved changes,
+  ''' or the user wishes to discard them, the handler will return <c>true</c>;
+  ''' otherwise, <c>false</c>.
+  ''' </summary>
+  ''' <value>
+  ''' The handler that will check for unsaved changes and prompt
+  ''' the user if they wish to discard them.
+  ''' </value>
+  Public ReadOnly Property CheckUnsavedChangesHandler() As Func(Of Boolean)
+    Get
+      Return AddressOf PromptUnsavedChanges
+    End Get
+  End Property
+
+  ''' <summary>
   ''' Handles when the sprite collection has changed.
   ''' </summary>
   ''' <param name="sender">The sender.</param>

@@ -50,16 +50,19 @@
 
   End Sub
 
-  Private Sub mnuExit_Click(sender As Object, e As RoutedEventArgs)
+  Private Sub MainWindow_Closing(sender As Object, e As ComponentModel.CancelEventArgs) Handles Me.Closing
 
-    ' See if we have unsaved changes, and prompt if we do
-    If CType(Me.DataContext, SpriteSheetViewModel).HasUnsavedChanges AndAlso
-      MessageBox.Show("You have unsaved changes. Are you sure you wish to exit?",
-                      "Exit", MessageBoxButton.OKCancel,
-                      MessageBoxImage.Question) = MessageBoxResult.Cancel Then
-      Return
+    ' Ensure all changes have been committed
+    CommitFocusedChanges(sender, New RoutedEventArgs())
+
+    ' Cancel the close if we have unsaved changes that the user wants to keep.
+    If Not CType(Me.DataContext, SpriteSheetViewModel).CheckUnsavedChangesHandler.Invoke() Then
+      e.Cancel = True
     End If
 
+  End Sub
+
+  Private Sub mnuExit_Click(sender As Object, e As RoutedEventArgs)
     Me.Close()
   End Sub
 

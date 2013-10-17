@@ -7,8 +7,6 @@ Public Class NewSpriteSheetCommand
   Inherits CommandBase(Of SpriteSheet)
   Implements ICommand
 
-  Private _lastPath As String
-
   ''' <summary>
   ''' Initializes a new instance of the <see cref="NewSpriteSheetCommand"/> class.
   ''' </summary>
@@ -28,11 +26,22 @@ Public Class NewSpriteSheetCommand
 
   ''' <summary>
   ''' Creates a new sprite sheet.
-  ''' </summary>
-  ''' <param name="parameter">This parameter is ignored.</param>
+  ''' </summary>  
+  ''' <param name="parameter">A delegate to determine
+  ''' if unsaved changes should be discarded. This should be
+  ''' a <see cref="SpriteSheetViewModel.CheckUnsavedChangesHandler" />
+  ''' value.</param>
   Public Overrides Sub Execute(parameter As Object)
 
     If CanExecute(parameter) Then
+
+      ' Prompt if we have unsaved changes, and exit out if so desired
+      Dim unsavedChangesHandler As Func(Of Boolean) =
+        TryCast(parameter, Func(Of Boolean))
+
+      If unsavedChangesHandler IsNot Nothing AndAlso Not unsavedChangesHandler.Invoke() Then
+        Return
+      End If
 
       ' Create a new sheet.
       Dim sheet As New Models.SpriteSheet()
