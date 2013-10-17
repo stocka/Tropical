@@ -35,7 +35,8 @@ Public Class DeleteCommand
       If sprite IsNot Nothing Then
 
         ' Show a confirmation dialog
-        Dim result = MessageBox.Show("Are you sure you wish to delete the sprite?", "Confirm", MessageBoxButton.OKCancel)
+        Dim result = MessageBox.Show("Are you sure you wish to delete the sprite?", "Delete",
+                                     MessageBoxButton.OKCancel, MessageBoxImage.Question)
 
         If result = MessageBoxResult.OK Then
 
