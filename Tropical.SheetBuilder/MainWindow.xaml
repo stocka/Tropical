@@ -1,7 +1,8 @@
 ﻿<Window x:Name="Tropical_Sprite_Sheet_Builder" x:Class="MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Tropical Sprite Sheet Builder" Height="480" Width="640">
+    Title="{Binding SheetTitle}" 
+    Height="480" Width="640">
   <Window.Resources>
     <Style x:Key="CurrentSpriteDependent" TargetType="FrameworkElement">
       <Style.Triggers>

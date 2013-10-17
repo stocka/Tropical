@@ -97,6 +97,7 @@
     <Compile Include="ViewModels\Commands\SpriteSheetCommands\SaveSpriteSheetCommand.vb" />
     <Compile Include="ViewModels\Commands\SpriteSheetCommands\SaveSpriteSheetContentsCommand.vb" />
     <Compile Include="ViewModels\InformationBoxViewModel.vb" />
+    <Compile Include="ViewModels\SpriteSheetFileInformation.vb" />
     <Compile Include="ViewModels\SpriteSheetService.vb" />
     <Compile Include="ViewModels\SpriteSheetViewModel.vb" />
     <Page Include="InformationDialog.xaml">

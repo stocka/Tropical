@@ -4,7 +4,7 @@
 ''' A command for saving a sprite sheet.
 ''' </summary>
 Public Class SaveSpriteSheetCommand
-  Inherits CommandBase(Of SpriteSheet)
+  Inherits CommandBase(Of SpriteSheetFileInformation)
   Implements ICommand
 
   Private ReadOnly _containingWindow As Window
@@ -17,13 +17,13 @@ Public Class SaveSpriteSheetCommand
   ''' <param name="canExecute">The function to be invoked as necessary
   ''' by <see cref="CanExecute" />.</param>
   ''' <param name="saved">The method to invoke after a sprite sheet
-  ''' has been successfully saved. The sprite sheet will be
+  ''' has been successfully saved. Information about the sprite sheet will be
   ''' passed to this method.</param>
   ''' <param name="containingWindow">The containing window to use
   ''' for any modal dialog boxes.</param>
   Public Sub New(service As SpriteSheetService,
                  canExecute As Func(Of Boolean),
-                 saved As Action(Of SpriteSheet),
+                 saved As Action(Of SpriteSheetFileInformation),
                  containingWindow As Window)
 
     MyBase.New(service, canExecute, saved)
@@ -59,9 +59,10 @@ Public Class SaveSpriteSheetCommand
 
         ' Now show the dialog
         Dim showDialog As Boolean? = saveFileDlg.ShowDialog()
+        Dim filePath As String = saveFileDlg.FileName
 
         If showDialog.GetValueOrDefault(False) = True AndAlso
-          Not String.IsNullOrWhiteSpace(saveFileDlg.FileName) Then
+          Not String.IsNullOrWhiteSpace(filePath) Then
 
           ' Set up a new information dialog
           Dim infoDialog As New InformationDialog()
@@ -74,16 +75,16 @@ Public Class SaveSpriteSheetCommand
 
           ' Now try to save the sheet, passing in the dialog's logger
           Dim success As Boolean =
-            SpriteSheetService.SaveSpriteSheet(saveFileDlg.FileName, spriteSheet, infoDialog.Logger)
+            SpriteSheetService.SaveSpriteSheet(filePath, spriteSheet, infoDialog.Logger)
 
           ' Were we successful?
           If success Then
 
             ' Try to execute our handler.
-            MyBase.TryExecuteHandler(spriteSheet)
+            MyBase.TryExecuteHandler(New SpriteSheetFileInformation(spriteSheet, filePath))
 
             ' Also save our last successful path
-            Me._lastPath = saveFileDlg.FileName
+            Me._lastPath = filePath
 
           End If
 

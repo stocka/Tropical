@@ -23,9 +23,9 @@ Public Class SpriteSheetViewModel
     Me._service = New SpriteSheetService(Me._sprites)
     Me._readOnlySprites = New ReadOnlyObservableCollection(Of Sprite)(Me._sprites)
     Me._containingWindow = containingWindow
-    
+
     ' Wire up our commands
-    Me._AddCommand = New AddCommand(
+    Me._addCommand = New AddCommand(
       Me.Service,
       Function() Me.CanAdd,
       Sub(sprite)
@@ -33,7 +33,7 @@ Public Class SpriteSheetViewModel
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
-    Me._DeleteCommand = New DeleteCommand(
+    Me._deleteCommand = New DeleteCommand(
       Me.Service,
       Function() Me.CanDelete,
       Sub(sprite)
@@ -41,36 +41,36 @@ Public Class SpriteSheetViewModel
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
-    Me._MoveUpCommand = New MoveUpCommand(
+    Me._moveUpCommand = New MoveUpCommand(
       Me.Service,
       Function() Me.CanMoveUp,
       Sub(sprite)
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
-    Me._MoveDownCommand = New MoveDownCommand(
+    Me._moveDownCommand = New MoveDownCommand(
       Me.Service,
       Function() Me.CanMoveDown,
       Sub(sprite)
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
-    Me._BrowseImagePathCommand = New BrowseImagePathCommand(
+    Me._browseImagePathCommand = New BrowseImagePathCommand(
       Me.Service,
       Function() Me.CanChangeImagePath,
       Nothing)
 
-    Me._BrowseHoverImagePathCommand = New BrowseHoverImagePathCommand(
+    Me._browseHoverImagePathCommand = New BrowseHoverImagePathCommand(
       Me.Service,
       Function() Me.CanChangeImagePath,
       Nothing)
 
-    Me._ClearImagePathCommand = New ClearImagePathCommand(
+    Me._clearImagePathCommand = New ClearImagePathCommand(
       Me.Service,
       Function() Me.CanChangeImagePath,
       Nothing)
 
-    Me._ClearHoverImagePathCommand = New ClearHoverImagePathCommand(
+    Me._clearHoverImagePathCommand = New ClearHoverImagePathCommand(
       Me.Service,
       Function() Me.CanChangeImagePath,
       Nothing)
@@ -79,21 +79,28 @@ Public Class SpriteSheetViewModel
       Me.Service,
       Function() Me.CanSaveLoadSpriteSheet,
       Sub(sheet)
-        RaiseEvent NewSpriteSheetLoaded(sheet)
+        ' Create a file information object with a blank name.
+        RaiseEvent NewSpriteSheetLoaded(New SpriteSheetFileInformation(sheet, ""))
       End Sub)
 
     Me._loadSpriteSheetCommand = New LoadSpriteSheetCommand(
       Me.Service,
       Function() Me.CanSaveLoadSpriteSheet,
-      Sub(sheet)
-        RaiseEvent NewSpriteSheetLoaded(sheet)
+      Sub(sheetInformation)
+        RaiseEvent NewSpriteSheetLoaded(sheetInformation)
       End Sub,
       Me.ContainingWindow)
 
     Me._saveSpriteSheetCommand = New SaveSpriteSheetCommand(
       Me.Service,
       Function() Me.CanSaveLoadSpriteSheet,
-      Nothing,
+      Sub(sheetInformation)
+        ' Indicate we no longer have unsaved changes.
+        Me.HasUnsavedChanges = False
+
+        ' Update our file name.
+        Me.FileName = sheetInformation.FileName
+      End Sub,
       Me.ContainingWindow)
 
     Me._saveSpriteSheetContentsCommand = New SaveSpriteSheetContentsCommand(
@@ -101,6 +108,10 @@ Public Class SpriteSheetViewModel
       Function() Me.CanSaveSpriteSheetContents,
       Nothing,
       Me.ContainingWindow)
+
+    ' Add handlers for when our sprite sheet or sprite collection changes.
+    AddHandler Me._spriteSheet.PropertyChanged, AddressOf SpriteSheetPropertyChangedHandler
+    AddHandler Me._sprites.CollectionChanged, AddressOf SpriteCollectionChangedHandler
 
   End Sub
 
@@ -212,6 +223,109 @@ Public Class SpriteSheetViewModel
     End Set
   End Property
 
+  Private _fileName As String = "New sheet"
+
+  ''' <summary>
+  ''' Gets or sets the name of the file that was last used
+  ''' to save/load the sprite sheet.
+  ''' </summary>
+  ''' <value>
+  ''' The name of the file that was last used to
+  ''' save/load the sprite sheet.
+  ''' </value>
+  Public Property FileName() As String
+    Get
+      Return Me._fileName
+    End Get
+    Set(value As String)
+
+      If value <> Me._fileName Then
+
+        RaisePropertyChanging(Function() FileName)
+        RaisePropertyChanging(Function() SheetTitle)
+
+        Me._fileName = value
+
+        RaisePropertyChanged(Function() FileName)
+        RaisePropertyChanged(Function() SheetTitle)
+
+      End If
+
+    End Set
+  End Property
+
+  ''' <summary>
+  ''' Gets the title to use for the sprite sheet, which is dependent
+  ''' on the <see cref="FileName">file name</see> and if there
+  ''' are any <see cref="HasUnsavedChanges">unsaved changes</see>.
+  ''' </summary>
+  ''' <value>
+  ''' The title to use for the sprite sheet.
+  ''' </value>
+  Public ReadOnly Property SheetTitle() As String
+    Get
+
+      ' Include an indicator if we have unsaved changes.
+      If Me.HasUnsavedChanges = True Then
+        Return "Tropical Sprite Sheet Builder - " & Me.FileName & "*"
+      Else
+        Return "Tropical Sprite Sheet Builder - " & Me.FileName
+      End If
+
+    End Get
+  End Property
+
+  Private _hasUnsavedChanges As Boolean = False
+
+  ''' <summary>
+  ''' Gets a value indicating whether the sprite sheet or one of
+  ''' its sprites has unsaved changes.
+  ''' </summary>
+  ''' <value>
+  ''' <c>true</c> if the sprite sheet or one of its sprites
+  ''' has unsaved changes; otherwise, <c>false</c>.
+  ''' </value>
+  Public Property HasUnsavedChanges() As Boolean
+    Get
+      Return Me._hasUnsavedChanges
+    End Get
+    Friend Set(value As Boolean)
+
+      If Me._hasUnsavedChanges <> value Then
+
+        RaisePropertyChanging(Function() HasUnsavedChanges)
+        RaisePropertyChanging(Function() SheetTitle)
+
+        Me._hasUnsavedChanges = value
+
+        RaisePropertyChanged(Function() HasUnsavedChanges)
+        RaisePropertyChanged(Function() SheetTitle)
+
+      End If
+
+    End Set
+  End Property
+
+  ''' <summary>
+  ''' Handles when the sprite collection has changed.
+  ''' </summary>
+  ''' <param name="sender">The sender.</param>
+  ''' <param name="e">The <see cref="Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+  Private Sub SpriteCollectionChangedHandler(sender As Object, e As Specialized.NotifyCollectionChangedEventArgs)
+    ' Indicate we have unsaved changes
+    Me.HasUnsavedChanges = True
+  End Sub
+
+  ''' <summary>
+  ''' Handles when a property on the sprite sheet has changed.
+  ''' </summary>
+  ''' <param name="sender">The sender.</param>
+  ''' <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+  Private Sub SpriteSheetPropertyChangedHandler(sender As Object, e As PropertyChangedEventArgs)
+    ' Indicate we have unsaved changes
+    Me.HasUnsavedChanges = True
+  End Sub
+
   ''' <summary>
   ''' Handles when a property has changed.  Used to simplify the process
   ''' of invoking <see cref="ICommand.CanExecuteChanged" /> when corresponding
@@ -252,7 +366,7 @@ Public Class SpriteSheetViewModel
   ''' which notifies listeners that a new view model
   ''' should be created from that sheet.
   ''' </summary>
-  Public Event NewSpriteSheetLoaded(newSheet As SpriteSheet)
+  Public Event NewSpriteSheetLoaded(sheetInformation As SpriteSheetFileInformation)
 
 #End Region
 
