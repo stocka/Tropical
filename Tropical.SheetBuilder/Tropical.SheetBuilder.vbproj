@@ -187,5 +187,8 @@
   <ItemGroup>
     <Resource Include="Resources\tropical_logo_256px.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\TropicalSplashScreen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
