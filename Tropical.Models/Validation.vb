@@ -4,9 +4,15 @@
 Public Class Validation
 
   ''' <summary>
+  ''' The text of the regular expression used to validate
+  ''' a CSS class name.
+  ''' </summary>
+  Friend Const CssClassNameRegexText As String = "^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$"
+
+  ''' <summary>
   ''' A regular expression for validating a CSS class name.
   ''' </summary>
-  Private Shared ReadOnly CssClassNameRegex As New System.Text.RegularExpressions.Regex("^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$")
+  Private Shared ReadOnly CssClassNameRegex As New System.Text.RegularExpressions.Regex(CssClassNameRegexText)
 
   ''' <summary>
   ''' A set of file names reserved by the Windows operating system.

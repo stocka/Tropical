@@ -38,7 +38,11 @@ Public Class Sprite
   ''' <value>
   ''' The name of the CSS class used for the sprite.
   ''' </value>
+  <Display(Name:="CSS Class",
+     ShortName:="Class",
+     Description:="This is the name of the CSS class used for the sprite.")>
   <Required(ErrorMessage:="The CSS class name is required.")>
+  <RegularExpression(Validation.CssClassNameRegexText, ErrorMessage:="The specified CSS class name is invalid.")>
   Public Property ClassName As String
     Get
       Return _className
@@ -68,6 +72,10 @@ Public Class Sprite
   ''' The name of the CSS class used to filter the appearance of the
   ''' sprite.
   ''' </value>
+  <Display(Name:="Filter CSS Class",
+    ShortName:="Filter Class",
+    Description:="This is the name of the CSS class used to filter the appearance of the sprite.")>
+  <RegularExpression(Validation.CssClassNameRegexText, ErrorMessage:="The specified filter CSS class name is invalid.")>
   Public Property FilterClassName As String
     Get
       Return _filterClassName
@@ -93,6 +101,9 @@ Public Class Sprite
   ''' <value>
   ''' The path to the sprite image.
   ''' </value>
+  <Display(Name:="Image Path",
+     ShortName:="Image Path",
+     Description:="This is the path to the image used by the sprite.")>
   Public Property ImagePath As String
     Get
       Return _imagePath
@@ -118,6 +129,9 @@ Public Class Sprite
   ''' The path to the sprite image that will
   ''' be displayed on hover.
   ''' </value>
+  <Display(Name:="Hover Image Path",
+     ShortName:="Hover Image Path",
+     Description:="This is the path to the image used by the sprite when hovering.")>
   Public Property HoverImagePath As String
     Get
       Return _hoverImagePath
@@ -181,16 +195,6 @@ Public Class Sprite
   Public Function Validate(validationContext As ValidationContext) As IEnumerable(Of ValidationResult) Implements IValidatableObject.Validate
 
     Dim brokenRules As New List(Of ValidationResult)
-
-    ' Validate the class name
-    If Not String.IsNullOrWhiteSpace(Me.ClassName) AndAlso Not Validation.ValidateCssClass(Me.ClassName) Then
-      brokenRules.Add(New ValidationResult("The specified CSS class name is invalid.", {"ClassName"}))
-    End If
-
-    ' Validate the filter class name, if provided
-    If Not String.IsNullOrWhiteSpace(Me.FilterClassName) AndAlso Not Validation.ValidateCssClass(Me.FilterClassName) Then
-      brokenRules.Add(New ValidationResult("The specified filter CSS class name is invalid.", {"FilterClassName"}))
-    End If
 
     ' Validate file paths, if provided
     If Not String.IsNullOrWhiteSpace(Me.ImagePath) AndAlso Not Validation.ValidateFilePath(Me.ImagePath) Then

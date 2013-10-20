@@ -16,7 +16,11 @@ Public Class SpriteSheet
   ''' The name of the CSS class that will
   ''' be used for all sprites.
   ''' </value>
+  <Display(Name:="Base CSS Class",
+     ShortName:="CSS Class",
+     Description:="This is the CSS class that will be used for all sprites.")>
   <Required(ErrorMessage:="The base CSS class name is required.")>
+  <RegularExpression(Validation.CssClassNameRegexText, ErrorMessage:="The specified base CSS class name is invalid.")>
   Public Property BaseClassName As String
     Get
       Return _baseClassName
@@ -43,6 +47,9 @@ Public Class SpriteSheet
   ''' The base filename that will be used to generate
   ''' the sprite sheet and associated CSS stylesheet.
   ''' </value>
+  <Display(Name:="Base File Name",
+     ShortName:="Base File Name",
+     Description:="This is the base file name that will be used to generate the sprite sheet and associated CSS stylesheet.")>
   <Required(ErrorMessage:="The base file name is required.")>
   Public Property BaseFileName As String
     Get
@@ -67,6 +74,9 @@ Public Class SpriteSheet
   ''' <value>
   ''' The height, in pixels, of each image.
   ''' </value>
+  <Display(Name:="Image Height",
+     ShortName:="Image Height",
+     Description:="This is the height, in pixels, of each image.")>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image height must be a positive value.")>
   Public Property ImageHeight() As Int32
     Get
@@ -91,6 +101,9 @@ Public Class SpriteSheet
   ''' <value>
   ''' The width, in pixels, of each image.
   ''' </value>
+  <Display(Name:="Image Width",
+     ShortName:="Image Width",
+     Description:="This is the width, in pixels, of each image.")>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image width must be a positive value.")>
   Public Property ImageWidth() As Int32
     Get
@@ -125,11 +138,6 @@ Public Class SpriteSheet
   Public Function Validate(validationContext As ValidationContext) As IEnumerable(Of ValidationResult) Implements IValidatableObject.Validate
 
     Dim brokenRules As New List(Of ValidationResult)
-
-    ' Validate the CSS class name
-    If Not String.IsNullOrWhiteSpace(Me.BaseClassName) AndAlso Not Validation.ValidateCssClass(Me.BaseClassName) Then
-      brokenRules.Add(New ValidationResult("The specified base CSS class name is invalid.", {"BaseClassName"}))
-    End If
 
     ' Validate the file name
     If Not String.IsNullOrWhiteSpace(Me.BaseFileName) AndAlso Not Validation.ValidateFileName(Me.BaseFileName) Then
