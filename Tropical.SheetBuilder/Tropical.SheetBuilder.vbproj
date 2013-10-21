@@ -82,6 +82,7 @@
     <Compile Include="InformationDialog.xaml.vb">
       <DependentUpon>InformationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntConverter.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\AddCommand.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\BrowseFilePathCommandBase.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\BrowseHoverImagePathCommand.vb" />

@@ -1,6 +1,7 @@
 ﻿<Window x:Name="Tropical_Sprite_Sheet_Builder" x:Class="MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Tropical.SheetBuilder"    
     Title="{Binding SheetTitle}" 
     Height="480" Width="640" Icon="/Resources/tropical_logo_256px.ico">
   <Window.Resources>
@@ -11,6 +12,7 @@
         </DataTrigger>
       </Style.Triggers>
     </Style>
+    <local:IntConverter x:Key="IntConverter" />
   </Window.Resources>
   <DockPanel>
 
@@ -87,7 +89,10 @@
               <TextBox x:Name="txtImageWidth" 
                        Validation.Error="OnTextBoxValidationError"
                        Text="{Binding SpriteSheet.ImageWidth, 
-                        ValidatesOnDataErrors=True, NotifyOnValidationError=True,
+                        ValidatesOnExceptions=True,
+                        ValidatesOnDataErrors=True, 
+                        NotifyOnValidationError=True,
+                        Converter={StaticResource IntConverter},
                         FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageWidth]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />
@@ -96,7 +101,10 @@
               <TextBox x:Name="txtImageHeight"
                        Validation.Error="OnTextBoxValidationError"
                        Text="{Binding SpriteSheet.ImageHeight, 
-                        ValidatesOnDataErrors=True, NotifyOnValidationError=True,
+                        ValidatesOnExceptions=True,
+                        ValidatesOnDataErrors=True, 
+                        NotifyOnValidationError=True,
+                        Converter={StaticResource IntConverter},
                         FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageHeight]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />

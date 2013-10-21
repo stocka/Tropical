@@ -103,7 +103,6 @@ Public Class SpriteSheet
   <Display(Name:="Image Height",
      ShortName:="Image Height",
      Description:="This is the height, in pixels, of each image.")>
-  <Required(ErrorMessage:="The image height is required.")>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image height must be a positive value.")>
   Public Property ImageHeight() As Int32
     Get
@@ -131,7 +130,6 @@ Public Class SpriteSheet
   <Display(Name:="Image Width",
      ShortName:="Image Width",
      Description:="This is the width, in pixels, of each image.")>
-  <Required(ErrorMessage:="The image width is required.")>
   <Range(1, Int32.MaxValue, ErrorMessage:="Image width must be a positive value.")>
   Public Property ImageWidth() As Int32
     Get
