@@ -1,10 +1,37 @@
-﻿''' <summary>
+﻿Imports System.ComponentModel
+Imports System.Collections.ObjectModel
+
+''' <summary>
 ''' A single sprite in a <see cref="SpriteSheet">sheet</see>.
 ''' </summary>
 <Serializable()>
 Public Class Sprite
   Inherits BaseNotifyPropertyChanged
   Implements IValidatableObject
+  Implements IDataErrorInfo
+
+
+  ''' <summary>
+  ''' A mapping between the names of all public properties and their
+  ''' equivalent property information.
+  ''' </summary>
+  Private Shared PropertyMappings As ReadOnlyDictionary(Of String, Reflection.PropertyInfo)
+
+  ''' <summary>
+  ''' Initializes the <see cref="Sprite"/> class.
+  ''' </summary>
+  Shared Sub New()
+
+    Dim propertyDict As New Dictionary(Of String, Reflection.PropertyInfo)
+
+    For Each prop In GetType(Sprite).GetProperties()
+      propertyDict(prop.Name) = prop
+    Next
+
+    Sprite.PropertyMappings =
+      New ReadOnlyDictionary(Of String, Reflection.PropertyInfo)(propertyDict)
+
+  End Sub
 
   Private _id As Guid = Guid.NewGuid()
 
@@ -185,6 +212,8 @@ Public Class Sprite
 
   End Function
 
+#Region "Validation"
+
   ''' <summary>
   ''' Determines whether the specified object is valid.
   ''' </summary>
@@ -208,5 +237,61 @@ Public Class Sprite
     Return brokenRules
 
   End Function
+
+  ''' <summary>
+  ''' Gets an error message indicating what is wrong with this object.
+  ''' </summary>
+  ''' <returns>An error message indicating what is wrong with this object. 
+  ''' The default is an empty string ("").</returns>
+  Public ReadOnly Property DataErrorInfoError As String Implements IDataErrorInfo.Error
+    Get
+      Return Me.DataErrorInfoItem("")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets the error message for the property with the given name.
+  ''' </summary>
+  ''' <returns>The error message for the property. 
+  ''' The default is an empty string ("").</returns>
+  ''' <param name="propertyName">The name of the property whose error message will be
+  ''' retrieved.</param>
+  Default Public ReadOnly Property DataErrorInfoItem(propertyName As String) As String Implements IDataErrorInfo.Item
+    Get
+
+      Dim valResult As Boolean = True
+      Dim results As New List(Of ValidationResult)
+      Dim context As New ValidationContext(Me)
+
+      If Not String.IsNullOrWhiteSpace(propertyName) Then
+
+        ' Validating a single property.
+        context.MemberName = propertyName
+
+        ' Try to get the equivalent value and validate it.
+        Dim propInfo As Reflection.PropertyInfo = Nothing
+
+        If Sprite.PropertyMappings.TryGetValue(propertyName, propInfo) Then
+          valResult = Validator.TryValidateProperty(propInfo.GetValue(Me), context, results)
+        End If
+
+      Else
+
+        ' Validating the entire object.
+        valResult = Validator.TryValidateObject(Me, context, results)
+
+      End If
+
+      ' Get the first error message if validation was unsuccessful
+      If valResult = False AndAlso results.Any() Then
+        Return results.First().ErrorMessage
+      Else
+        Return String.Empty
+      End If
+
+    End Get
+  End Property
+
+#End Region
 
 End Class
