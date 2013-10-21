@@ -5,7 +5,7 @@
     ' We're doing all of this so that we can start up with a fresh
     ' DataContext, which also means not using a StartupUri.
     Dim mainWin As New MainWindow()
-    mainWin.ChangeCurrentSpriteSheet(New SpriteSheetFileInformation(New Models.SpriteSheet(), ""))
+    mainWin.ChangeCurrentSpriteSheet(New SpriteSheetFileInformation(SpriteSheetService.GetNewSpriteSheet(), ""))
 
     Me.MainWindow = mainWin
 

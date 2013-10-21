@@ -104,6 +104,24 @@ Public Class SpriteSheetService
   End Function
 
   ''' <summary>
+  ''' Initializes a sprite sheet with default values and returns it.
+  ''' </summary>
+  ''' <returns>An instantiated sprite sheet.</returns>
+  Public Shared Function GetNewSpriteSheet() As SpriteSheet
+
+    Dim sheet As New SpriteSheet()
+    With sheet
+      .BaseClassName = "icon"
+      .BaseFileName = "icons"
+      .ImageHeight = 16
+      .ImageWidth = 16
+    End With
+
+    Return sheet
+
+  End Function
+
+  ''' <summary>
   ''' Loads the sprite sheet file at the specified file path
   ''' and returns it.
   ''' </summary>

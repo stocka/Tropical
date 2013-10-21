@@ -44,7 +44,7 @@ Public Class NewSpriteSheetCommand
       End If
 
       ' Create a new sheet.
-      Dim sheet As New Models.SpriteSheet()
+      Dim sheet As Models.SpriteSheet = SpriteSheetService.GetNewSpriteSheet()
 
       ' Pass it to our handler.
       MyBase.TryExecuteHandler(sheet)
