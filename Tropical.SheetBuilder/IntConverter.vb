@@ -38,11 +38,11 @@ Public Class IntConverter
   ''' </returns>
   Public Function ConvertBack(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IValueConverter.ConvertBack
 
-    If value Is Nothing OrElse String.IsNullOrWhiteSpace(value.ToString()) Then
-      Return "0"
-    Else
-      Return value.ToString()
+    If value Is Nothing Then
+      Return ""
     End If
+
+    Return value.ToString()
 
   End Function
 

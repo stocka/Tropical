@@ -85,8 +85,17 @@
         Me.DefaultTextBoxTooltips(sourceTextBox) = sourceTextBox.ToolTip.ToString()
       End If
 
-      ' Set our tooltip to the error message
-      sourceTextBox.SetValue(TextBox.ToolTipProperty, e.Error.ErrorContent)
+      ' HACK: workaround format exceptions specially
+      If e.Error.Exception Is Nothing OrElse Not TypeOf e.Error.Exception Is FormatException Then
+
+        ' Set our tooltip to the error message
+        sourceTextBox.SetValue(TextBox.ToolTipProperty, e.Error.ErrorContent)
+
+      ElseIf TypeOf CType(e.Error.BindingInError, BindingExpression).ParentBinding.Converter Is IntConverter Then
+
+        sourceTextBox.SetValue(TextBox.ToolTipProperty, "A positive number must be specified.")
+
+      End If
 
     ElseIf Not Validation.GetHasError(sourceTextBox) AndAlso
       Me.DefaultTextBoxTooltips.ContainsKey(sourceTextBox) Then
