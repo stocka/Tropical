@@ -13,6 +13,8 @@
       </Style.Triggers>
     </Style>
     <local:IntConverter x:Key="IntConverter" />
+    <local:ImageSourceConverter x:Key="ImageSourceConverter" />
+    <local:ImageTooltipConverter x:Key="ImageTooltipConverter" />
   </Window.Resources>
   <DockPanel>
 
@@ -170,10 +172,15 @@
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
 
             <Label FontSize="11">Image</Label>
+            
             <Image x:Name="imgSpriteImage" 
-                   Source="{Binding CurrentSprite.ImagePath}"
+                   Source="{Binding CurrentSprite.ImagePath,
+                            Converter={StaticResource ImageSourceConverter}}"
+                   ToolTip="{Binding CurrentSprite.ImagePath,
+                            Converter={StaticResource ImageTooltipConverter}}"
                    StretchDirection="DownOnly"
-                   Width="50" Height="50" />
+                   Width="50" Height="50" Margin="3" />
+            
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
                        Text="{Binding CurrentSprite.ImagePath}"
@@ -191,9 +198,13 @@
 
             <Label FontSize="11">Hover Image</Label>
             <Image x:Name="imgSpriteHoverImage" 
-                   Source="{Binding CurrentSprite.HoverImagePath}"
+                   Source="{Binding CurrentSprite.HoverImagePath,
+                            Converter={StaticResource ImageSourceConverter}}"
+                   ToolTip="{Binding CurrentSprite.HoverImagePath,
+                            Converter={StaticResource ImageTooltipConverter}}"                   
                    StretchDirection="DownOnly"
-                   Width="50" Height="50" />
+                   Width="50" Height="50" Margin="3" />
+            
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
                        Text="{Binding CurrentSprite.HoverImagePath}"

@@ -79,10 +79,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ImageSourceConverter.vb" />
+    <Compile Include="Converters\ImageTooltipConverter.vb" />
     <Compile Include="InformationDialog.xaml.vb">
       <DependentUpon>InformationDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IntConverter.vb" />
+    <Compile Include="Converters\IntConverter.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\AddCommand.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\BrowseFilePathCommandBase.vb" />
     <Compile Include="ViewModels\Commands\SpriteCommands\BrowseHoverImagePathCommand.vb" />
@@ -190,6 +192,12 @@
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Resources\TropicalSplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NoImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MissingImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
