@@ -64,6 +64,7 @@
             <Label FontSize="11">Base CSS Class</Label>
             <TextBox x:Name="txtBaseCssClass" 
                      Text="{Binding SpriteSheet.BaseClassName}"
+                     ToolTip="{Binding SheetDescriptions[BaseClassName]}" 
                      Width="200" FontSize="11"/>
           </StackPanel>
 
@@ -71,6 +72,7 @@
             <Label FontSize="11">Base File Name</Label>
             <TextBox x:Name="txtBaseFileName" 
                      Text="{Binding SpriteSheet.BaseFileName}"
+                     ToolTip="{Binding SheetDescriptions[BaseFileName]}"             
                      Width="200" FontSize="11" />
           </StackPanel>
 
@@ -80,11 +82,13 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
               <TextBox x:Name="txtImageWidth" 
                        Text="{Binding SpriteSheet.ImageWidth}"
+                       ToolTip="{Binding SheetDescriptions[ImageWidth]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />
               <Label FontSize="11" VerticalAlignment="Top">by</Label>
 
               <TextBox x:Name="txtImageHeight"
                        Text="{Binding SpriteSheet.ImageHeight}"
+                       ToolTip="{Binding SheetDescriptions[ImageHeight]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />
               <Label FontSize="11" VerticalAlignment="Top">pixels</Label>
             </StackPanel>
@@ -133,12 +137,14 @@
             <Label FontSize="11">CSS Class</Label>
             <TextBox x:Name="txtSpriteCssClass" 
                      Text="{Binding CurrentSprite.ClassName}"
+                     ToolTip="{Binding SpriteDescriptions[ClassName]}"
                      Width="200" FontSize="11" 
                      HorizontalAlignment="Left" Margin="3,0"/>
 
             <Label FontSize="11">Filter to CSS Class</Label>
             <TextBox x:Name="txtSpriteFilterCssClass" 
                      Text="{Binding CurrentSprite.FilterClassName}"
+                     ToolTip="{Binding SpriteDescriptions[FilterClassName]}"
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
 
             <Label FontSize="11">Image</Label>
@@ -149,6 +155,7 @@
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
                        Text="{Binding CurrentSprite.ImagePath}"
+                       ToolTip="{Binding SpriteDescriptions[ImagePath]}"
                        Width="125" Margin="3,0" />
               <Button x:Name="btnBrowseSpriteImage" 
                       Command="{Binding BrowseImagePathCommand}"
@@ -168,6 +175,7 @@
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
                        Text="{Binding CurrentSprite.HoverImagePath}"
+                       ToolTip="{Binding SpriteDescriptions[HoverImagePath]}" 
                        Width="125" Margin="3,0" />
               <Button x:Name="btnBrowseSpriteHoverImage" 
                     Command="{Binding BrowseHoverImagePathCommand}"

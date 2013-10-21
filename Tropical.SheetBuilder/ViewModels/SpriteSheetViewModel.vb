@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.ComponentModel.DataAnnotations
 Imports System.Collections.ObjectModel
 Imports Tropical.Models
 
@@ -7,6 +8,69 @@ Imports Tropical.Models
 ''' </summary>
 Public Class SpriteSheetViewModel
   Inherits BaseNotifyPropertyChanged
+
+  ''' <summary>
+  ''' A dictionary for all descriptions for fields on a sprite sheet.
+  ''' The key is the field name and the value is the equivalent description,
+  ''' as determined by the <see cref="DisplayAttribute.Description" />
+  ''' that has been specified for the field.
+  ''' </summary>
+  Shared ReadOnly SheetFieldDescriptions As ReadOnlyDictionary(Of String, String)
+
+  ''' <summary>
+  ''' A dictionary for all descriptions for fields on a sprite.
+  ''' The key is the field name and the value is the equivalent description,
+  ''' as determined by the <see cref="DisplayAttribute.Description" />
+  ''' that has been specified for the field.
+  ''' </summary>
+  Shared ReadOnly SpriteFieldDescriptions As ReadOnlyDictionary(Of String, String)
+
+  ''' <summary>
+  ''' Initializes the <see cref="SpriteSheetViewModel"/> class.
+  ''' </summary>
+  Shared Sub New()
+
+    ' Iterate over all properties on the sprite sheet
+    Dim sheetProps As Reflection.PropertyInfo() = GetType(SpriteSheet).GetProperties()
+    Dim sheetFieldDict As New Dictionary(Of String, String)
+
+    For Each sheetProp In sheetProps
+
+      ' If we have a DisplayAttribute, stick the equivalent description
+      ' in our dictionary for this property name.
+      Dim valAtts As Object() =
+        sheetProp.GetCustomAttributes(GetType(DisplayAttribute), True)
+
+      If valAtts IsNot Nothing AndAlso valAtts.Any() Then
+        sheetFieldDict(sheetProp.Name) = CType(valAtts(0), DisplayAttribute).Description
+      End If
+
+    Next
+
+    ' Copy over our dictionary
+    SheetFieldDescriptions = New ReadOnlyDictionary(Of String, String)(sheetFieldDict)
+
+    ' Now do the same thing for the sprite
+    Dim spriteProps As Reflection.PropertyInfo() = GetType(Sprite).GetProperties()
+    Dim spriteFieldDict As New Dictionary(Of String, String)
+
+    For Each spriteProp In spriteProps
+
+      ' If we have a DisplayAttribute, stick the equivalent description
+      ' in our dictionary for this property name.
+      Dim valAtts As Object() =
+        spriteProp.GetCustomAttributes(GetType(DisplayAttribute), True)
+
+      If valAtts IsNot Nothing AndAlso valAtts.Any() Then
+        spriteFieldDict(spriteProp.Name) = CType(valAtts(0), DisplayAttribute).Description
+      End If
+
+    Next
+
+    ' Copy over our dictionary
+    SpriteFieldDescriptions = New ReadOnlyDictionary(Of String, String)(spriteFieldDict)
+
+  End Sub
 
   ''' <summary>
   ''' Initializes a new instance of the <see cref="SpriteSheetViewModel"/> class.
@@ -396,6 +460,52 @@ Public Class SpriteSheetViewModel
     End Select
 
   End Sub
+
+#Region "Field Descriptions/Validation"
+
+  ''' <summary>
+  ''' Gets the description for a field on a sprite sheet.
+  ''' </summary>
+  ''' <param name="fieldName">The name of the field for which
+  ''' a description will be retrieved</param>
+  ''' <value>
+  ''' The description for the field, or <c>String.Empty</c> if no
+  ''' description is available.
+  ''' </value>
+  Public ReadOnly Property SheetDescriptions(fieldName As String) As String
+    Get
+
+      If SpriteSheetViewModel.SheetFieldDescriptions.ContainsKey(fieldName) Then
+        Return SpriteSheetViewModel.SheetFieldDescriptions(fieldName)
+      Else
+        Return String.Empty
+      End If
+
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets the description for a field on a sprite.
+  ''' </summary>
+  ''' <param name="fieldName">The name of the field for which
+  ''' a description will be retrieved</param>
+  ''' <value>
+  ''' The description for the field, or <c>String.Empty</c> if no
+  ''' description is available.
+  ''' </value>
+  Public ReadOnly Property SpriteDescriptions(fieldName As String) As String
+    Get
+
+      If SpriteSheetViewModel.SpriteFieldDescriptions.ContainsKey(fieldName) Then
+        Return SpriteSheetViewModel.SpriteFieldDescriptions(fieldName)
+      Else
+        Return String.Empty
+      End If
+
+    End Get
+  End Property
+
+#End Region
 
 #Region "Sprite Sheet Loading"
 
