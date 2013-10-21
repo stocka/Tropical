@@ -1,6 +1,13 @@
 ﻿Class MainWindow
 
   ''' <summary>
+  ''' Stores the default tooltips to be used for each textbox when
+  ''' there are no errors.  Modified and accessed by 
+  ''' <see cref="OnTextBoxValidationError" />.
+  ''' </summary>
+  Private ReadOnly DefaultTextBoxTooltips As New Dictionary(Of TextBox, String)
+
+  ''' <summary>
   ''' Changes the current sprite sheet to use the new provided
   ''' sheet as this instance's data context.
   ''' </summary>
@@ -45,6 +52,47 @@
       If textBindingEx IsNot Nothing Then
         textBindingEx.UpdateSource()
       End If
+
+    End If
+
+  End Sub
+
+  ''' <summary>
+  ''' Called when a validation error has been added or removed for a textbox.
+  ''' </summary>
+  ''' <param name="sender">The sender.</param>
+  ''' <param name="e">The <see cref="ValidationErrorEventArgs"/> instance containing the event data.</param>
+  ''' <remarks>
+  ''' This is a workaround for the fact that WPF will always prefer the locally-defined
+  ''' property on an element.  However, when validation errors occur, we want to give
+  ''' those precedence over the locally-defined tooltips.  This method will override
+  ''' the tooltip to display when a validation error has taken place, and will revert
+  ''' back to the default (as stored in <see cref="DefaultTextBoxTooltips" />) when
+  ''' there are no longer any errors.
+  ''' </remarks>
+  Private Sub OnTextBoxValidationError(sender As Object, e As ValidationErrorEventArgs)
+
+    Dim sourceTextBox As TextBox = TryCast(sender, TextBox)
+
+    If sourceTextBox Is Nothing Then
+      Return
+    End If
+
+    If e.Action = ValidationErrorEventAction.Added Then
+
+      ' Store our default tooltip for the textbox
+      If Not Me.DefaultTextBoxTooltips.ContainsKey(sourceTextBox) Then
+        Me.DefaultTextBoxTooltips(sourceTextBox) = sourceTextBox.ToolTip.ToString()
+      End If
+
+      ' Set our tooltip to the error message
+      sourceTextBox.SetValue(TextBox.ToolTipProperty, e.Error.ErrorContent)
+
+    ElseIf Not Validation.GetHasError(sourceTextBox) AndAlso
+      Me.DefaultTextBoxTooltips.ContainsKey(sourceTextBox) Then
+
+      ' If we don't have any validation errors, use the default tooltip
+      sourceTextBox.SetValue(TextBox.ToolTipProperty, Me.DefaultTextBoxTooltips(sourceTextBox))
 
     End If
 

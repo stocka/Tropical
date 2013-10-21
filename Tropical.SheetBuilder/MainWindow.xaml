@@ -63,7 +63,9 @@
           <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left">
             <Label FontSize="11">Base CSS Class</Label>
             <TextBox x:Name="txtBaseCssClass" 
-                     Text="{Binding SpriteSheet.BaseClassName}"
+                     Validation.Error="OnTextBoxValidationError"
+                     Text="{Binding SpriteSheet.BaseClassName, 
+                      ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      ToolTip="{Binding SheetDescriptions[BaseClassName]}" 
                      Width="200" FontSize="11"/>
           </StackPanel>
@@ -71,7 +73,9 @@
           <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0,0,0">
             <Label FontSize="11">Base File Name</Label>
             <TextBox x:Name="txtBaseFileName" 
-                     Text="{Binding SpriteSheet.BaseFileName}"
+                     Validation.Error="OnTextBoxValidationError"
+                     Text="{Binding SpriteSheet.BaseFileName, 
+                      ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      ToolTip="{Binding SheetDescriptions[BaseFileName]}"             
                      Width="200" FontSize="11" />
           </StackPanel>
@@ -81,13 +85,19 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
               <TextBox x:Name="txtImageWidth" 
-                       Text="{Binding SpriteSheet.ImageWidth}"
+                       Validation.Error="OnTextBoxValidationError"
+                       Text="{Binding SpriteSheet.ImageWidth, 
+                        ValidatesOnDataErrors=True, NotifyOnValidationError=True,
+                        FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageWidth]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />
               <Label FontSize="11" VerticalAlignment="Top">by</Label>
 
               <TextBox x:Name="txtImageHeight"
-                       Text="{Binding SpriteSheet.ImageHeight}"
+                       Validation.Error="OnTextBoxValidationError"
+                       Text="{Binding SpriteSheet.ImageHeight, 
+                        ValidatesOnDataErrors=True, NotifyOnValidationError=True,
+                        FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageHeight]}" 
                        Width="50" FontSize="11" VerticalAlignment="Top" />
               <Label FontSize="11" VerticalAlignment="Top">pixels</Label>
@@ -135,15 +145,19 @@
                       VerticalAlignment="Top" Margin="0,0,0,3">
 
             <Label FontSize="11">CSS Class</Label>
-            <TextBox x:Name="txtSpriteCssClass" 
-                     Text="{Binding CurrentSprite.ClassName}"
+            <TextBox x:Name="txtSpriteCssClass"
+                     Validation.Error="OnTextBoxValidationError" 
+                     Text="{Binding CurrentSprite.ClassName, 
+                      ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      ToolTip="{Binding SpriteDescriptions[ClassName]}"
                      Width="200" FontSize="11" 
                      HorizontalAlignment="Left" Margin="3,0"/>
 
             <Label FontSize="11">Filter to CSS Class</Label>
-            <TextBox x:Name="txtSpriteFilterCssClass" 
-                     Text="{Binding CurrentSprite.FilterClassName}"
+            <TextBox x:Name="txtSpriteFilterCssClass"
+                     Validation.Error="OnTextBoxValidationError" 
+                     Text="{Binding CurrentSprite.FilterClassName, 
+                      ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                      ToolTip="{Binding SpriteDescriptions[FilterClassName]}"
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
 
