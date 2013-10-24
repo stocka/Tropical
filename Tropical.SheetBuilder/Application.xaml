@@ -2,5 +2,28 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Application.Resources>
+    <ResourceDictionary>
+      <BitmapImage x:Key="NewSpriteSheetImage" UriSource="/Resources/MicrosoftIconLibrary/NewSpriteSheet.png" />
+      <Image x:Key="NewSpriteSheetIcon" Height="16" Width="16" Source="{StaticResource NewSpriteSheetImage}" />
+      <BitmapImage x:Key="OpenSpriteSheetImage" UriSource="/Resources/MicrosoftIconLibrary/OpenSpriteSheet.png" />
+      <Image x:Key="OpenSpriteSheetIcon" Height="16" Width="16" Source="{StaticResource OpenSpriteSheetImage}" />
+      <BitmapImage x:Key="SaveSpriteSheetImage" UriSource="/Resources/MicrosoftIconLibrary/SaveSpriteSheet.png" />
+      <Image x:Key="SaveSpriteSheetIcon" Height="16" Width="16" Source="{StaticResource SaveSpriteSheetImage}" />
+      <BitmapImage x:Key="SaveSpriteSheetContentImage" UriSource="/Resources/MicrosoftIconLibrary/SaveSpriteSheetContent.png" />
+      <Image x:Key="SaveSpriteSheetContentIcon" Height="16" Width="16" Source="{StaticResource SaveSpriteSheetContentImage}" />
+
+      <BitmapImage x:Key="NewSpriteImage" UriSource="/Resources/MicrosoftIconLibrary/NewSprite.png" />
+      <Image x:Key="NewSpriteIcon" Height="16" Width="16" Source="{StaticResource NewSpriteImage}" />
+      <BitmapImage x:Key="DeleteSpriteImage" UriSource="/Resources/MicrosoftIconLibrary/DeleteSprite.png" />
+      <Image x:Key="DeleteSpriteIcon" Height="16" Width="16" Source="{StaticResource DeleteSpriteImage}" />
+      <BitmapImage x:Key="MoveUpSpriteImage" UriSource="/Resources/MicrosoftIconLibrary/MoveUpSprite.png" />
+      <Image x:Key="MoveUpSpriteIcon" Height="16" Width="16" Source="{StaticResource MoveUpSpriteImage}" />
+      <BitmapImage x:Key="MoveDownSpriteImage" UriSource="/Resources/MicrosoftIconLibrary/MoveDownSprite.png" />
+      <Image x:Key="MoveDownSpriteIcon" Height="16" Width="16" Source="{StaticResource MoveDownSpriteImage}" />
+
+      <BitmapImage x:Key="HelpImage" UriSource="/Resources/MicrosoftIconLibrary/Help.png" />
+      <Image x:Key="HelpIcon" Height="16" Width="16" Source="{StaticResource HelpImage}" />
+
+    </ResourceDictionary>
   </Application.Resources>
 </Application>

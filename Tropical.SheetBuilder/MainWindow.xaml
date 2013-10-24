@@ -12,6 +12,22 @@
         </DataTrigger>
       </Style.Triggers>
     </Style>
+
+    <Style x:Key="SpriteIconButton" TargetType="Button">
+      <Setter Property="Margin" Value="3" />
+      <Style.Resources>
+        <Style TargetType="StackPanel">
+          <Setter Property="Orientation" Value="Horizontal" />
+          <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Image">
+          <Setter Property="Width" Value="16" />
+          <Setter Property="Height" Value="16" />
+          <Setter Property="Margin" Value="0,0,3,0" />
+        </Style>
+      </Style.Resources>
+    </Style>
+
     <local:IntConverter x:Key="IntConverter" />
     <local:ImageSourceConverter x:Key="ImageSourceConverter" />
     <local:ImageTooltipConverter x:Key="ImageTooltipConverter" />
@@ -21,19 +37,23 @@
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="_File">
         <MenuItem Header="_New"
+                  Icon="{StaticResource NewSpriteSheetIcon}"
                   Click="CommitFocusedChanges"
                   Command="{Binding NewSpriteSheetCommand}"
                   CommandParameter="{Binding CheckUnsavedChangesHandler}" />
         <Separator />
         <MenuItem Header="_Open" 
+                  Icon="{StaticResource OpenSpriteSheetIcon}"                  
                   Click="CommitFocusedChanges"
                   Command="{Binding LoadSpriteSheetCommand}"
                   CommandParameter="{Binding CheckUnsavedChangesHandler}" />
         <MenuItem Header="_Save" 
+                  Icon="{StaticResource SaveSpriteSheetIcon}" 
                   Click="CommitFocusedChanges"
                   Command="{Binding SaveSpriteSheetCommand}"
                   CommandParameter="{Binding SpriteSheet}" />
         <MenuItem Header="_Generate" 
+                  Icon="{StaticResource SaveSpriteSheetContentIcon}" 
                   Click="CommitFocusedChanges"
                   Command="{Binding SaveSpriteSheetContentsCommand}"
                   CommandParameter="{Binding SpriteSheet}"  />
@@ -43,6 +63,7 @@
       </MenuItem>
       <MenuItem Header="_Help">
         <MenuItem Header="_About"
+                  Icon="{StaticResource HelpIcon}" 
                   Click="mnuAbout_Click" />
       </MenuItem>
     </Menu>
@@ -132,18 +153,43 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top">
-          <Button Command="{Binding AddCommand}" 
-                  CommandParameter="{Binding CurrentSprite}"
-                  Margin="3">Add</Button>
-          <Button Command="{Binding DeleteCommand}"
-                  CommandParameter="{Binding CurrentSprite}" 
-                  Margin="3">Delete</Button>
-          <Button Command="{Binding MoveUpCommand}"
-                  CommandParameter="{Binding CurrentSprite}" 
-                  Margin="3">Move Up</Button>
-          <Button Command="{Binding MoveDownCommand}"
-                  CommandParameter="{Binding CurrentSprite}"  
-                  Margin="3">Move Down</Button>
+
+          <Button Style="{StaticResource SpriteIconButton}"
+                  Command="{Binding AddCommand}" 
+                  CommandParameter="{Binding CurrentSprite}">
+            <StackPanel>
+              <Image Source="{StaticResource NewSpriteImage}" />
+              <TextBlock>Add</TextBlock>
+            </StackPanel>
+          </Button>
+
+          <Button Style="{StaticResource SpriteIconButton}"
+                  Command="{Binding DeleteCommand}" 
+                  CommandParameter="{Binding CurrentSprite}">
+            <StackPanel>
+              <Image Source="{StaticResource DeleteSpriteImage}" />
+              <TextBlock>Delete</TextBlock>
+            </StackPanel>
+          </Button>
+
+          <Button Style="{StaticResource SpriteIconButton}"
+                  Command="{Binding MoveUpCommand}" 
+                  CommandParameter="{Binding CurrentSprite}">
+            <StackPanel>
+              <Image Source="{StaticResource MoveUpSpriteImage}" />
+              <TextBlock>Move Up</TextBlock>
+            </StackPanel>
+          </Button>
+
+          <Button Style="{StaticResource SpriteIconButton}"
+                  Command="{Binding MoveDownCommand}" 
+                  CommandParameter="{Binding CurrentSprite}">
+            <StackPanel>
+              <Image Source="{StaticResource MoveDownSpriteImage}" />
+              <TextBlock>Move Down</TextBlock>
+            </StackPanel>
+          </Button>
+
           <Label Style="{StaticResource CurrentSpriteDependent}" 
                  Margin="0,3,0,3">Current Sprite</Label>
         </StackPanel>
@@ -172,7 +218,7 @@
                      Width="200" FontSize="11" HorizontalAlignment="Left"/>
 
             <Label FontSize="11">Image</Label>
-            
+
             <Image x:Name="imgSpriteImage" 
                    Source="{Binding CurrentSprite.ImagePath,
                             Converter={StaticResource ImageSourceConverter}}"
@@ -180,7 +226,7 @@
                             Converter={StaticResource ImageTooltipConverter}}"
                    StretchDirection="DownOnly"
                    Width="50" Height="50" Margin="3" />
-            
+
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
                        Text="{Binding CurrentSprite.ImagePath}"
@@ -204,7 +250,7 @@
                             Converter={StaticResource ImageTooltipConverter}}"                   
                    StretchDirection="DownOnly"
                    Width="50" Height="50" Margin="3" />
-            
+
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
                        Text="{Binding CurrentSprite.HoverImagePath}"

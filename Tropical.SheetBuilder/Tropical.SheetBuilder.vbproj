@@ -199,5 +199,32 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\MissingImage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\DeleteSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\MoveDownSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\MoveUpSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\NewSpriteSheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\NewSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\OpenSpriteSheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\SaveSpriteSheetContent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MicrosoftIconLibrary\SaveSpriteSheet.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
