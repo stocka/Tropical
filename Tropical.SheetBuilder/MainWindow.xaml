@@ -56,6 +56,7 @@
     </Style>
 
     <Style x:Key="SpriteIconButton" TargetType="Button">
+      <Setter Property="CommandParameter" Value="{Binding CurrentSprite}" />
       <Setter Property="Margin" Value="3" />
       <Style.Resources>
         <Style TargetType="StackPanel">
@@ -65,7 +66,7 @@
         <Style TargetType="Image">
           <Setter Property="Width" Value="16" />
           <Setter Property="Height" Value="16" />
-          <Setter Property="Margin" Value="0,0,3,0" />
+          <Setter Property="Margin" Value="3,0,0,0" />
         </Style>
       </Style.Resources>
     </Style>
@@ -221,38 +222,34 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top">
 
           <Button Style="{StaticResource SpriteIconButton}"
-                  Command="{Binding AddCommand}" 
-                  CommandParameter="{Binding CurrentSprite}">
+                  Command="{Binding AddCommand}">
             <StackPanel>
-              <Image Source="{StaticResource NewSpriteImage}" />
               <TextBlock>Add</TextBlock>
+              <Image Source="{StaticResource NewSpriteImage}" />
             </StackPanel>
           </Button>
 
           <Button Style="{StaticResource SpriteIconButton}"
-                  Command="{Binding DeleteCommand}" 
-                  CommandParameter="{Binding CurrentSprite}">
+                  Command="{Binding DeleteCommand}">
             <StackPanel>
-              <Image Source="{StaticResource DeleteSpriteImage}" />
               <TextBlock>Delete</TextBlock>
+              <Image Source="{StaticResource DeleteSpriteImage}" />
             </StackPanel>
           </Button>
 
           <Button Style="{StaticResource SpriteIconButton}"
-                  Command="{Binding MoveUpCommand}" 
-                  CommandParameter="{Binding CurrentSprite}">
+                  Command="{Binding MoveUpCommand}">
             <StackPanel>
-              <Image Source="{StaticResource MoveUpSpriteImage}" />
               <TextBlock>Move Up</TextBlock>
+              <Image Source="{StaticResource MoveUpSpriteImage}" />
             </StackPanel>
           </Button>
 
           <Button Style="{StaticResource SpriteIconButton}"
-                  Command="{Binding MoveDownCommand}" 
-                  CommandParameter="{Binding CurrentSprite}">
+                  Command="{Binding MoveDownCommand}">
             <StackPanel>
-              <Image Source="{StaticResource MoveDownSpriteImage}" />
               <TextBlock>Move Down</TextBlock>
+              <Image Source="{StaticResource MoveDownSpriteImage}" />
             </StackPanel>
           </Button>
 
