@@ -27,6 +27,34 @@
         </Style>
       </Style.Resources>
     </Style>
+    
+    <Style x:Key="CurrentSpriteFields" TargetType="StackPanel">
+      <Setter Property="Orientation" Value="Vertical" />
+      <Setter Property="HorizontalAlignment" Value="Left"/>
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="Margin" Value="0,0,0,3" />
+      <Style.Resources>
+        <Style TargetType="Label">
+          <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style TargetType="TextBox">
+          <Setter Property="Width" Value="200" />
+          <Setter Property="Margin" Value="3,0" />
+          <Setter Property="HorizontalAlignment" Value="Left" />
+          <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style TargetType="Image">
+          <Setter Property="Width" Value="50" />
+          <Setter Property="Height" Value="50" />
+          <Setter Property="Margin" Value="3" />
+          <Setter Property="StretchDirection" Value="DownOnly" />
+        </Style>
+        <Style TargetType="Button">
+          <Setter Property="Width" Value="50" />
+          <Setter Property="Margin" Value="3,0" />
+        </Style>
+      </Style.Resources>
+    </Style>
 
     <local:IntConverter x:Key="IntConverter" />
     <local:ImageSourceConverter x:Key="ImageSourceConverter" />
@@ -197,73 +225,65 @@
         <ScrollViewer Grid.Row="1" Grid.Column="0" 
                       Style="{StaticResource CurrentSpriteDependent}"
                       HorizontalScrollBarVisibility="Auto">
-          <StackPanel Orientation="Vertical" HorizontalAlignment="Left" 
-                      VerticalAlignment="Top" Margin="0,0,0,3">
+          <StackPanel Style="{StaticResource CurrentSpriteFields}">
 
-            <Label FontSize="11">CSS Class</Label>
+            <Label>CSS Class</Label>
             <TextBox x:Name="txtSpriteCssClass"
                      Validation.Error="OnTextBoxValidationError" 
                      Text="{Binding CurrentSprite.ClassName, 
                       ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     ToolTip="{Binding SpriteDescriptions[ClassName]}"
-                     Width="200" FontSize="11" 
-                     HorizontalAlignment="Left" Margin="3,0"/>
+                     ToolTip="{Binding SpriteDescriptions[ClassName]}"/>
 
-            <Label FontSize="11">Filter to CSS Class</Label>
+            <Label>Filter to CSS Class</Label>
             <TextBox x:Name="txtSpriteFilterCssClass"
                      Validation.Error="OnTextBoxValidationError" 
                      Text="{Binding CurrentSprite.FilterClassName, 
                       ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     ToolTip="{Binding SpriteDescriptions[FilterClassName]}"
-                     Width="200" FontSize="11" HorizontalAlignment="Left"/>
+                     ToolTip="{Binding SpriteDescriptions[FilterClassName]}"/>
 
-            <Label FontSize="11">Image</Label>
+            <Label>Image</Label>
 
             <Image x:Name="imgSpriteImage" 
                    Source="{Binding CurrentSprite.ImagePath,
                             Converter={StaticResource ImageSourceConverter}}"
                    ToolTip="{Binding CurrentSprite.ImagePath,
-                            Converter={StaticResource ImageTooltipConverter}}"
-                   StretchDirection="DownOnly"
-                   Width="50" Height="50" Margin="3" />
+                            Converter={StaticResource ImageTooltipConverter}}" />
 
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteImage" 
                        Text="{Binding CurrentSprite.ImagePath}"
                        ToolTip="{Binding SpriteDescriptions[ImagePath]}"
-                       Width="125" Margin="3,0" />
+                       Width="125" />
               <Button x:Name="btnBrowseSpriteImage" 
                       Command="{Binding BrowseImagePathCommand}"
-                      CommandParameter="{Binding CurrentSprite}" 
-                      Width="50" Margin="3,0">Browse</Button>
+                      CommandParameter="{Binding CurrentSprite}">
+                Browse</Button>
               <Button x:Name="btnClearHoverImage" 
                     Command="{Binding ClearImagePathCommand}"
-                    CommandParameter="{Binding CurrentSprite}"  
-                    Width="50" Margin="3,0">Clear</Button>
+                    CommandParameter="{Binding CurrentSprite}">
+                Clear</Button>
             </StackPanel>
 
-            <Label FontSize="11">Hover Image</Label>
+            <Label>Hover Image</Label>
             <Image x:Name="imgSpriteHoverImage" 
                    Source="{Binding CurrentSprite.HoverImagePath,
                             Converter={StaticResource ImageSourceConverter}}"
                    ToolTip="{Binding CurrentSprite.HoverImagePath,
-                            Converter={StaticResource ImageTooltipConverter}}"                   
-                   StretchDirection="DownOnly"
-                   Width="50" Height="50" Margin="3" />
+                            Converter={StaticResource ImageTooltipConverter}}" />
 
             <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtSpriteHoverImage" 
                        Text="{Binding CurrentSprite.HoverImagePath}"
                        ToolTip="{Binding SpriteDescriptions[HoverImagePath]}" 
-                       Width="125" Margin="3,0" />
+                       Width="125" />
               <Button x:Name="btnBrowseSpriteHoverImage" 
                     Command="{Binding BrowseHoverImagePathCommand}"
-                    CommandParameter="{Binding CurrentSprite}" 
-                    Width="50" Margin="3,0">Browse</Button>
+                    CommandParameter="{Binding CurrentSprite}">
+                Browse</Button>
               <Button x:Name="btnClearSpriteHoverImage" 
                     Command="{Binding ClearHoverImagePathCommand}"
-                    CommandParameter="{Binding CurrentSprite}"  
-                    Width="50" Margin="3,0">Clear</Button>
+                    CommandParameter="{Binding CurrentSprite}">
+                Clear</Button>
             </StackPanel>
           </StackPanel>
         </ScrollViewer>
