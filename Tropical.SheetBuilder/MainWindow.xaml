@@ -6,6 +6,12 @@
     Height="480" Width="640" Icon="/Resources/tropical_logo_256px.ico">
   <Window.Resources>
     
+    <Style x:Key="MainMenu" TargetType="Menu">
+      <Setter Property="DockPanel.Dock" Value="Top" />
+      <Setter Property="BorderBrush" Value="Gray" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    
     <Style x:Key="SpriteSheetFields" TargetType="GroupBox">
 
       <Setter Property="Grid.Row" Value="0" />
@@ -105,7 +111,7 @@
   </Window.Resources>
   <DockPanel>
 
-    <Menu DockPanel.Dock="Top">
+    <Menu Style="{StaticResource MainMenu}">
       <MenuItem Header="_File">
         <MenuItem Header="_New"
                   Icon="{StaticResource NewSpriteSheetIcon}"
