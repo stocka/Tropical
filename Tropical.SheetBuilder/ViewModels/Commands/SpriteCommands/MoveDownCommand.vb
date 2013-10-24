@@ -12,13 +12,17 @@ Public Class MoveDownCommand
   ''' <param name="service">The sprite sheet service.</param>
   ''' <param name="canExecute">The function to be invoked as necessary
   ''' by <see cref="CanExecute" />.</param>
+  ''' <param name="movingDown">The method to invoke before a sprite
+  ''' will be moved.  The affected sprite will be
+  ''' passed to this method.</param>
   ''' <param name="movedDown">The method to invoke after a sprite
   ''' has been successfully moved. The affected sprite will be
   ''' passed to this method.</param>
   Public Sub New(service As SpriteSheetService,
                  canExecute As Func(Of Boolean),
+                 movingDown As Action(Of Sprite),
                  movedDown As Action(Of Sprite))
-    MyBase.New(service, canExecute, movedDown)
+    MyBase.New(service, canExecute, movingDown, movedDown)
   End Sub
 
   ''' <summary>

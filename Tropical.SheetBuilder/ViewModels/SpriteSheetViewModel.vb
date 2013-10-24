@@ -109,6 +109,10 @@ Public Class SpriteSheetViewModel
       Me.Service,
       Function() Me.CanMoveUp,
       Sub(sprite)
+        Me.CanMoveChanging()
+      End Sub,
+      Sub(sprite)
+        Me.CanMoveChanged()
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
@@ -116,6 +120,10 @@ Public Class SpriteSheetViewModel
       Me.Service,
       Function() Me.CanMoveDown,
       Sub(sprite)
+        Me.CanMoveChanging()
+      End Sub,
+      Sub(sprite)
+        Me.CanMoveChanged()
         Me.PropagateSpriteCollectionChanges()
       End Sub)
 
@@ -559,7 +567,8 @@ Public Class SpriteSheetViewModel
   ''' </value>
   Public ReadOnly Property CanMoveUp() As Boolean
     Get
-      Return Me.CurrentSprite IsNot Nothing
+      Return Me.CurrentSprite IsNot Nothing AndAlso
+        Not Object.ReferenceEquals(Me.CurrentSprite, Me.Sprites.First())
     End Get
   End Property
 
@@ -573,9 +582,34 @@ Public Class SpriteSheetViewModel
   ''' </value>
   Public ReadOnly Property CanMoveDown() As Boolean
     Get
-      Return Me.CurrentSprite IsNot Nothing
+      Return Me.CurrentSprite IsNot Nothing AndAlso
+        Not Object.ReferenceEquals(Me.CurrentSprite, Me.Sprites.Last())
     End Get
   End Property
+
+  ''' <summary>
+  ''' Raises <see cref="PropertyChanging" /> events for the
+  ''' <see cref="CanMoveUp" /> and <see cref="CanMoveDown" />
+  ''' properties.
+  ''' </summary>
+  Private Sub CanMoveChanging()
+
+    RaisePropertyChanging(Function() Me.CanMoveUp)
+    RaisePropertyChanging(Function() Me.CanMoveDown)
+
+  End Sub
+
+  ''' <summary>
+  ''' Raises <see cref="PropertyChanged" /> events for the
+  ''' <see cref="CanMoveUp" /> and <see cref="CanMoveDown" />
+  ''' properties.
+  ''' </summary>
+  Private Sub CanMoveChanged()
+
+    RaisePropertyChanged(Function() Me.CanMoveUp)
+    RaisePropertyChanged(Function() Me.CanMoveDown)
+
+  End Sub
 
   ''' <summary>
   ''' Gets a value indicating whether the current sprite can have
