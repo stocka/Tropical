@@ -5,6 +5,48 @@
     Title="{Binding SheetTitle}" 
     Height="480" Width="640" Icon="/Resources/tropical_logo_256px.ico">
   <Window.Resources>
+    
+    <Style x:Key="SpriteSheetFields" TargetType="GroupBox">
+
+      <Setter Property="Grid.Row" Value="0" />
+      <Setter Property="Grid.Column" Value="0" />
+      <Setter Property="Grid.ColumnSpan" Value="2" />
+
+      <Setter Property="Height" Value="70" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="Header" Value="Sheet Options" />
+      
+      <Style.Resources>
+        <Style TargetType="Label">
+          <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style TargetType="TextBox">
+          <Setter Property="Width" Value="200" />
+          <Setter Property="FontSize" Value="11" />
+        </Style>
+        <Style TargetType="StackPanel">
+          <Setter Property="Orientation" Value="Vertical" />
+          <Setter Property="HorizontalAlignment" Value="Left" />
+          <Setter Property="Margin" Value="0,0,15,0" />
+        </Style>
+      </Style.Resources>
+    </Style>
+    
+    <Style x:Key="SpriteList" TargetType="ListBox">
+      <Setter Property="Grid.Row" Value="1" />
+      <Setter Property="Grid.Column" Value="0" />
+      
+      <Setter Property="ItemsSource" Value="{Binding Sprites}" />
+      <Setter Property="SelectedItem" Value="{Binding CurrentSprite,Mode=TwoWay}" />
+      <Setter Property="DisplayMemberPath" Value="EffectiveClassName" />
+
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Top" />
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible" />
+      
+      <Setter Property="Margin" Value="3" />
+    </Style>
+    
     <Style x:Key="CurrentSpriteDependent" TargetType="FrameworkElement">
       <Style.Triggers>
         <DataTrigger Binding="{Binding CurrentSprite}" Value="{x:Null}">
@@ -105,7 +147,8 @@
         <ColumnDefinition Width="1.25*" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-      <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="70" VerticalAlignment="Top" Header="Sheet Options" >
+      
+      <GroupBox Style="{StaticResource SpriteSheetFields}">
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -113,30 +156,28 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
 
-          <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left">
-            <Label FontSize="11">Base CSS Class</Label>
+          <StackPanel Grid.Column="0" Grid.Row="0">
+            <Label>Base CSS Class</Label>
             <TextBox x:Name="txtBaseCssClass" 
                      Validation.Error="OnTextBoxValidationError"
                      Text="{Binding SpriteSheet.BaseClassName, 
                       ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     ToolTip="{Binding SheetDescriptions[BaseClassName]}" 
-                     Width="200" FontSize="11"/>
+                     ToolTip="{Binding SheetDescriptions[BaseClassName]}" />
           </StackPanel>
 
-          <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0,0,0">
-            <Label FontSize="11">Base File Name</Label>
+          <StackPanel Grid.Column="1" Grid.Row="0">
+            <Label>Base File Name</Label>
             <TextBox x:Name="txtBaseFileName" 
                      Validation.Error="OnTextBoxValidationError"
                      Text="{Binding SpriteSheet.BaseFileName, 
                       ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                     ToolTip="{Binding SheetDescriptions[BaseFileName]}"             
-                     Width="200" FontSize="11" />
+                     ToolTip="{Binding SheetDescriptions[BaseFileName]}" />
           </StackPanel>
 
-          <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Vertical" Margin="15,0,0,0">
-            <Label FontSize="11">Image Dimensions</Label>
+          <StackPanel Grid.Column="2" Grid.Row="0">
+            <Label>Image Dimensions</Label>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
               <TextBox x:Name="txtImageWidth" 
                        Validation.Error="OnTextBoxValidationError"
                        Text="{Binding SpriteSheet.ImageWidth, 
@@ -146,8 +187,9 @@
                         Converter={StaticResource IntConverter},
                         FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageWidth]}" 
-                       Width="50" FontSize="11" VerticalAlignment="Top" />
-              <Label FontSize="11" VerticalAlignment="Top">by</Label>
+                       Width="50"/>
+              
+              <Label>by</Label>
 
               <TextBox x:Name="txtImageHeight"
                        Validation.Error="OnTextBoxValidationError"
@@ -158,20 +200,16 @@
                         Converter={StaticResource IntConverter},
                         FallbackValue=0, TargetNullValue=0}"
                        ToolTip="{Binding SheetDescriptions[ImageHeight]}" 
-                       Width="50" FontSize="11" VerticalAlignment="Top" />
-              <Label FontSize="11" VerticalAlignment="Top">pixels</Label>
+                       Width="50"/>
+              
+              <Label>pixels</Label>
             </StackPanel>
           </StackPanel>
         </Grid>
       </GroupBox>
-      <ListBox Grid.Column="0" Grid.Row="1"
-              ItemsSource="{Binding Sprites}" 
-              SelectedItem="{Binding CurrentSprite,Mode=TwoWay}" 
-              DisplayMemberPath="EffectiveClassName"
-              VerticalAlignment="Stretch"
-              VerticalContentAlignment="Top"
-              ScrollViewer.VerticalScrollBarVisibility="Visible"
-              Margin="3" />
+      
+      <ListBox Style="{StaticResource SpriteList}" />
+      
       <Grid Grid.Row="1" Grid.Column="1">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
